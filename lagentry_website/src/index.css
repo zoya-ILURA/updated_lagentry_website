@@ -1,0 +1,55 @@
+/* NUCLEAR BORDER ELIMINATION */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+/* CANVAS TOTAL BORDER DESTRUCTION */
+canvas, canvas * {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+html, body {
+  height: 100%;
+  background: #000000 !important;
+  overflow-x: hidden; /* prevent horizontal scroll */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+#root {
+  min-height: 100vh;
+  overflow-x: hidden; /* ensure no horizontal scroll from children */
+}
+
+body {
+  font-family: 'Georgia', serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #ffffff;
+  background: #000000 !important;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Hide scrollbar completely */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox */
+html {
+  scrollbar-width: none;
+}
