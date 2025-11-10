@@ -8,6 +8,7 @@ interface ShaderCanvasProps {
   hasUpcomingReminders?: boolean;
   shaderId?: number;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 export const ShaderCanvas = ({ 
@@ -16,7 +17,8 @@ export const ShaderCanvas = ({
   hasActiveReminders = false,
   hasUpcomingReminders = false,
   shaderId = 1,
-  className = ""
+  className = "",
+  style
 }: ShaderCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
@@ -278,7 +280,8 @@ export const ShaderCanvas = ({
         margin: 0,
         padding: 0,
         display: 'block',
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent',
+        ...style
       }}
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
