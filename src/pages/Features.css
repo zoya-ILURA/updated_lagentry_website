@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Georgia:wght@400;700&display=swap');
 
 .features-page {
-  background: #000000;
+  background: #0f0f0f;
   background-image: 
     radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
@@ -115,7 +115,7 @@
 }
 
 .voice-agents-heading {
-  font-size: 4.5rem;
+  font-size: 4rem;
   font-weight: 400;
   text-align: center;
   margin-top: -20px;
@@ -214,6 +214,7 @@
   object-fit: cover;
   object-position: top;
   display: block;
+  filter: brightness(1.15);
 }
 
 /* Horizontal Video Grid */
@@ -957,7 +958,7 @@
 /* Responsive Design */
 @media (max-width: 1200px) {
   .voice-agents-heading {
-    font-size: 3.5rem;
+    font-size: 3rem;
     letter-spacing: 1.5px;
   }
 

@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Features.css';
 
 const Features: React.FC = () => {
+  const navigate = useNavigate();
   const [callVolume, setCallVolume] = useState(10000);
   const [callDuration, setCallDuration] = useState(8);
   const [agentCost, setAgentCost] = useState(28);
@@ -178,7 +180,7 @@ const Features: React.FC = () => {
           {/* Custom Domain Message */}
           <div className="custom-domain-message">
             <p className="custom-domain-text">Didn't find your domain? Customise your own.</p>
-            <button className="get-started-button">Get Started</button>
+            <button className="get-started-button" onClick={() => navigate('/waitlist')}>Get Started</button>
           </div>
           
           {/* Detailed Time & Cost Calculator */}
