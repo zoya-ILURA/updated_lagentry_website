@@ -1,0 +1,45 @@
+/* GLOBAL BORDER RESET */
+*, *::before, *::after {
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+
+/* CANVAS SPECIFIC RESET */
+canvas {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html, body {
+  border: 0 !important;
+  margin: 0;
+  padding: 0;
+  box-shadow: none !important;
+  outline: 0 !important;
+  background-color: #000000 !important;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Ensure only one scrollbar - remove nested scrolling */
+body * {
+  overflow-x: hidden;
+}
+
+/* Allow vertical scrolling only on body */
+body > * {
+  overflow-y: visible;
+}
+
+.App {
+  min-height: 100vh;
+  background-color: #000000 !important;
+  color: #ffffff;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+}
