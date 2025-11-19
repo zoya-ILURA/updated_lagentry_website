@@ -393,6 +393,9 @@ const BookDemo: React.FC = () => {
       ref={containerRef}
       className={`book-demo-container ${theme === 'light' ? 'light-theme' : ''}`}
     >
+      {/* Semi-circle decorative element */}
+      <div className="book-demo-semi-circle"></div>
+      
       {/* Top Image with Overlay Form */}
       <div className="demo-top-image-container">
         <img src="/images/demo2.png" alt="Demo visual" className="demo-top-background-image" />

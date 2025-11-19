@@ -16,20 +16,21 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
   float dist = distance(fragCoord, center);
   float radius = min(iResolution.x, iResolution.y) * 0.5;
   float centerDim = disableCenterDimming ? 1.0 : smoothstep(radius * 0.3, radius * 0.5, dist);
+  float slowTime = iTime * 0.3; // Slow down animation by 70%
   for(float i = 1.0; i < 10.0; i++){
-    uv.x += 0.6 / i * cos(i * 2.5 * uv.y + iTime);
-    uv.y += 0.6 / i * cos(i * 1.5 * uv.x + iTime);
+    uv.x += 0.6 / i * cos(i * 2.5 * uv.y + slowTime);
+    uv.y += 0.6 / i * cos(i * 1.5 * uv.x + slowTime);
   }
   if (hasActiveReminders) {
-    fragColor = vec4(vec3(0.1, 0.3, 0.6) / abs(sin(iTime - uv.y - uv.x)), 1.0);
+    fragColor = vec4(vec3(0.1, 0.3, 0.6) / abs(sin(slowTime - uv.y - uv.x)), 1.0);
   } else if (hasUpcomingReminders) {
-    fragColor = vec4(vec3(0.1, 0.5, 0.2) / abs(sin(iTime - uv.y - uv.x)), 1.0);
+    fragColor = vec4(vec3(0.1, 0.5, 0.2) / abs(sin(slowTime - uv.y - uv.x)), 1.0);
   } else {
-    // Default to darker purple/blue gradient
-    vec3 base = vec3(0.10, 0.06, 0.22);   // darker purple
-    vec3 blend = vec3(0.08, 0.14, 0.40);  // darker blue
+    // Default to #030014 purple (rgb(3, 0, 20) = vec3(0.012, 0.0, 0.078))
+    vec3 base = vec3(0.012, 0.0, 0.078);   // #030014 purple
+    vec3 blend = vec3(0.015, 0.0, 0.12);  // slightly lighter purple variant
     vec3 color = mix(base, blend, 0.30);
-    float wave = max(0.6, abs(sin(iTime - uv.y - uv.x))); // avoid bright whites
+    float wave = max(0.6, abs(sin(slowTime - uv.y - uv.x))); // avoid bright whites
     fragColor = vec4(color / wave, 1.0);
   }
   if (!disableCenterDimming) {
@@ -57,9 +58,10 @@ varying vec2 vTextureCoord;
 #define t iTime
 mat2 m(float a){float c=cos(a), s=sin(a);return mat2(c,-s,s,c);} 
 float map(vec3 p, bool isActive, bool isUpcoming){
-    p.xz*= m(t*0.4);p.xy*= m(t*0.3);
-    vec3 q = p*2.+t;
-    return length(p+vec3(sin(t*0.7)))*log(length(p)+1.) + sin(q.x+sin(q.z+sin(q.y)))*0.5 - 1.;
+    float slowTime = t * 0.3; // Slow down animation by 70%
+    p.xz*= m(slowTime*0.4);p.xy*= m(slowTime*0.3);
+    vec3 q = p*2.+slowTime;
+    return length(p+vec3(sin(slowTime*0.7)))*log(length(p)+1.) + sin(q.x+sin(q.z+sin(q.y)))*0.5 - 1.;
 }
 void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     vec2 p = fragCoord.xy/min(iResolution.x, iResolution.y) - vec2(.9, .5);
@@ -76,8 +78,8 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
         } else if(hasUpcomingReminders) {
             baseColor = vec3(0.05, 0.3, 0.1) + vec3(2.0, 5.0, 1.0)*f;
         } else {
-            // Default darker purple/blue gradient
-            baseColor = vec3(0.10, 0.06, 0.22) + vec3(1.8, 0.9, 2.4)*f;
+            // Default to #030014 purple (rgb(3, 0, 20) = vec3(0.012, 0.0, 0.078))
+            baseColor = vec3(0.012, 0.0, 0.078) + vec3(0.8, 0.0, 1.2)*f;
         }
         cl = cl*baseColor + smoothstep(2.5, .0, rz)*.7*baseColor;
         d += min(rz, 1.);

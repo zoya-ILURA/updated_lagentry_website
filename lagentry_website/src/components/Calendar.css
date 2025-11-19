@@ -1,15 +1,17 @@
 .calendar-container {
-  background: var(--card, #0e0f14);
-  border: 1px solid var(--border, #212230);
+  background: transparent;
+  border: 1px solid rgba(155, 92, 255, 0.2);
   border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: none;
   transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .calendar-container.light-theme {
-  background: #ffffff;
-  border-color: #e0e0e0;
+  background: transparent;
+  border-color: rgba(0, 0, 0, 0.1);
   color: #1a1a1a;
 }
 
@@ -21,8 +23,8 @@
 }
 
 .calendar-nav-btn {
-  background: var(--card, #0e0f14);
-  border: 1px solid var(--border, #212230);
+  background: transparent;
+  border: 1px solid rgba(155, 92, 255, 0.3);
   color: var(--text, #e6e9ef);
   border-radius: 8px;
   width: 36px;
@@ -36,18 +38,20 @@
 }
 
 .calendar-nav-btn:hover {
-  background: var(--border, #212230);
+  background: rgba(155, 92, 255, 0.2);
+  border-color: rgba(155, 92, 255, 0.5);
   transform: scale(1.05);
 }
 
 .light-theme .calendar-nav-btn {
-  background: #f5f5f5;
-  border-color: #e0e0e0;
+  background: transparent;
+  border-color: rgba(0, 0, 0, 0.2);
   color: #1a1a1a;
 }
 
 .light-theme .calendar-nav-btn:hover {
-  background: #e0e0e0;
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.3);
 }
 
 .calendar-month-year {
@@ -227,8 +231,8 @@
 }
 
 .time-slot {
-  background: var(--card, #0e0f14);
-  border: 1px solid var(--border, #212230);
+  background: transparent;
+  border: 1px solid rgba(155, 92, 255, 0.3);
   border-radius: 8px;
   padding: 12px 16px;
   color: var(--text, #e6e9ef);
@@ -240,9 +244,10 @@
 }
 
 .time-slot:hover {
-  background: var(--border, #212230);
+  background: rgba(155, 92, 255, 0.2);
+  border-color: rgba(155, 92, 255, 0.5);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(155, 92, 255, 0.3);
 }
 
 .time-slot-selected {
@@ -254,13 +259,14 @@
 }
 
 .light-theme .time-slot {
-  background: #f5f5f5;
-  border-color: #e0e0e0;
+  background: transparent;
+  border-color: rgba(0, 0, 0, 0.2);
   color: #1a1a1a;
 }
 
 .light-theme .time-slot:hover {
-  background: #e0e0e0;
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.3);
 }
 
 .light-theme .time-slot-selected {

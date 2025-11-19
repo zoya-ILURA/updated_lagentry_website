@@ -11,7 +11,7 @@
   flex-direction: column;
   justify-content: flex-start;
   padding: 120px 16px 40px; /* Added top padding for navbar space */
-  background: #0A0618;
+  background: #030014;
   min-height: 100vh;
   box-sizing: border-box;
   position: relative;
@@ -21,19 +21,112 @@
   font-family: 'Georgia', serif;
 }
 
+/* Semi-circle decorative element - attached to dashboard */
+.book-demo-semi-circle {
+  position: absolute;
+  top: 220px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1600px;
+  height: 500px;
+  background: radial-gradient(
+    ellipse 1000px 500px at 50% 100%,
+    rgba(155, 92, 255, 0.15) 0%,
+    rgba(106, 90, 205, 0.1) 30%,
+    rgba(138, 43, 226, 0.08) 50%,
+    transparent 70%
+  );
+  clip-path: ellipse(50% 50% at 50% 100%);
+  z-index: 0;
+  pointer-events: none;
+  animation: semiCircleGlow 8s ease-in-out infinite;
+}
+
+.book-demo-semi-circle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1400px;
+  height: 500px;
+  background: radial-gradient(
+    ellipse 900px 450px at 50% 100%,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(155, 92, 255, 0.08) 20%,
+    rgba(106, 90, 205, 0.06) 40%,
+    transparent 65%
+  );
+  clip-path: ellipse(50% 50% at 50% 100%);
+  animation: semiCircleGlowInner 6s ease-in-out infinite;
+}
+
+.book-demo-semi-circle::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1200px;
+  height: 500px;
+  background: radial-gradient(
+    circle 300px at 50% 100%,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(155, 92, 255, 0.2) 15%,
+    rgba(106, 90, 205, 0.15) 30%,
+    transparent 50%
+  );
+  clip-path: ellipse(50% 50% at 50% 100%);
+  animation: semiCircleGlowCore 4s ease-in-out infinite;
+}
+
+@keyframes semiCircleGlow {
+  0%, 100% {
+    opacity: 0.8;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-20px) scale(1.05);
+  }
+}
+
+@keyframes semiCircleGlowInner {
+  0%, 100% {
+    opacity: 0.6;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translateX(-50%) translateY(-15px) scale(1.03);
+  }
+}
+
+@keyframes semiCircleGlowCore {
+  0%, 100% {
+    opacity: 0.7;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-10px) scale(1.02);
+  }
+}
+
 /* Top image container with overlay form */
 .demo-top-image-container {
   position: relative;
   width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto 520px auto;
-  min-height: 500px;
-  height: 500px;
+  min-height: 600px;
+  height: 600px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   overflow: visible;
   background: transparent;
+  z-index: 1;
 }
 
 .demo-top-background-image {
@@ -110,13 +203,13 @@
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 1000px;
+  max-width: 1400px;
   display: flex;
   justify-content: center;
   align-items: flex-end;
   padding: 0 20px 0 20px;
   overflow: visible;
-  z-index: 20;
+  z-index: 2;
   pointer-events: none;
 }
 
@@ -128,7 +221,7 @@
 .demo-top-image-wrap {
   position: relative;
   width: 100%;
-  max-width: 1000px;
+  max-width: 1400px;
   margin: 40px auto 24px auto;
 }
 
@@ -136,7 +229,7 @@
 .demo-top-caption {
   position: relative;
   width: 100%;
-  max-width: 1000px;
+  max-width: 1400px;
   margin: 150px auto 0 auto;
   display: flex;
   flex-direction: column;
@@ -175,9 +268,9 @@
 /* Slight corner continuity so caption visually attaches to image */
 .demo-top-image {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1400px;
   height: auto;
-  max-height: 440px;
+  max-height: 600px;
   display: block;
   object-fit: cover;
   border-radius: 8px 8px 20px 20px;
@@ -766,28 +859,87 @@
 
 .book-demo-card {
   width: 100%;
-  max-width: 1000px;
-  background: rgba(10, 6, 24, 0.85);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(155, 92, 255, 0.2);
-  border-radius: 16px;
+  max-width: 1400px;
+  background: rgba(3, 0, 20, 0.25);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(155, 92, 255, 0.25);
+  border-radius: 20px;
   padding: 32px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(155, 92, 255, 0.15),
+    0 0 0 1px rgba(106, 90, 205, 0.1);
   margin: 0 auto;
   position: relative;
   transition: transform 0.1s ease-out;
   will-change: transform;
+  overflow: hidden;
+}
+
+.book-demo-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(155, 92, 255, 0.3),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.book-demo-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(155, 92, 255, 0.25),
+    rgba(106, 90, 205, 0.2),
+    rgba(138, 43, 226, 0.15)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.7;
 }
 
 /* Slanted effect is now controlled via inline styles based on scroll progress */
 
 .light-theme .book-demo-card {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.light-theme .book-demo-card::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 0, 0, 0.1),
+    transparent
+  );
+}
+
+.light-theme .book-demo-card::after {
+  background: linear-gradient(
+    135deg,
+    rgba(155, 92, 255, 0.2),
+    rgba(106, 90, 205, 0.15),
+    rgba(155, 92, 255, 0.1)
+  );
 }
 
 .book-demo-title {
@@ -1015,13 +1167,14 @@
 }
 
 .submit-button.gradient {
-  background: linear-gradient(135deg, var(--accentA), var(--accentB));
-  box-shadow: 0 8px 20px rgba(155, 92, 255, 0.35);
+  background: linear-gradient(135deg, rgba(106, 90, 205, 0.9), rgba(75, 0, 130, 0.95));
+  box-shadow: 0 8px 20px rgba(75, 0, 130, 0.5);
 }
 
 .submit-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(155, 92, 255, 0.4);
+  background: linear-gradient(135deg, rgba(90, 70, 180, 0.95), rgba(60, 0, 110, 1));
+  box-shadow: 0 12px 24px rgba(75, 0, 130, 0.6);
 }
 
 .submit-button:disabled {
@@ -1073,13 +1226,13 @@
 .demo-bottom-image-wrap {
   position: relative;
   width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 80px auto 80px auto; /* extra bottom space for overlay */
 }
 
 .demo-bottom-image {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
   height: auto;
   display: block;
   object-fit: cover;

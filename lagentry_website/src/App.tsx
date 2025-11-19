@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import Pricing from './pages/Pricing';
 import BookDemo from './pages/BookDemo';
 import Waitlist from './pages/Waitlist';
+import Features from './pages/Features';
 
 const HomePage: React.FC = () => {
   return (
@@ -32,6 +33,7 @@ const App: React.FC = () => {
         <Navigation />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/features" element={<Features />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/book-demo" element={<BookDemo />} />
           <Route path="/waitlist" element={<Waitlist />} />

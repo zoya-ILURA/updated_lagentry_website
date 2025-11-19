@@ -10,6 +10,11 @@ const WelcomePage: React.FC = () => {
     <div className="welcome-container">
       <div className="welcome-content">
         <div className="tagline-banner">
+          <img 
+            src="/images/nvidia-logo-png_seeklogo-101614.png" 
+            alt="NVIDIA Logo" 
+            className="nvidia-logo"
+          />
           <span>Backed by NVIDIA.</span>
         </div>
         
@@ -32,7 +37,7 @@ const WelcomePage: React.FC = () => {
         </p>
         
         <div className="cta-section">
-          <button className="cta-button" onClick={() => navigate('/waitlist')}>
+          <button className="cta-button secondary-cta" onClick={() => navigate('/waitlist')}>
             Join the Waitlist
             <span className="arrow">→</span>
           </button>
@@ -42,7 +47,7 @@ const WelcomePage: React.FC = () => {
               <div className="animation-space">
                 {/* Shader reminder animation - Ether shader */}
                 <ShaderCanvas 
-                  size={600}
+                  size={1400}
                   shaderId={2}
                   className="shader-reminder"
                 />

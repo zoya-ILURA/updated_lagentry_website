@@ -10,7 +10,10 @@ const Footer: React.FC = () => {
           <div className="footer-section">
             <div className="footer-logo">
               <span className="logo-l">L</span>
-              <span className="logo-text">agentry</span>
+              <span className="logo-text">
+                <span className="logo-underlined">agent</span>
+                <span className="logo-part">ry</span>
+              </span>
             </div>
             <p className="footer-description">
               Empowering businesses to create intelligent AI agents with simple prompts. 
