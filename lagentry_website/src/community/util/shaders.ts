@@ -26,10 +26,10 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
   } else if (hasUpcomingReminders) {
     fragColor = vec4(vec3(0.1, 0.5, 0.2) / abs(sin(slowTime - uv.y - uv.x)), 1.0);
   } else {
-    // Default to #030014 purple (rgb(3, 0, 20) = vec3(0.012, 0.0, 0.078))
-    vec3 base = vec3(0.012, 0.0, 0.078);   // #030014 purple
-    vec3 blend = vec3(0.015, 0.0, 0.12);  // slightly lighter purple variant
-    vec3 color = mix(base, blend, 0.30);
+    // Default to gradient #000000 -> #3D0A55
+    vec3 base = vec3(0.0, 0.0, 0.0);
+    vec3 blend = vec3(0.2392, 0.0392, 0.3333); // #3D0A55
+    vec3 color = mix(base, blend, 0.6);
     float wave = max(0.6, abs(sin(slowTime - uv.y - uv.x))); // avoid bright whites
     fragColor = vec4(color / wave, 1.0);
   }
@@ -78,8 +78,10 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
         } else if(hasUpcomingReminders) {
             baseColor = vec3(0.05, 0.3, 0.1) + vec3(2.0, 5.0, 1.0)*f;
         } else {
-            // Default to #030014 purple (rgb(3, 0, 20) = vec3(0.012, 0.0, 0.078))
-            baseColor = vec3(0.012, 0.0, 0.078) + vec3(0.8, 0.0, 1.2)*f;
+            // Default gradient #000000 -> #3D0A55
+            vec3 base = vec3(0.0, 0.0, 0.0);
+            vec3 blend = vec3(0.2392, 0.0392, 0.3333);
+            baseColor = mix(base, blend, 0.65) + vec3(0.8, 0.25, 1.0)*f;
         }
         cl = cl*baseColor + smoothstep(2.5, .0, rz)*.7*baseColor;
         d += min(rz, 1.);
@@ -127,8 +129,9 @@ void mainImage(out vec4 O, in vec2 fragCoord) {
     float len = length(clamped_p - p);
     if (len > 0.0) { vec4 star = 1e-3 / len * (cos(p.y / 0.1 + vec4(0.0, 1.0, 2.0, 3.0)) + 1.0); O += star; }
   }
-  // Default toward darker purple/blue; avoid whites
-  O.rgb = mix(O.rgb, vec3(0.12, 0.08, 0.28), 0.35);
+  // Default toward gradient #000000 -> #3D0A55
+  O.rgb = mix(O.rgb, vec3(0.0, 0.0, 0.0), 0.4);
+  O.rgb = mix(O.rgb, vec3(0.2392, 0.0392, 0.3333), 0.35);
   if (hasActiveReminders) { O.rgb = mix(O.rgb, vec3(0.10, 0.24, 0.70), 0.40);} 
   else if (hasUpcomingReminders) { O.rgb = mix(O.rgb, vec3(0.18, 0.10, 0.35), 0.40);} 
   if (!disableCenterDimming) { O.rgb = mix(O.rgb * 0.3, O.rgb, centerDim);} 
@@ -168,10 +171,10 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     line = mix(line, animatedLine, 0.3);
     vec3 backgroundColor = vec3(0.0, 0.0, 0.0); vec3 lineColor;
     if (hasActiveReminders) { lineColor = vec3(0.15, 0.30, 0.85);} 
-    else if (hasUpcomingReminders) { lineColor = vec3(0.38, 0.22, 0.70);} else { lineColor = vec3(0.40, 0.22, 0.70);} 
+    else if (hasUpcomingReminders) { lineColor = vec3(0.38, 0.22, 0.70);} else { lineColor = vec3(0.2392, 0.0392, 0.3333);} 
     vec3 finalColor = mix(backgroundColor, lineColor, line);
     if (hasActiveReminders) { finalColor += vec3(0.08, 0.16, 0.45) * mouseInfluence * line;} 
-    else if (hasUpcomingReminders) { finalColor += vec3(0.22, 0.12, 0.42) * mouseInfluence * line;} else { finalColor += vec3(0.18, 0.10, 0.35) * mouseInfluence * line; }
+    else if (hasUpcomingReminders) { finalColor += vec3(0.22, 0.12, 0.42) * mouseInfluence * line;} else { finalColor += vec3(0.0, 0.0, 0.0) * mouseInfluence * line; }
     fragColor = vec4(finalColor, 1.0);
     vec2 center = iResolution.xy * 0.5; float dist = distance(fragCoord, center); float radius = min(iResolution.x, iResolution.y) * 0.5;
     float centerDim = disableCenterDimming ? 1.0 : smoothstep(radius * 0.3, radius * 0.5, dist);

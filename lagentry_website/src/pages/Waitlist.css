@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   padding: 100px 16px 80px;
-  background: #030014;
+  background: linear-gradient(135deg, #000000 0%, #0A0012 40%, #150021 70%, #3D0A55 100%);
   min-height: 100vh;
   overflow: hidden;
 }
@@ -13,7 +13,7 @@
   position: fixed;
   inset: 0;
   z-index: 0;
-  background: #030014;
+  background: linear-gradient(135deg, #000000 0%, #0A0012 40%, #150021 70%, #3D0A55 100%);
 }
 
 /* Center overlay join box */
@@ -41,9 +41,8 @@
 
 /* Top stats pill */
 .join-stats { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 24px; }
-.join-pill { display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px; background: linear-gradient(180deg, rgba(124,58,237,0.25), rgba(59,130,246,0.18)); box-shadow: 0 4px 10px rgba(0,0,0,0.25) inset; }
-.join-pill-icon { font-size: 18px; line-height: 1; color: #7c3aed; }
-.join-pill-text { color: #cbd4ff; font-weight: 700; font-size: 15px; }
+.join-pill { display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px; background: linear-gradient(180deg, rgba(160,63,140,0.35), rgba(60,11,41,0.35)); box-shadow: 0 4px 10px rgba(0,0,0,0.35) inset; }
+.join-pill-text { color: #f3e2ff; font-weight: 700; font-size: 15px; }
 
 .join-header {
   display: flex;
@@ -56,13 +55,13 @@
 .join-logo {
   width: 120px;
   height: 120px;
-  border-radius: 16px;
-  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+  background: rgba(0,0,0,0.95);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(155, 92, 255, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9);
 }
 
 .join-logo img { width: 96px; height: 96px; object-fit: contain; display: block; }
@@ -207,7 +206,7 @@
 .particle {
   position: absolute;
   border-radius: 50%;
-  background: rgba(155, 92, 255, 0.3);
+  background: rgba(61, 10, 85, 0.35);
   filter: blur(1px);
   animation: float 20s infinite ease-in-out;
 }
@@ -226,7 +225,7 @@
   left: 80%;
   top: 40%;
   animation-delay: 2s;
-  background: rgba(106, 90, 205, 0.3);
+  background: rgba(21, 0, 33, 0.4);
 }
 
 .particle-3 {
@@ -243,7 +242,7 @@
   left: 70%;
   top: 10%;
   animation-delay: 6s;
-  background: rgba(106, 90, 205, 0.3);
+  background: rgba(61, 10, 85, 0.4);
 }
 
 .particle-5 {
@@ -260,7 +259,7 @@
   left: 20%;
   top: 50%;
   animation-delay: 10s;
-  background: rgba(106, 90, 205, 0.3);
+  background: rgba(10, 0, 18, 0.4);
 }
 
 @keyframes float {
@@ -294,7 +293,7 @@
 .orb-1 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(155, 92, 255, 0.6), transparent);
+  background: radial-gradient(circle, rgba(61, 10, 85, 0.65), transparent);
   top: -200px;
   left: -200px;
   animation-delay: 0s;
@@ -303,7 +302,7 @@
 .orb-2 {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(106, 90, 205, 0.5), transparent);
+  background: radial-gradient(circle, rgba(10, 0, 18, 0.55), transparent);
   bottom: -250px;
   right: -250px;
   animation-delay: 2s;
@@ -312,7 +311,7 @@
 .orb-3 {
   width: 350px;
   height: 350px;
-  background: radial-gradient(circle, rgba(155, 92, 255, 0.4), transparent);
+  background: radial-gradient(circle, rgba(21, 0, 33, 0.55), transparent);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

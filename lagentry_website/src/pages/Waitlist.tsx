@@ -144,8 +144,7 @@ const Waitlist: React.FC = () => {
           {/* Top stats pill */}
           <div className="join-stats">
             <div className="join-pill">
-              <span className="join-pill-icon">👥</span>
-              <span className="join-pill-text">Join 1,247 others already on the waitlist</span>
+              <span className="join-pill-text">Join 5,784 others already on the waitlist</span>
             </div>
           </div>
           <div className="join-header">
@@ -155,7 +154,7 @@ const Waitlist: React.FC = () => {
           </div>
           <div className="join-content">
             <div className="join-subtitle">Hire AI employees for MENA businesses.</div>
-            <div className="join-desc">Create intelligent agents tailored to your workflows. Launch your custom AI workforce in seconds.</div>
+            <div className="join-desc">Launch your custom AI workforce in seconds.</div>
 
             <form onSubmit={onSubmit} className="join-form">
               <div className="join-input-row">
