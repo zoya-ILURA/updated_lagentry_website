@@ -22,8 +22,7 @@ html, body {
   height: 100%;
   background: #000000 !important;
   overflow-x: hidden; /* prevent horizontal scroll */
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  overflow-y: auto; /* allow vertical scroll with default scrollbar */
 }
 
 #root {
@@ -44,12 +43,24 @@ code {
     monospace;
 }
 
-/* Hide scrollbar completely */
-::-webkit-scrollbar {
-  display: none;
+/* Show default scrollbar only for body/html, hide for carousel */
+body::-webkit-scrollbar,
+html::-webkit-scrollbar {
+  width: 8px;
 }
 
-/* Firefox */
-html {
-  scrollbar-width: none;
+body::-webkit-scrollbar-track,
+html::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+body::-webkit-scrollbar-thumb,
+html::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-thumb:hover,
+html::-webkit-scrollbar-thumb:hover {
+  background: #777;
 }

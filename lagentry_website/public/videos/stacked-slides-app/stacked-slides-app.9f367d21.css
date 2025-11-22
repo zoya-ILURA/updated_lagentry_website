@@ -20,29 +20,39 @@ body {
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Helvetica Neue, Noto Sans, Segoe UI Emoji, Apple Color Emoji, Arial, sans-serif;
 }
 
-/* Black scrollbar styling */
+/* Hide scrollbar completely */
 ::-webkit-scrollbar {
-  width: 8px;
-  background-color: #000000;
+  display: none !important;
+  width: 0 !important;
+  background-color: transparent !important;
 }
 
 ::-webkit-scrollbar-track {
-  background: #000000;
+  display: none !important;
+  background: transparent !important;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #000000;
-  border-radius: 4px;
+  display: none !important;
+  background: transparent !important;
+  border-radius: 0 !important;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #1a1a1a;
+  display: none !important;
+  background: transparent !important;
 }
 
-/* Firefox scrollbar */
+/* Firefox scrollbar - hide */
 html {
-  scrollbar-color: #000000 #000000;
-  scrollbar-width: thin;
+  scrollbar-color: transparent transparent !important;
+  scrollbar-width: none !important;
+}
+
+body {
+  overflow-x: hidden !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
 .nav {

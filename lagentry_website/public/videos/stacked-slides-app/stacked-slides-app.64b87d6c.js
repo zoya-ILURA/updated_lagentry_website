@@ -25406,7 +25406,7 @@ $RefreshReg$(_c2, "App");
   globalThis.$RefreshSig$ = prevRefreshSig;
 }
 },{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","2935f73d4a29c810":"3mnjp","b89ba0a34675dd10":"gCwkS","40084c89ee6b8cdc":"3v8Pg","2faaf9acef317983":"5tDmp","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi","71f5f7219ece3753":"XZRcK"}],"3mnjp":[function(require,module,exports,__globalThis) {
-module.exports = module.bundle.resolve("V1.f18fbe50.mp4") + "?" + Date.now();
+module.exports = module.bundle.resolve("/videos/prompt to agent.mp4") + "?" + Date.now();
 
 },{}],"gCwkS":[function(require,module,exports,__globalThis) {
 module.exports = module.bundle.resolve("V2.5def5691.mp4") + "?" + Date.now();

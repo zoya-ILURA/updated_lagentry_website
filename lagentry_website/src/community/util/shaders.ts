@@ -58,10 +58,9 @@ varying vec2 vTextureCoord;
 #define t iTime
 mat2 m(float a){float c=cos(a), s=sin(a);return mat2(c,-s,s,c);} 
 float map(vec3 p, bool isActive, bool isUpcoming){
-    float slowTime = t * 0.3; // Slow down animation by 70%
-    p.xz*= m(slowTime*0.4);p.xy*= m(slowTime*0.3);
-    vec3 q = p*2.+slowTime;
-    return length(p+vec3(sin(slowTime*0.7)))*log(length(p)+1.) + sin(q.x+sin(q.z+sin(q.y)))*0.5 - 1.;
+    p.xz*= m(t*0.4);p.xy*= m(t*0.3);
+    vec3 q = p*2.+t;
+    return length(p+vec3(sin(t*0.7)))*log(length(p)+1.) + sin(q.x+sin(q.z+sin(q.y)))*0.5 - 1.;
 }
 void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     vec2 p = fragCoord.xy/min(iResolution.x, iResolution.y) - vec2(.9, .5);
@@ -71,26 +70,29 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     for(int i=0; i<=5; i++) {
         vec3 p3d = vec3(0,0,5.) + normalize(vec3(p, -1.))*d;
         float rz = map(p3d, hasActiveReminders, hasUpcomingReminders);
-        float f = clamp((rz - map(p3d+.1, hasActiveReminders, hasUpcomingReminders))*0.5, -.1, 1.);
+        float f = clamp((rz - map(p3d+.1, hasActiveReminders, hasUpcomingReminders))*0.8, -.1, 1.);
         vec3 baseColor;
         if(hasActiveReminders) {
             baseColor = vec3(0.05, 0.2, 0.5) + vec3(4.0, 2.0, 5.0)*f;
         } else if(hasUpcomingReminders) {
             baseColor = vec3(0.05, 0.3, 0.1) + vec3(2.0, 5.0, 1.0)*f;
         } else {
-            // Default gradient #000000 -> #3D0A55
-            vec3 base = vec3(0.0, 0.0, 0.0);
-            vec3 blend = vec3(0.2392, 0.0392, 0.3333);
-            baseColor = mix(base, blend, 0.65) + vec3(0.8, 0.25, 1.0)*f;
+            // Dark purple with subtle magenta hints - matching image
+            baseColor = vec3(0.12, 0.03, 0.18) + vec3(0.8, 0.15, 1.2)*f;
         }
-        cl = cl*baseColor + smoothstep(2.5, .0, rz)*.7*baseColor;
+        cl = cl*baseColor + smoothstep(2.5, .0, rz)*.8*baseColor;
         d += min(rz, 1.);
     }
     vec2 center = iResolution.xy * 0.5;
     float dist = distance(fragCoord, center);
     float radius = min(iResolution.x, iResolution.y) * 0.5;
     float centerDim = disableCenterDimming ? 1.0 : smoothstep(radius * 0.3, radius * 0.5, dist);
-    fragColor = vec4(cl, 1.0);
+    
+    // Calculate brightness to determine alpha - show more of the shape
+    float brightness = length(cl);
+    float alpha = smoothstep(0.02, 0.4, brightness); // Show more of the shape, not just bright parts
+    
+    fragColor = vec4(cl, alpha);
     if (!disableCenterDimming) {
         fragColor.rgb = mix(fragColor.rgb * 0.3, fragColor.rgb, centerDim);
     }

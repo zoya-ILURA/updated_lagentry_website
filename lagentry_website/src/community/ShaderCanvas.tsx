@@ -39,8 +39,17 @@ export const ShaderCanvas = ({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const gl = canvas.getContext('webgl');
+    const gl = canvas.getContext('webgl', { 
+      alpha: true, 
+      premultipliedAlpha: false,
+      preserveDrawingBuffer: false,
+      antialias: true
+    });
     if (!gl) return;
+    
+    // Ensure canvas background is transparent
+    canvas.style.backgroundColor = 'transparent';
+    canvas.style.background = 'transparent';
 
     const vsSource = vertexShader;
     const fsSource = selectedShader.fragmentShader;
@@ -147,10 +156,19 @@ export const ShaderCanvas = ({
     hasUpcomingReminders: boolean,
     mousePos: [number, number]
   ) {
+    // Clear with fully transparent background
     gl.clearColor(0.0, 0.0, 0.0, 0.0);
     gl.clearDepth(1.0);
-    gl.enable(gl.DEPTH_TEST);
-    gl.depthFunc(gl.LEQUAL);
+    
+    // Disable depth test for 2D blending
+    gl.disable(gl.DEPTH_TEST);
+    
+    // Enable alpha blending for proper transparency
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    gl.blendEquation(gl.FUNC_ADD);
+    
+    // Clear the canvas with transparent color
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     gl.useProgram(programInfo.program);
@@ -182,7 +200,21 @@ export const ShaderCanvas = ({
     <canvas
       ref={canvasRef}
       className="transition-transform duration-300"
-      style={{ width: width ?? size, height: height ?? size, transform: isHovered ? 'scale(1.01)' : 'scale(1)', cursor: 'default' }}
+      style={{ 
+        width: width ?? size, 
+        height: height ?? size, 
+        transform: isHovered ? 'scale(1.01)' : 'scale(1)', 
+        cursor: 'default',
+        border: 'none',
+        outline: 'none',
+        display: 'block',
+        background: 'transparent !important',
+        backgroundColor: 'transparent !important',
+        boxShadow: 'none',
+        margin: 0,
+        padding: 0,
+        verticalAlign: 'bottom'
+      }}
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}

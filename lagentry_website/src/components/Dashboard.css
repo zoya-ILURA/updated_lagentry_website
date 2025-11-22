@@ -151,6 +151,19 @@
   display: block;
   position: relative;
   z-index: 5;
+  overflow: hidden; /* Hide scrollbars */
+}
+
+/* Hide scrollbars in iframe */
+.embedded-slides-frame-wrap {
+  overflow: hidden;
+}
+
+/* Hide scrollbars from stacked-slides-app */
+.embedded-slides-frame::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 /* Placeholder slide area (empty content and video) */

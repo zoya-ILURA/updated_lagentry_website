@@ -8,10 +8,20 @@
   background: #000000;
   color: #ffffff;
   position: relative;
+  z-index: 1;
+  transform: translateY(100vh); /* Start below viewport */
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease-out;
+}
+
+/* Slide up animation when intro completes */
+.welcome-container.intro-complete {
+  transform: translateY(0); /* Slide up to normal position */
+  opacity: 1;
 }
 
 .welcome-content {
-  flex: 1;
+  flex: 0 0 50%;
   max-width: 50%;
   padding-right: 4rem;
   text-align: center;
@@ -331,14 +341,19 @@
 .animation-space {
   flex: 1;
   min-height: 600px;
-  background: transparent;
+  background: transparent !important;
+  background-color: transparent !important;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: visible;
-  padding: 100px;
+  padding: 80px;
   width: 100%;
+  z-index: 2;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .shader-reminder {
@@ -347,13 +362,12 @@
   animation: smoothFloat 25s ease-in-out infinite;
   box-shadow: none !important;
   outline: none !important;
-  margin: 0 !important;
+  margin: -100px !important;
   padding: 0 !important;
   position: relative;
-  z-index: 1;
-  transform: scale(2);
-  width: 100% !important;
-  height: 100% !important;
+  z-index: 3;
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .shader-reminder canvas {
@@ -363,6 +377,19 @@
   margin: 0 !important;
   padding: 0 !important;
   background: transparent !important;
+  background-color: transparent !important;
+  display: block;
+  /* Ensure no default canvas background */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Force transparency */
+  opacity: 1;
+  mix-blend-mode: normal;
+  /* Remove any default canvas styling */
+  image-rendering: auto;
+  -webkit-backface-visibility: visible;
+  backface-visibility: visible;
 }
 
 @keyframes smoothFloat {
@@ -442,10 +469,44 @@
   }
 }
 
+/* Mobile Responsive Styles */
+@media (max-width: 968px) {
+  .welcome-container {
+    flex-direction: column;
+    padding: 2rem 1rem;
+    min-height: auto;
+  }
+  
+  .welcome-content {
+    max-width: 100%;
+    padding-right: 0;
+    margin-bottom: 2rem;
+    text-align: center;
+    min-height: auto;
+  }
+
+  .heading-line1 {
+    font-size: 2.5rem;
+  }
+
+  .animated-text-item {
+    font-size: 1.75rem;
+  }
+
+  .description-text {
+    font-size: 0.95rem;
+  }
+
+  .animation-space {
+    min-height: 400px;
+    padding: 40px;
+  }
+}
+
 @media (max-width: 768px) {
   .welcome-container {
     flex-direction: column;
-    padding: 1rem;
+    padding: 1.5rem 1rem;
   }
   
   .welcome-content {
@@ -456,23 +517,23 @@
   }
   
   .heading-line1 {
-    font-size: 2.5rem;
-  }
-  
-  .animated-text-item {
     font-size: 2rem;
   }
   
+  .animated-text-item {
+    font-size: 1.5rem;
+  }
+  
   .animated-text-container {
-    height: 2.5rem;
+    height: 2rem;
   }
   
   .animated-text-line {
-    height: 2.5rem;
+    height: 2rem;
   }
   
   .description-text {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
   
   .cta-section {
@@ -481,5 +542,44 @@
   
   .animation-space {
     min-height: 300px;
+    padding: 20px;
+  }
+
+  .tagline-banner {
+    font-size: 0.85rem;
+    padding: 6px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-container {
+    padding: 1rem 0.75rem;
+  }
+
+  .heading-line1 {
+    font-size: 1.75rem;
+  }
+
+  .animated-text-item {
+    font-size: 1.25rem;
+  }
+
+  .description-text {
+    font-size: 0.8rem;
+  }
+
+  .animation-space {
+    min-height: 250px;
+    padding: 10px;
+  }
+
+  .tagline-banner {
+    font-size: 0.75rem;
+    padding: 5px 12px;
+  }
+
+  .cta-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
   }
 }
