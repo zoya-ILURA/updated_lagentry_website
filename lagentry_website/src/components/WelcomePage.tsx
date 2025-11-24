@@ -64,7 +64,7 @@ const WelcomePage: React.FC = () => {
         </div>
         
         <h1 className="main-heading">
-          <span className="heading-line1">Lagentry - MENA's First AI Agent Builder</span>
+          <span className="heading-line1">Hire AI Employees</span>
         </h1>
         
         <div className="animated-text-container">

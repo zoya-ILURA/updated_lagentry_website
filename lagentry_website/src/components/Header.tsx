@@ -93,7 +93,7 @@ const Header: React.FC = () => {
         <div className={`sliding-text ${showText ? 'visible' : ''} ${!showText && showLagentry ? 'hidden' : ''}`}>
           <div className="sliding-text-content">
             <img src="/images/logo.png" alt="Lagentry Logo" className="header-logo-icon-intro" />
-            <h2>Introducing MENA's first AI agent Builder</h2>
+            <h2>Hire AI Employees</h2>
           </div>
           {/* Diagonal glow line */}
           <div className={`diagonal-glow-line ${showText ? 'visible' : ''}`}></div>
