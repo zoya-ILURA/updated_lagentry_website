@@ -4,6 +4,7 @@ import { db } from '../lib/firebase';
 import { addDoc, collection, serverTimestamp, doc, setDoc, getDoc } from 'firebase/firestore';
 import emailjs from 'emailjs-com';
 import Calendar from '../components/Calendar';
+import { submitFormData, FormSubmissionData } from '../lib/submitFormData';
 // import FeatureCards from '../components/FeatureCards';
 // import MenaCard from '../components/MenaCard';
 
@@ -82,33 +83,71 @@ const BookDemo: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Calculate scroll progress (0 to 1) based on scroll position
-      // Start transitioning from 0px to 500px scroll for slower transition
-      const scrollY = window.scrollY;
-      const maxScroll = 500; // Increased for slower, more gradual transition
-      const progress = Math.min(scrollY / maxScroll, 1);
+      if (!cardRef.current) {
+        // Fallback: use scroll position
+        const scrollY = window.scrollY;
+        const startScroll = 400;
+        const transitionDistance = 800;
+        const adjustedScroll = Math.max(0, scrollY - startScroll);
+        const progress = Math.min(adjustedScroll / transitionDistance, 1);
+        setScrollProgress(progress);
+        return;
+      }
+      
+      const cardRect = cardRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // Get card's top position in viewport
+      const cardTop = cardRect.top;
+      
+      // Start transition when card top enters viewport (at 100% of viewport height)
+      // Complete transition when card top reaches 20% of viewport height
+      const startPoint = windowHeight; // Card enters from bottom
+      const endPoint = windowHeight * 0.2; // Card reaches near top
+      
+      let progress = 0;
+      
+      if (cardTop < startPoint) {
+        if (cardTop <= endPoint) {
+          // Card has scrolled past end point - fully straight
+          progress = 1;
+        } else {
+          // Card is in transition zone - calculate progress
+          const distance = startPoint - cardTop;
+          const totalDistance = startPoint - endPoint;
+          progress = Math.min(Math.max(distance / totalDistance, 0), 1);
+        }
+      } else {
+        // Card hasn't entered viewport yet - fully slanted
+        progress = 0;
+      }
+      
       setScrollProgress(progress);
     };
 
     const handleClick = (e: MouseEvent) => {
-      // Instantly straighten on click
       setScrollProgress(1);
     };
 
     // Add scroll listener
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
     
     // Initial check
     handleScroll();
+    
+    // Also check after a delay to catch any late DOM updates
+    const initTimer = setTimeout(handleScroll, 100);
 
-    // Add click listener to the container
+    // Add click listener
     if (containerRef.current) {
       containerRef.current.addEventListener('click', handleClick);
     }
 
-
     return () => {
+      clearTimeout(initTimer);
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
       if (containerRef.current) {
         containerRef.current.removeEventListener('click', handleClick);
       }
@@ -243,40 +282,64 @@ const BookDemo: React.FC = () => {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
+    setError(null);
+    setSuccess(null);
     
     if (!selectedDate || !selectedTime) {
       setError('Please select a date and time for your demo.');
+      setSubmitting(false);
       return;
     }
 
-    // Store form data before resetting
-    const formData = { ...form };
-    const bookingDate = selectedDate;
-    const bookingTime = selectedTime;
-    const bookingDateTime = `${formatDate(selectedDate)} at ${selectedTime}`;
-
-    // Show success immediately (optimistic UI)
-    setSuccess(
-      `Thank you for booking a demo! Your demo is scheduled for ${formatDate(selectedDate)} at ${selectedTime}. A confirmation email will be sent to ${form.email}.`
-    );
-    
-    // Reset form immediately
-    setForm(initialState);
-    setSelectedDate(null);
-    setSelectedTime(null);
-    setSubmitting(false);
-
-    // Save to database and send emails in background (non-blocking)
-    const bookingData = {
-      ...formData,
-      bookingDate: bookingDate.toISOString(),
-      bookingTime: bookingTime,
-      bookingDateTime: bookingDateTime,
-      createdAt: serverTimestamp(),
+    // Prepare form data for Supabase
+    const formSubmissionData: FormSubmissionData = {
+      full_name: form.name,
+      work_email: form.email,
+      contact_number: form.phone,
+      company_name: form.company,
+      company_size: form.companySize,
+      demo_request_message: form.message || undefined,
+      terms_accepted: form.consent,
+      selected_date: selectedDate ? selectedDate.toISOString().split('T')[0] : null,
+      selected_time: selectedTime,
     };
 
-    // Save to Firestore in background
-    addDoc(collection(db, 'bookings'), bookingData)
+    // Submit to Supabase
+    const result = await submitFormData(formSubmissionData);
+
+    if (result.success) {
+      // Show success message
+      setSuccess(result.message);
+      
+      // Reset form
+      setForm(initialState);
+      setSelectedDate(null);
+      setSelectedTime(null);
+      setSubmitting(false);
+
+      // Delete draft if exists
+      if (draftId) {
+        setDoc(doc(db, 'drafts', draftId), { deleted: true }, { merge: true })
+          .catch(err => console.error('Error deleting draft:', err));
+        localStorage.removeItem('draftId');
+        setDraftId(null);
+      }
+
+      // Optional: Also save to Firestore for backward compatibility (if needed)
+      const bookingDate = selectedDate;
+      const bookingTime = selectedTime;
+      const bookingDateTime = `${formatDate(selectedDate)} at ${selectedTime}`;
+      const bookingData = {
+        ...form,
+        bookingDate: bookingDate.toISOString(),
+        bookingTime: bookingTime,
+        bookingDateTime: bookingDateTime,
+        createdAt: serverTimestamp(),
+      };
+
+      // Save to Firestore in background (optional - remove if not needed)
+      addDoc(collection(db, 'bookings'), bookingData)
       .then(() => {
         console.log('Booking saved successfully to Firestore');
         
@@ -300,8 +363,8 @@ const BookDemo: React.FC = () => {
             
             // Send user confirmation email
             const userEmailPromise = emailjs.send(serviceId, templateIdUser, {
-              to_email: formData.email,
-              to_name: formData.name,
+              to_email: form.email,
+              to_name: form.name,
               booking_date: formatDate(bookingDate),
               booking_time: bookingTime,
               booking_datetime: bookingDateTime,
@@ -315,19 +378,19 @@ const BookDemo: React.FC = () => {
               console.error('Error sending user email:', err);
               // Show warning but don't overwrite success
               setTimeout(() => {
-                setError(`Note: Email notification may not have been sent. Please check your email: ${formData.email}`);
+                setError(`Note: Email notification may not have been sent. Please check your email: ${form.email}`);
               }, 2000);
               return null;
             });
             
             // Send admin notification email
             const adminEmailPromise = emailjs.send(serviceId, templateIdAdmin, {
-              name: formData.name,
-              email: formData.email,
-              phone: formData.phone,
-              company: formData.company,
-              company_size: formData.companySize,
-              message: formData.message,
+              name: form.name,
+              email: form.email,
+              phone: form.phone,
+              company: form.company,
+              company_size: form.companySize,
+              message: form.message,
               booking_date: formatDate(bookingDate),
               booking_time: bookingTime,
               booking_datetime: bookingDateTime,
@@ -369,22 +432,13 @@ const BookDemo: React.FC = () => {
         }
       })
       .catch((err: any) => {
-        // If save fails, show error
-        setError('Failed to save booking. Please try again.');
-        setSuccess(null);
-        // Restore form data
-        setForm(formData);
-        setSelectedDate(bookingDate);
-        setSelectedTime(bookingTime);
-        console.error('Error saving booking:', err);
+        // Firestore save failed, but Supabase save succeeded, so just log
+        console.error('Error saving to Firestore (optional):', err);
       });
-
-    // Delete draft in background (non-blocking)
-    if (draftId) {
-      setDoc(doc(db, 'drafts', draftId), { deleted: true }, { merge: true })
-        .catch(err => console.error('Error deleting draft:', err));
-      localStorage.removeItem('draftId');
-      setDraftId(null);
+    } else {
+      // Supabase submission failed
+      setError(result.message || 'Failed to submit form. Please try again.');
+      setSubmitting(false);
     }
   };
 

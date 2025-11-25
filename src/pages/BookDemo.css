@@ -1,5 +1,5 @@
 .book-demo-container {
-  --bg: #0A0618;
+  --bg: #07070a;
   --card: #0e0f14;
   --muted: #9aa3b2;
   --text: #e6e9ef;
@@ -10,8 +10,8 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 120px 16px 40px; /* Added top padding for navbar space */
-  background: #0A0618;
+  padding: 40px 16px 40px;
+  background: var(--bg);
   min-height: 100vh;
   box-sizing: border-box;
   position: relative;
@@ -26,7 +26,7 @@
   position: relative;
   width: 100%;
   max-width: 1000px;
-  margin: 0 auto 520px auto;
+  margin: 100px auto 510px auto;
   min-height: 500px;
   height: 500px;
   display: flex;
@@ -62,29 +62,32 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 16px 20px 0 20px;
-  z-index: 5;
+  padding: 24px 20px 0 20px;
+  z-index: 10;
   pointer-events: none;
   background: linear-gradient(
     to bottom,
-    rgba(7, 6, 22, 0.85) 0%,
-    rgba(7, 6, 22, 0.7) 50%,
-    rgba(7, 6, 22, 0.4) 80%,
+    rgba(7, 6, 22, 0.75) 0%,
+    rgba(7, 6, 22, 0.6) 50%,
+    rgba(7, 6, 22, 0.3) 80%,
     transparent 100%
   );
   border-radius: 20px 20px 0 0;
+  overflow: visible;
 }
 
 .demo-top-image-title {
   margin: 0 0 12px 0;
   color: #ffffff;
-  font-size: 42px;
+  font-size: 36px;
   font-weight: 600;
   letter-spacing: -0.02em;
   text-align: center;
   line-height: 1.2;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
   white-space: nowrap;
+  overflow: visible;
+  width: 100%;
 }
 
 .demo-top-image-subtitle {
@@ -94,8 +97,8 @@
   font-weight: 400;
   text-align: center;
   line-height: 1.6;
-  opacity: 0.95;
-  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+  opacity: 1;
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.7), 0 0 8px rgba(0, 0, 0, 0.4);
   max-width: 600px;
 }
 
@@ -106,7 +109,7 @@
 /* Overlay grid for form card on bottom half */
 .book-demo-grid-overlay {
   position: absolute;
-  bottom: -380px;
+  bottom: -370px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -767,16 +770,16 @@
 .book-demo-card {
   width: 100%;
   max-width: 1000px;
-  background: rgba(10, 6, 24, 0.85);
+  background: rgba(14, 15, 20, 0.75);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(155, 92, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 32px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   margin: 0 auto;
   position: relative;
-  transition: transform 0.1s ease-out;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
 }
 
@@ -1157,7 +1160,7 @@
 
   .demo-top-image-container {
     min-height: 500px;
-    margin: 0 auto 20px auto;
+    margin: 80px auto 20px auto;
   }
 
   .demo-top-background-image {
@@ -1167,12 +1170,15 @@
   }
 
   .demo-top-image-text-overlay {
-    padding: 12px 16px 0 16px;
+    padding: 20px 16px 0 16px;
   }
 
   .demo-top-image-title {
-    font-size: 32px;
+    font-size: 24px;
     white-space: nowrap;
+    overflow: visible;
+    width: 100%;
+    line-height: 1.2;
   }
 
   .demo-top-image-subtitle {
@@ -1343,7 +1349,7 @@
 
   .demo-top-image-container {
     min-height: 400px;
-    margin: 0 auto 16px auto;
+    margin: 80px auto 16px auto;
   }
 
   .demo-top-background-image {
@@ -1353,13 +1359,16 @@
   }
 
   .demo-top-image-text-overlay {
-    padding: 10px 12px 0 12px;
+    padding: 16px 12px 0 12px;
     height: 50%;
   }
 
   .demo-top-image-title {
-    font-size: 24px;
+    font-size: 18px;
     white-space: nowrap;
+    overflow: visible;
+    width: 100%;
+    line-height: 1.2;
   }
 
   .demo-top-image-subtitle {
