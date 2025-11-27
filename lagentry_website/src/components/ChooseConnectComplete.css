@@ -22,7 +22,7 @@
 }
 
 .section-title {
-  font-family: 'Georgia', serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 2rem;
   font-weight: 600;
   color: #ffffff;
@@ -32,7 +32,7 @@
 }
 
 .agent-word-underlined {
-  font-family: 'Georgia', serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 700;
   position: relative;
   display: inline-block;
@@ -110,7 +110,7 @@
 .step-3 .step-number-circle {
   opacity: 0;
   transform: translateY(10px);
-  transition: all 0.4s ease;
+  transition: all 0.2s ease;
   transition-delay: 0s;
 }
 
@@ -124,8 +124,8 @@
 .step-3 .step-title {
   opacity: 0;
   transform: translateY(10px);
-  transition: all 0.4s ease;
-  transition-delay: 0.1s;
+  transition: all 0.2s ease;
+  transition-delay: 0.05s;
 }
 
 .step-2.active .step-title,
@@ -138,8 +138,8 @@
 .step-3 .step-description {
   opacity: 0;
   transform: translateY(10px);
-  transition: all 0.4s ease;
-  transition-delay: 0.2s;
+  transition: all 0.2s ease;
+  transition-delay: 0.1s;
 }
 
 .step-2.active .step-description,

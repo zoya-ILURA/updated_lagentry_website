@@ -114,12 +114,12 @@ const Features: React.FC = () => {
                   >
                     <div className="play-pause-icon">
                       {playingVideo === video.id ? (
-                        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="40" height="40" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <rect x="18" y="12" width="6" height="36" rx="2" fill="white"/>
                           <rect x="36" y="12" width="6" height="36" rx="2" fill="white"/>
                         </svg>
                       ) : (
-                        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="40" height="40" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M20 12L48 30L20 48V12Z" fill="white"/>
                         </svg>
                       )}

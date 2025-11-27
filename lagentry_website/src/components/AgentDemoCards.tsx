@@ -221,13 +221,23 @@ const AgentDemoCards: React.FC = () => {
                               loop={true}
                               autoPlay
                               playsInline
-                              preload="metadata"
+                              preload="auto"
+                              style={{ display: 'block', opacity: 1 }}
                               onPlay={() => setPlayingCards(prev => ({ ...prev, 'ai-cfo-agent': true }))}
                               onPause={() => setPlayingCards(prev => ({ ...prev, 'ai-cfo-agent': false }))}
                               onLoadedMetadata={(e) => {
                                 const video = e.currentTarget;
                                 if (video) {
                                   video.style.display = 'block';
+                                  video.style.opacity = '1';
+                                }
+                              }}
+                              onError={(e) => {
+                                console.error('CFO Video loading error:', e);
+                                const video = e.currentTarget;
+                                if (video) {
+                                  console.error('Video src:', video.src);
+                                  console.error('Video error code:', video.error?.code);
                                 }
                               }}
                             />
@@ -273,13 +283,23 @@ const AgentDemoCards: React.FC = () => {
                               loop={true}
                               autoPlay
                               playsInline
-                              preload="metadata"
+                              preload="auto"
+                              style={{ display: 'block', opacity: 1 }}
                               onPlay={() => setPlayingCards(prev => ({ ...prev, 'ai-cfo-agent': true }))}
                               onPause={() => setPlayingCards(prev => ({ ...prev, 'ai-cfo-agent': false }))}
                               onLoadedMetadata={(e) => {
                                 const video = e.currentTarget;
                                 if (video) {
                                   video.style.display = 'block';
+                                  video.style.opacity = '1';
+                                }
+                              }}
+                              onError={(e) => {
+                                console.error('CFO Video loading error:', e);
+                                const video = e.currentTarget;
+                                if (video) {
+                                  console.error('Video src:', video.src);
+                                  console.error('Video error code:', video.error?.code);
                                 }
                               }}
                             />

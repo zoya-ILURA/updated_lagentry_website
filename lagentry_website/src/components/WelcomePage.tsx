@@ -17,10 +17,10 @@ const WelcomePage: React.FC = () => {
       // Session already started - show WelcomePage immediately
       setIsIntroComplete(true);
     } else {
-      // Wait for intro to complete (5 seconds) + small buffer for slide animation
+      // Wait for intro to complete - reduced wait time
       const timer = setTimeout(() => {
         setIsIntroComplete(true);
-      }, 5500); // 5.5 seconds to allow slide-out animation
+      }, 1000); // 1 second to allow slide-out animation
       
       return () => clearTimeout(timer);
     }

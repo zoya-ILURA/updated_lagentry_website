@@ -231,7 +231,7 @@
 }
 
 .sliding-text h2 {
-  font-family: Georgia, serif !important;
+  font-family: 'Poppins', sans-serif !important;
   font-size: 4rem !important;
   font-weight: 700 !important;
   background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 50%, #8B5CF6 100%) !important;

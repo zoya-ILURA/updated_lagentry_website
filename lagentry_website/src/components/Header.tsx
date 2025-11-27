@@ -22,22 +22,22 @@ const Header: React.FC = () => {
       // Mark session as started immediately
       sessionStorage.setItem('lagentry-session-started', 'true');
       
-      // Animation sequence timing - 5 seconds total
+      // Animation sequence timing - reduced to ~1 second total
       const timeline = [
-        { delay: 500, action: () => {
+        { delay: 100, action: () => {
           setShowText(true);
         }},
-        { delay: 2000, action: () => {
+        { delay: 300, action: () => {
           setShowCopyright(true);
         }},
-        { delay: 3500, action: () => {
+        { delay: 500, action: () => {
           // Hide text and copyright, show Lagentry
           setShowText(false);
           setShowCopyright(false);
           setShowLagentry(true);
         }},
-        { delay: 5000, action: () => {
-          // After 5 seconds, slide out the intro
+        { delay: 800, action: () => {
+          // Slide out the intro quickly
           setShowLagentry(false);
           setShowNavigation(true);
           setHideHeader(true);

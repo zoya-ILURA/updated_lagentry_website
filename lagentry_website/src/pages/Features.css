@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Georgia:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 .features-page {
   background: #000000;
   min-height: 100vh;
   padding: 120px 20px 80px;
   color: #ffffff;
-  font-family: 'Georgia', serif;
+  font-family: 'Poppins', sans-serif;
   position: relative;
   overflow: visible;
 }
@@ -108,7 +108,7 @@
 }
 
 .features-page * {
-  font-family: 'Georgia', serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .features-page-container {
@@ -281,6 +281,8 @@
   box-shadow: none !important;
   transition: box-shadow 0.3s ease, border 0.3s ease;
   background: transparent;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .horizontal-video-item:has(.horizontal-video-overlay.playing) .horizontal-video {
@@ -301,46 +303,62 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.3s ease;
-  z-index: 1;
+  z-index: 10;
+  pointer-events: auto;
 }
 
 .horizontal-video-overlay:hover {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .horizontal-video-overlay.playing {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .horizontal-video-overlay.playing:hover {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .play-pause-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   transition: transform 0.2s ease, opacity 0.3s ease;
-  opacity: 0.9;
+  opacity: 1;
+  background: transparent;
+  border-radius: 50%;
+  backdrop-filter: none;
+  border: none;
+  box-shadow: none;
+}
+
+.play-pause-icon svg {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 .horizontal-video-overlay:hover .play-pause-icon {
-  transform: scale(1.1);
+  transform: scale(1.15);
   opacity: 1;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .horizontal-video-overlay.playing .play-pause-icon {
-  opacity: 0.7;
+  opacity: 1;
+  background: transparent;
 }
 
 .horizontal-video-overlay.playing:hover .play-pause-icon {
-  opacity: 0.9;
+  opacity: 1;
+  background: transparent;
+  border: none;
 }
 
 /* Custom Domain Message */
@@ -370,7 +388,7 @@
   padding: 16px 40px;
   font-size: 1.2rem;
   font-weight: 400;
-  font-family: 'Georgia', serif;
+  font-family: 'Poppins', sans-serif;
   color: #ffffff !important;
   background: linear-gradient(135deg, #3A025b 0%, #4A036F 50%, #5A0483 100%) !important;
   border: 2px solid rgba(255, 255, 255, 0.4) !important;

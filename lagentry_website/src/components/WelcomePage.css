@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
 
 .welcome-container {
   min-height: 100vh;
@@ -82,7 +82,7 @@
 
 .heading-line1 {
   display: block;
-  font-family: 'Georgia', serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 2.5rem;
   font-weight: 700;
   background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
@@ -116,7 +116,7 @@
 }
 
 .animated-text-item {
-  font-family: 'Georgia', serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 2.5rem;
   font-weight: 700;
   background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);

@@ -1,7 +1,7 @@
 .templates-section {
   background: #000000;
   padding: 80px 20px;
-  font-family: 'Georgia', serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .templates-container {
@@ -19,7 +19,7 @@
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 20px;
-  font-family: 'Georgia', serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .templates-subtitle {
@@ -28,7 +28,7 @@
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
-  font-family: 'Georgia', serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .templates-grid {
@@ -84,7 +84,7 @@
   font-size: 1.6rem;
   font-weight: 700;
   margin: 0 0 6px 0;
-  font-family: 'Georgia', serif;
+  font-family: 'Poppins', sans-serif;
   color: #ffffff;
 }
 
@@ -93,7 +93,7 @@
   color: #ffffff;
   margin: 0;
   font-weight: 500;
-  font-family: 'Georgia', serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .template-avatar {
@@ -134,7 +134,7 @@
   color: #ffffff;
   margin: 0 0 15px 0;
   font-weight: 600;
-  font-family: 'Georgia', serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .skills-list {
@@ -153,7 +153,7 @@
   font-weight: 500;
   transition: all 0.2s ease;
   cursor: pointer;
-  font-family: 'Georgia', serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .skill-button:hover {
@@ -171,7 +171,7 @@
   font-weight: 500;
   margin: 0;
   font-style: italic;
-  font-family: 'Georgia', serif;
+  font-family: 'Poppins', sans-serif;
   color: #ffffff;
 }
 

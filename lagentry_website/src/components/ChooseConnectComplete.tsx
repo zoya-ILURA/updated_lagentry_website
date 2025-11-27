@@ -55,7 +55,7 @@ const ChooseConnectComplete: React.FC = () => {
                   }
                   return prev + 1;
                 });
-              }, 3000);
+              }, 2000);
             }, 500);
           }
         });
@@ -82,7 +82,7 @@ const ChooseConnectComplete: React.FC = () => {
       <div className="choose-connect-complete-container">
         <div className="section-header">
           <h2 className="section-title">
-            The Lagentry <span className="agent-word-underlined">Process</span>.
+            The <span className="agent-word-underlined">Lagentry</span> Process.
           </h2>
         </div>
         <div className={`steps-container ${isVisible ? 'visible' : ''}`}>
