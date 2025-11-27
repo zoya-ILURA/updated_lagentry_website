@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
               <span className="logo-text">agentry</span>
             </div>
             <p className="footer-description">
-              Empowering businesses to create intelligent AI agents with simple prompts. 
+              Empowering businesses to create intelligent AI <span className="agents-word-clear">agents</span> with simple prompts. 
               Build, deploy, and scale your conversational AI in minutes.
             </p>
             <div className="social-icons">

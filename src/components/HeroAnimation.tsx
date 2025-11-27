@@ -75,11 +75,7 @@ const HeroAnimation: React.FC = () => {
           {/* Main animated heading */}
           <div className="main-title-container">
             <h1 className="main-title">
-              <span className="title-line">There's a new</span>
-              <div className="animated-text-wrapper">
-                <span className="animated-text">{animatedTexts[currentTextIndex]}</span>
-              </div>
-              <span className="title-line">in town.</span>
+              <span className="title-line">Lagentry - MENA's First AI Agent Builder.</span>
             </h1>
           </div>
 

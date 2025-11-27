@@ -4,7 +4,8 @@ import './App.css';
 import Navigation from './components/Navigation';
 import Header from './components/Header';
 import WelcomePage from './components/WelcomePage';
-import Templates from './components/Templates';
+import AgentDemoCards from './components/AgentDemoCards';
+import ChooseConnectComplete from './components/ChooseConnectComplete';
 import Dashboard from './components/Dashboard';
 import GmailSection from './components/GmailSection';
 import Footer from './components/Footer';
@@ -19,7 +20,8 @@ const HomePage: React.FC = () => {
     <>
       <Header />
       <WelcomePage />
-      <Templates />
+      <AgentDemoCards />
+      <ChooseConnectComplete />
       <Dashboard />
       <GmailSection />
       <Footer />

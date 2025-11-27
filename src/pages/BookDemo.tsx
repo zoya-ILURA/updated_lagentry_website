@@ -82,12 +82,31 @@ const BookDemo: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Calculate scroll progress (0 to 1) based on scroll position
-      // Start transitioning from 0px to 500px scroll for slower transition
-      const scrollY = window.scrollY;
-      const maxScroll = 500; // Increased for slower, more gradual transition
-      const progress = Math.min(scrollY / maxScroll, 1);
-      setScrollProgress(progress);
+      // Calculate scroll progress based on card's position in viewport
+      if (cardRef.current) {
+        const rect = cardRef.current.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        
+        // Card is fully visible when its top is at or above viewport top
+        // Start transitioning when card enters viewport
+        // Transition completes when card's top reaches viewport top (or slightly above)
+        const cardTop = rect.top;
+        
+        // Calculate progress: 0 when card is below viewport, 1 when card top reaches viewport top
+        // Use a transition range for smooth animation
+        const transitionStart = windowHeight; // Start when card is one viewport height below
+        const transitionEnd = 0; // End when card top reaches viewport top
+        const transitionRange = transitionStart - transitionEnd;
+        
+        // Calculate progress (0 to 1)
+        let progress = 0;
+        if (cardTop <= transitionStart) {
+          // Card is in or above transition zone
+          progress = Math.max(0, Math.min(1, (transitionStart - cardTop) / transitionRange));
+        }
+        
+        setScrollProgress(progress);
+      }
     };
 
     const handleClick = (e: MouseEvent) => {
