@@ -9,6 +9,7 @@ type Tier = {
   per?: string;
   badge: string;
   features: string[];
+  whoIsItFor: string;
   cta: string;
   href: string;
 };
@@ -16,117 +17,156 @@ type Tier = {
 const tiers: Tier[] = [
   {
     id: 'basic-free',
-    title: 'Basic Plan',
-    subtitle: 'Best for personal use.',
-    price: 'Free',
-    per: '',
-    badge: 'AI-based',
+    title: 'Basic',
+    subtitle: 'Perfect for individuals exploring AI Employees for the first time',
+    price: '$0',
+    per: '/ month',
+    badge: '',
     features: [
-      'Employee directory',
-      'Task management',
-      'Calendar integration',
-      'File storage',
-      'Communication tools',
-      'Reporting and analytics',
+      '1,000 credits on signup',
+      'Chat with any 1 AI Employee',
+      'Voice agents',
+      'Try conversational flows',
+      'Test knowledge base uploads',
+      'Insights & usage report',
+      'Community support',
+      'Access to Lagentry Marketplace',
+      '1000+ integrations',
     ],
+    whoIsItFor: 'Individuals, freelancers, and early testers who want to understand how Lagentry AI Employees work before committing.',
     cta: 'Get Started',
-    href: '#',
+    href: '/waitlist',
   },
   {
-    id: 'basic-20',
-    title: 'Basic Plan',
-    subtitle: 'For large teams & corporations.',
+    id: 'hobby-20',
+    title: 'Hobby',
+    subtitle: 'Ideal for small teams & solo founders getting started with automation',
     price: '$20',
-    per: '/ per month',
-    badge: 'AI-based',
+    per: '/ month',
+    badge: '',
     features: [
-      'Advanced employee directory',
-      'Project management',
-      'Resource scheduling',
-      'Version control',
-      'Team collaboration',
-      'Advanced analytics',
+      'Everything in Basic, plus',
+      'Use any 2 AI Employees at a time',
+      '10,000 monthly credits',
+      'Deploy agents with chat widget + dashboard',
+      'Access to AI Employee templates',
+      'Voice agents',
+      'Multilingual support',
+      'Workflow editor',
+      'Analytics dashboard',
+      'Email integration',
+      'File upload for internal knowledge',
+      '1000+ integrations',
     ],
+    whoIsItFor: 'Small founders, early-stage startups, individual agents who want automation without heavy setup.',
     cta: 'Get Started',
-    href: '#',
+    href: '/waitlist',
   },
   {
-    id: 'pro-120',
-    title: 'Pro Plan',
-    subtitle: 'Best for business owners.',
-    price: '$120',
-    per: '/ per month',
-    badge: 'AI-based',
-    features: [
-      'Customizable employee directory',
-      'Client project management',
-      'Client meeting schedule',
-      'Compliance tracking',
-      'Client communication',
-      'Create custom reports tailored',
-    ],
-    cta: 'Get Started',
-    href: '#',
-  },
-  {
-    id: 'teams-80',
-    title: 'Teams',
-    subtitle: 'Best for business owners.',
+    id: 'startup-80',
+    title: 'Startup',
+    subtitle: 'For growing teams ready to deploy AI Employees into real workflows',
     price: '$80',
-    per: '/ per month',
-    badge: 'AI-based',
+    per: '/ month',
+    badge: '',
     features: [
-      'Contact with teams',
-      'Collaborate with upto 10 team members',
-      'Control Agents',
-      'Manage Agents',
-      'Client communication',
-      'Create custom reports and build Agents Together',
+      'Everything in Hobby, plus',
+      'Use up to 5 AI Employees at a time',
+      '50,000 monthly credits',
+      'Iframe Embeds',
+      'Voice agents',
+      '1000+ integrations',
+      'Advanced analytics & custom dashboards',
+      'Fine-tuning knowledge base',
+      'Team collaboration',
+      'Agent personality customization',
+      'Multi-language skill pack',
     ],
+    whoIsItFor: 'Startups & small businesses wanting to create automated workflows: customer support, property management, sales outreach automation, ticketing.',
     cta: 'Get Started',
-    href: '#',
+    href: '/waitlist',
+  },
+  {
+    id: 'growth-100',
+    title: 'Growth',
+    subtitle: 'Best for businesses scaling operations with multiple AI Employees',
+    price: '$100',
+    per: '/ month',
+    badge: '',
+    features: [
+      'Everything in Startup, plus',
+      'Use up to 10 AI Employees at a time',
+      '100,000 monthly credits',
+      'Custom AI Employee builder',
+      'Priority access to new AI employee templates',
+      'Private deployment',
+      'Collaboration for up to 10 users',
+      'Voice agents',
+      'Full access to voice cloning',
+      'Advanced workflow automations',
+      'API access',
+      'Webhooks',
+      'CRM bi-directional sync',
+      'Advanced security: encryption, audit logs',
+      '1000+ integrations',
+    ],
+    whoIsItFor: 'Agencies, operations teams, SME businesses scaling their support, sales, HR, finance, and real-estate flows using AI Employees.',
+    cta: 'Get Started',
+    href: '/waitlist',
   },
 ];
 
 const Pricing: React.FC = () => {
   return (
     <div className="pricing-container">
-      <h1 className="pricing-title">Choose the best plan that fits your need</h1>
+      <div className="pricing-header">
+        <h1 className="pricing-title">Unlimited Users. Only Pay For Actions.</h1>
+        <p className="pricing-subtitle">Scale your business with AI Employees designed for every stage of growth</p>
+      </div>
+      
       <div className="pricing-grid pricing-grid-4">
-        {tiers.map((t, index) => (
+        {tiers.map((tier, index) => (
           <div 
-            key={t.id} 
-            className="card glass"
-            style={(index === 0 || index === 1 || index === 2 || index === 3) ? {
+            key={tier.id} 
+            className={`pricing-card`}
+            style={{
               backgroundImage: 'url(/images/pricingbackgroundimage.png)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat'
-            } : undefined}
+            }}
           >
             <div className="card-halo" />
-            {(index === 0 || index === 1 || index === 2 || index === 3) && <div className="stars-overlay" />}
+            <div className="stars-overlay" />
+            
             <div className="card-inner">
-              <div className="card-top">
-                <div className="plan-line">
-                  <img src="/images/logo.png" alt="Logo" className="plan-logo" />
-                  <span className="plan-title">{t.title}</span>
-                  <span className="plan-badge">{t.badge}</span>
+              <div className="card-header">
+                <h3 className="plan-title">{tier.title}</h3>
+                <p className="plan-subtitle">{tier.subtitle}</p>
+                
+                <div className="plan-price">
+                  <span className="price-main">{tier.price}</span>
+                  {tier.per && <span className="price-per">{tier.per}</span>}
                 </div>
-                <p className="plan-subtitle">{t.subtitle}</p>
+                
+                <a className="cta-button" href={tier.href}>
+                  {tier.cta}
+                </a>
               </div>
-              <div className="plan-price">
-                <span className="price-main">{t.price}</span>
-                {t.per && <span className="price-per">{t.per}</span>}
+
+              <div className="card-content">
+                <div className="features-section">
+                  <h4 className="features-title">Includes</h4>
+                  <ul className="features-list">
+                    {tier.features.map((feature, idx) => (
+                      <li key={idx} className="feature-item">
+                        <span className="check-icon">✓</span>
+                        <span className="feature-text">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-              <a className="card-cta big" href={t.href}>{t.cta}</a>
-              <div className="divider" />
-              <div className="features-title">What you will get</div>
-              <ul className="features">
-                {t.features.map((f) => (
-                  <li key={f}><span className="check" />{f}</li>
-                ))}
-              </ul>
             </div>
           </div>
         ))}
@@ -136,5 +176,3 @@ const Pricing: React.FC = () => {
 };
 
 export default Pricing;
-
-

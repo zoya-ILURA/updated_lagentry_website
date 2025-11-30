@@ -9,10 +9,10 @@ const WelcomePage: React.FC = () => {
   const [isIntroComplete, setIsIntroComplete] = useState(false);
 
   useEffect(() => {
-    // Wait for intro animation to complete (Header animation ends at 8000ms)
+    // Wait for intro animation to complete (Header animation ends at 5000ms)
     const timer = setTimeout(() => {
       setIsIntroComplete(true);
-    }, 8500); // Slightly after header hides to allow smooth transition
+    }, 5500); // Slightly after header hides to allow smooth transition
 
     return () => clearTimeout(timer);
   }, []);
@@ -45,6 +45,11 @@ const WelcomePage: React.FC = () => {
     <div className="welcome-container intro-complete">
       <div className="welcome-content">
         <div className="tagline-banner">
+          <img 
+            src="/images/nvidia-logo-png_seeklogo-101614.png" 
+            alt="NVIDIA" 
+            className="nvidia-logo"
+          />
           <span>Backed by NVIDIA.</span>
         </div>
 

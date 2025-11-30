@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');
 
 .agent-demo-section {
   padding: 6rem 2rem;
@@ -59,7 +59,7 @@
 }
 
 .ai-sales-gtm-title {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 3rem;
   font-weight: 700;
   color: #ffffff;
@@ -68,7 +68,7 @@
 }
 
 .ai-sales-gtm-tagline {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 1.25rem;
   color: #ffffff;
   margin: 0;
@@ -102,14 +102,14 @@
 }
 
 .ai-sales-gtm-feature-item span {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 1rem;
   color: #ffffff;
   line-height: 1.6;
 }
 
 .ai-sales-gtm-button {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 1rem;
   font-weight: 500;
   color: #ffffff;
@@ -408,7 +408,7 @@
 }
 
 .agent-content-panel-stacked .agent-card-name {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 2.5rem;
   font-weight: 700;
   color: #ffffff;
@@ -418,7 +418,7 @@
 }
 
 .agent-content-panel-stacked .agent-card-description {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 1.1rem;
   color: #e0e0e0;
   margin: 0 0 1.5rem 0;
@@ -441,7 +441,7 @@
 }
 
 .agent-content-panel-stacked .agent-feature-text {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 0.95rem;
   color: #c0c0c0;
   line-height: 1.5;
@@ -454,7 +454,7 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   color: #ffffff;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
@@ -579,7 +579,7 @@
 }
 
 .agent-demo-title {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -590,7 +590,7 @@
 }
 
 .agent-demo-subtitle {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 1.1rem;
   color: #b0b0b0;
   max-width: 600px;
@@ -1097,7 +1097,7 @@ video {
 }
 
 .agent-card-name {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 2.5rem;
   font-weight: 700;
   color: #ffffff;
@@ -1111,7 +1111,7 @@ video {
 }
 
 .agent-card-description {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 1rem;
   color: #b0b0b0;
   line-height: 1.6;
@@ -1180,7 +1180,7 @@ video {
 }
 
 .agent-feature-text {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 0.95rem;
   color: #b0b0b0;
   line-height: 1.5;
@@ -1231,14 +1231,14 @@ video {
 }
 
 .agent-play-title {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.2;
 }
 
 .agent-play-subtitle {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 0.875rem;
   color: #b0b0b0;
   line-height: 1.2;
@@ -1246,7 +1246,7 @@ video {
 
 /* More About Button */
 .agent-more-about-button {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 1rem;
   font-weight: 500;
   color: #ffffff;

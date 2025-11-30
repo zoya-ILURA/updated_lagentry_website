@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');
+
 .feature-cards-section {
   width: 100%;
   padding: 120px 16px;
   background: var(--bg, #07070a);
   position: relative;
   overflow: hidden;
+  font-family: 'Geist', sans-serif;
 }
 
 .feature-cards-section.light-theme {

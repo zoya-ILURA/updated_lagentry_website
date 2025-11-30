@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');
+
 .admin-login-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Geist', sans-serif;
   background: var(--bg, #07070a);
   padding: 20px;
 }
@@ -241,7 +244,7 @@
 .admin-booking-id {
   color: var(--muted, #9aa3b2);
   font-size: 12px;
-  font-family: monospace;
+  font-family: 'Geist', sans-serif;
 }
 
 .admin-booking-date {

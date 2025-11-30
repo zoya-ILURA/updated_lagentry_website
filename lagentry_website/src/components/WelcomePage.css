@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');
 
 .welcome-container {
   min-height: 100vh;
@@ -66,7 +66,7 @@
 }
 
 .tagline-banner span {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
   color: #ffffff;
@@ -82,7 +82,7 @@
 
 .heading-line1 {
   display: block;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 2.5rem;
   font-weight: 700;
   background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
@@ -116,7 +116,7 @@
 }
 
 .animated-text-item {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 2.5rem;
   font-weight: 700;
   background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
@@ -156,7 +156,7 @@
 }
 
 .description-text {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 1rem;
   line-height: 1.6;
   background: linear-gradient(135deg, #ffffff 0%, #b0b0b0 100%);
@@ -187,7 +187,7 @@
   border: none;
   border-radius: 12px;
   padding: 16px 32px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;

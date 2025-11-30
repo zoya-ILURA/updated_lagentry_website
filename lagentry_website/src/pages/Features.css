@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');
 
 .features-page {
   background: #000000;
   min-height: 100vh;
   padding: 120px 20px 80px;
   color: #ffffff;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Geist', sans-serif;
   position: relative;
   overflow: visible;
 }
@@ -108,7 +108,7 @@
 }
 
 .features-page * {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Geist', sans-serif;
 }
 
 .features-page-container {
@@ -388,7 +388,7 @@
   padding: 16px 40px;
   font-size: 1.2rem;
   font-weight: 400;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Geist', sans-serif;
   color: #ffffff !important;
   background: linear-gradient(135deg, #3A025b 0%, #4A036F 50%, #5A0483 100%) !important;
   border: 2px solid rgba(255, 255, 255, 0.4) !important;
@@ -502,9 +502,6 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.calculator-panel:hover {
-  transform: translateY(-4px);
-}
 
 .before-panel {
   background: 
@@ -536,46 +533,6 @@
   pointer-events: none;
 }
 
-.before-panel:hover::before {
-  left: 100%;
-}
-
-.before-panel::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 3px,
-      rgba(58, 2, 91, 0.08) 3px,
-      rgba(58, 2, 91, 0.08) 6px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 3px,
-      rgba(58, 2, 91, 0.05) 3px,
-      rgba(58, 2, 91, 0.05) 6px
-    );
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.7;
-  mix-blend-mode: overlay;
-}
-
-.before-panel:hover {
-  transform: translateY(-2px);
-  box-shadow: 
-    0 6px 20px rgba(0, 0, 0, 0.5),
-    0 0 15px rgba(58, 2, 91, 0.4),
-    inset 0 0 20px rgba(58, 2, 91, 0.15);
-  border-color: rgba(58, 2, 91, 0.5) !important;
-}
 
 .before-panel > * {
   position: relative;
@@ -613,46 +570,6 @@
   pointer-events: none;
 }
 
-.after-panel:hover::before {
-  left: 100%;
-}
-
-.after-panel::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 3px,
-      rgba(58, 2, 91, 0.1) 3px,
-      rgba(58, 2, 91, 0.1) 6px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 3px,
-      rgba(58, 2, 91, 0.06) 3px,
-      rgba(58, 2, 91, 0.06) 6px
-    );
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.8;
-  mix-blend-mode: overlay;
-}
-
-.after-panel:hover {
-  transform: translateY(-2px);
-  box-shadow: 
-    0 6px 20px rgba(0, 0, 0, 0.5),
-    0 0 15px rgba(58, 2, 91, 0.4),
-    inset 0 0 20px rgba(58, 2, 91, 0.15);
-  border-color: rgba(58, 2, 91, 0.5);
-}
 
 .after-panel > * {
   position: relative;
@@ -889,18 +806,6 @@
   transition: left 0.5s;
 }
 
-.savings-metric:hover::before {
-  left: 100%;
-}
-
-.savings-metric:hover {
-  transform: translateY(-2px);
-  box-shadow: 
-    0 6px 20px rgba(0, 0, 0, 0.5),
-    0 0 15px rgba(139, 92, 246, 0.4),
-    inset 0 0 20px rgba(139, 92, 246, 0.15);
-  border-color: rgba(139, 92, 246, 0.5);
-}
 
 .metric-value {
   font-size: 2rem;

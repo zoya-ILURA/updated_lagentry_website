@@ -11,21 +11,33 @@ const Features: React.FC = () => {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   const videos = [
-    { id: 1, video: '/v1.mp4', title: 'Customer Support' },
-    { id: 2, video: '/v2.mp4', title: 'Real Estate' },
-    { id: 3, video: '/v3.mp4', title: 'Sales' },
-    { id: 4, video: '/v4.mp4', title: 'Marketing' }
+    { id: 1, video: `${process.env.PUBLIC_URL}/v1.mp4`, title: 'Customer Support Voice Agent' },
+    { id: 2, video: `${process.env.PUBLIC_URL}/v2.mp4`, title: 'Real Estate' },
+    { id: 3, video: `${process.env.PUBLIC_URL}/v3.mp4`, title: 'Sales' },
+    { id: 4, video: `${process.env.PUBLIC_URL}/v4.mp4`, title: 'Marketing' }
   ];
 
-  // Initialize videos - paused by default
+  // Initialize videos - don't autoplay, let user control
   useEffect(() => {
-    videoRefs.current.forEach((video) => {
-      if (video) {
-        video.muted = true;
-        video.loop = true;
-        video.pause(); // Start paused
-      }
-    });
+    const initializeVideos = () => {
+      videoRefs.current.forEach((video) => {
+        if (video) {
+          video.muted = true;
+          video.loop = true;
+          video.preload = "metadata";
+          // Reset to beginning when loaded
+          video.addEventListener('loadeddata', () => {
+            video.currentTime = 0;
+          });
+        }
+      });
+    };
+
+    initializeVideos();
+
+    return () => {
+      // Cleanup if needed
+    };
   }, []);
 
   const handleVideoClick = (id: number) => {
@@ -107,6 +119,7 @@ const Features: React.FC = () => {
                     loop
                     muted
                     playsInline
+                    preload="metadata"
                   />
                   <div
                     className={`horizontal-video-overlay ${playingVideo === video.id ? 'playing' : ''}`}

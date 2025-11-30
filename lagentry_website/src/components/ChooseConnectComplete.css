@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');
 
 .choose-connect-complete-section {
   padding: 6rem 2rem;
@@ -22,7 +22,7 @@
 }
 
 .section-title {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 2rem;
   font-weight: 600;
   color: #ffffff;
@@ -32,7 +32,7 @@
 }
 
 .agent-word-underlined {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-weight: 700;
   position: relative;
   display: inline-block;
@@ -163,7 +163,7 @@
 }
 
 .step-number {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 1.25rem;
   font-weight: 600;
   color: #ffffff;
@@ -177,7 +177,7 @@
 }
 
 .step-title {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 1.75rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -186,7 +186,7 @@
 }
 
 .step-description {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 0.95rem;
   color: #b0b0b0;
   line-height: 1.6;
@@ -206,7 +206,7 @@
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 0.85rem;
   font-weight: 500;
   color: #ffffff;

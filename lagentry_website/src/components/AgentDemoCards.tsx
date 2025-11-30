@@ -1,11 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
 import './AgentDemoCards.css';
 import realVoiceDemo from '../realvoicedemo.mp3';
-import salesVoice from '../Salesvoice.mp3';
+// Sales video path - file should be in public folder
+const salesVideo = `${process.env.PUBLIC_URL}/sales.mp4`;
 import agentBg from './agentbg2.png';
 // Video paths - files should be in public folder
 // Files are in: public/AICFO.MP4, public/HRvc.gif, public/vim1.mp4, public/vim2.mp4
-const aiCFOVideo = '/AICFO.MP4';
+const aiCFOVideo = `${process.env.PUBLIC_URL}/AICFO.MP4`;
 const hrVideo = '/HRvc.gif';
 
 interface AgentCard {
@@ -35,7 +36,7 @@ const agents: AgentCard[] = [
     id: 'agent-2',
     name: 'AI Sales Agent',
     description: 'Revolutionary AI-powered sales automation that transforms customer interactions, streamlines sales processes, and drives revenue growth through intelligent automation.',
-    video: '/vim1.mp4',
+    video: salesVideo,
     color: '#8B5CF6',
     features: [
       'Intelligent lead qualification and scoring',
@@ -48,7 +49,7 @@ const agents: AgentCard[] = [
     id: 'agent-3',
     name: 'HR Agent',
     description: 'Streamline your human resources operations with intelligent automation that handles recruitment, employee management, and HR workflows efficiently.',
-    video: '/vim2.mp4',
+    video: `${process.env.PUBLIC_URL}/vim2.mp4`,
     color: '#C084FC',
     features: [
       'Automated recruitment processes',
@@ -78,12 +79,21 @@ const AgentDemoCards: React.FC = () => {
   const [mutedCards, setMutedCards] = useState<{ [key: string]: boolean }>({});
   const [isVisible, setIsVisible] = useState(false);
   const [audioPlaying, setAudioPlaying] = useState<{ [key: string]: boolean }>({});
+  const [isIntroComplete, setIsIntroComplete] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({});
   const audioRefs = useRef<{ [key: string]: HTMLAudioElement | null }>({});
   const aiCFOVideoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
+    // Set intro as complete immediately so all sections show
+    setIsIntroComplete(true);
+  }, []);
+
+  useEffect(() => {
+    // Always observe for intersection
+    if (!isIntroComplete) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -104,7 +114,7 @@ const AgentDemoCards: React.FC = () => {
         observer.unobserve(sectionRef.current);
       }
     };
-  }, []);
+  }, [isIntroComplete]);
 
   // Autoplay videos when they come into view
   useEffect(() => {
@@ -150,7 +160,7 @@ const AgentDemoCards: React.FC = () => {
   }, [isVisible]);
 
   const handlePlay = (cardId: string) => {
-    if (cardId === 'agent-1' || cardId === 'agent-2') {
+    if (cardId === 'agent-2') {
       const audio = audioRefs.current[cardId];
       if (audio) {
         if (audio.paused) {
@@ -371,7 +381,7 @@ const AgentDemoCards: React.FC = () => {
                               </div>
                             ))}
                           </div>
-                          {(agent.id === 'agent-1' || agent.id === 'agent-2') && (
+                          {agent.id === 'agent-2' && (
                             <div className="agent-play-button-container" onClick={() => handlePlay(agent.id)}>
                               <button className="agent-play-button" aria-label="Play audio">
                                 <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -392,15 +402,16 @@ const AgentDemoCards: React.FC = () => {
                             </div>
                           )}
                           <button className="agent-more-about-button">More About {agent.name}</button>
-                          {(agent.id === 'agent-1' || agent.id === 'agent-2') && (
-                            <audio
+                          {agent.id === 'agent-2' && (
+                            <video
                               ref={(el) => {
                                 audioRefs.current[agent.id] = el;
                               }}
-                              src={agent.id === 'agent-1' ? realVoiceDemo : salesVoice}
+                              src={salesVideo}
                               onEnded={() => setAudioPlaying(prev => ({ ...prev, [agent.id]: false }))}
                               onPlay={() => setAudioPlaying(prev => ({ ...prev, [agent.id]: true }))}
                               onPause={() => setAudioPlaying(prev => ({ ...prev, [agent.id]: false }))}
+                              style={{ display: 'none' }}
                             />
                           )}
                         </div>
@@ -418,7 +429,7 @@ const AgentDemoCards: React.FC = () => {
                               </div>
                             ))}
                           </div>
-                          {(agent.id === 'agent-1' || agent.id === 'agent-2') && (
+                          {agent.id === 'agent-2' && (
                             <div className="agent-play-button-container" onClick={() => handlePlay(agent.id)}>
                               <button className="agent-play-button" aria-label="Play audio">
                                 <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -439,15 +450,16 @@ const AgentDemoCards: React.FC = () => {
                             </div>
                           )}
                           <button className="agent-more-about-button">More About {agent.name}</button>
-                          {(agent.id === 'agent-1' || agent.id === 'agent-2') && (
-                            <audio
+                          {agent.id === 'agent-2' && (
+                            <video
                               ref={(el) => {
                                 audioRefs.current[agent.id] = el;
                               }}
-                              src={agent.id === 'agent-1' ? realVoiceDemo : salesVoice}
+                              src={salesVideo}
                               onEnded={() => setAudioPlaying(prev => ({ ...prev, [agent.id]: false }))}
                               onPlay={() => setAudioPlaying(prev => ({ ...prev, [agent.id]: true }))}
                               onPause={() => setAudioPlaying(prev => ({ ...prev, [agent.id]: false }))}
+                              style={{ display: 'none' }}
                             />
                           )}
                         </div>

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');
 
 /* NUCLEAR BORDER REMOVAL - DESTROY ALL BORDERS */
 * {
@@ -112,7 +112,7 @@
 
 .nav-item {
   color: #ffffff;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 1.05rem;
   font-weight: 500;
   cursor: pointer;
@@ -136,7 +136,7 @@
   border: none;
   border-radius: 8px;
   padding: 0.75rem 1.5rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -298,7 +298,7 @@
 
 .mobile-nav-item {
   color: #ffffff;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 1rem;
   font-weight: 500;
   padding: 0.75rem 0;
@@ -317,7 +317,7 @@
   border: none;
   border-radius: 8px;
   padding: 0.75rem 1.5rem;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
