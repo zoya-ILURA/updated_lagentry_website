@@ -5,6 +5,7 @@ import Navigation from './components/Navigation';
 import Header from './components/Header';
 import WelcomePage from './components/WelcomePage';
 import AgentDemoCards from './components/AgentDemoCards';
+import WhyChooseLagentry from './components/WhyChooseLagentry';
 import ChooseConnectComplete from './components/ChooseConnectComplete';
 import Dashboard from './components/Dashboard';
 import GmailSection from './components/GmailSection';
@@ -20,6 +21,7 @@ const HomePage: React.FC = () => {
       <Header />
       <WelcomePage />
       <AgentDemoCards />
+      <WhyChooseLagentry />
       <ChooseConnectComplete />
       <Dashboard />
       <GmailSection />
