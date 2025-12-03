@@ -165,31 +165,56 @@
 .agent-sphere {
   width: 120px;
   height: 120px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ff1493, #8b008b);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow: hidden;
 }
 
 .sphere-animation {
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
-  border-radius: 50%;
-  animation: pulse 2s ease-in-out infinite;
+  position: relative;
 }
 
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.7;
+.sphere-animation svg {
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  animation: rotateCircle 2s linear infinite;
+}
+
+.sphere-animation circle {
+  fill: none;
+  stroke-width: 2;
+}
+
+.sphere-animation .circle-bg {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+.sphere-animation .circle-dotted {
+  stroke: #ff1493;
+  stroke-dasharray: 8, 4;
+  stroke-linecap: round;
+  animation: rotateDash 2s linear infinite;
+}
+
+@keyframes rotateCircle {
+  from {
+    transform: rotate(0deg);
   }
-  50% {
-    transform: scale(1.1);
-    opacity: 1;
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotateDash {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -37.7;
   }
 }
 
@@ -842,3 +867,5 @@
     padding: 30px;
   }
 }
+
+
