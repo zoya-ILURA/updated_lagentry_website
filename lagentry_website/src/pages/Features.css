@@ -390,7 +390,7 @@
   font-weight: 400;
   font-family: 'Geist', sans-serif;
   color: #ffffff !important;
-  background: linear-gradient(135deg, #3A025b 0%, #4A036F 50%, #5A0483 100%) !important;
+  background: var(--btn-purple-gradient) !important;
   border: 2px solid rgba(255, 255, 255, 0.4) !important;
   border-radius: 8px;
   cursor: pointer;

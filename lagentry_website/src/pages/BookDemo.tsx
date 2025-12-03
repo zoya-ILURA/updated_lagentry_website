@@ -660,7 +660,7 @@ const BookDemo: React.FC = () => {
         <img src="/images/demo1.png" alt="Demo visual" className="demo-bottom-image" />
         <div className="demo-bottom-video">
           <video
-            src={`${process.env.PUBLIC_URL}/videos/demo1.mp4`}
+            src="/demo1.mp4"
             autoPlay
             muted
             loop

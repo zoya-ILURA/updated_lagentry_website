@@ -2,14 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ShaderCanvas } from "./ShaderCanvas";
 import "./WelcomePage.css";
+import { hasIntroCompleted } from "../introState";
 
 const WelcomePage: React.FC = () => {
   const navigate = useNavigate();
   const [shaderSize, setShaderSize] = useState(600);
-  const [isIntroComplete, setIsIntroComplete] = useState(false);
+  const [isIntroComplete, setIsIntroComplete] = useState(() => hasIntroCompleted());
 
   useEffect(() => {
-    // Wait for intro animation to complete (Header animation ends at 5000ms)
+    // If intro already completed (we are navigating back to home), show content immediately.
+    if (hasIntroCompleted()) {
+      setIsIntroComplete(true);
+      return;
+    }
+
+    // First load: wait for intro animation to complete (Header ends around 5000ms)
     const timer = setTimeout(() => {
       setIsIntroComplete(true);
     }, 5500); // Slightly after header hides to allow smooth transition

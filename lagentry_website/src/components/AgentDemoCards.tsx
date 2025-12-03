@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './AgentDemoCards.css';
 import realVoiceDemo from '../realvoicedemo.mp3';
 // Sales video path - file should be in public folder
@@ -7,7 +8,7 @@ import agentBg from './agentbg2.png';
 // Video paths - files should be in public folder
 // Files are in: public/AICFO.MP4, public/HRvc.gif, public/vim1.mp4, public/vim2.mp4
 const aiCFOVideo = `${process.env.PUBLIC_URL}/AICFO.MP4`;
-const hrVideo = '/HRvc.gif';
+const hrVideo = '/HRvc.mp4';
 
 interface AgentCard {
   id: string;
@@ -75,6 +76,8 @@ const aiCFOContent = {
 };
 
 const AgentDemoCards: React.FC = () => {
+  const navigate = useNavigate();
+
   const [playingCards, setPlayingCards] = useState<{ [key: string]: boolean }>({});
   const [mutedCards, setMutedCards] = useState<{ [key: string]: boolean }>({});
   const [isVisible, setIsVisible] = useState(false);
@@ -84,6 +87,27 @@ const AgentDemoCards: React.FC = () => {
   const videoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({});
   const audioRefs = useRef<{ [key: string]: HTMLAudioElement | null }>({});
   const aiCFOVideoRef = useRef<HTMLVideoElement | null>(null);
+
+  const handleMoreAbout = (cardType: 'cfo' | 'agent', id: string) => {
+    if (cardType === 'cfo') {
+      navigate('/agents/cfo-finance');
+      return;
+    }
+
+    switch (id) {
+      case 'agent-1':
+        navigate('/agents/real-estate');
+        break;
+      case 'agent-2':
+        navigate('/agents/gtm-sales');
+        break;
+      case 'agent-3':
+        navigate('/agents/hr-recruitment');
+        break;
+      default:
+        navigate('/agents');
+    }
+  };
 
   useEffect(() => {
     // Set intro as complete immediately so all sections show
@@ -202,7 +226,7 @@ const AgentDemoCards: React.FC = () => {
     <div className="agent-demo-section" ref={sectionRef}>
       <div className="agent-demo-container">
         <div className="agent-demo-header">
-          <h2 className="agent-demo-title">Meet our AI Employees</h2>
+          <h2 className="agent-demo-title gradient-purple-text">Meet our AI Employees</h2>
           <p className="agent-demo-subtitle">
             Experience the power of intelligent automation across all domains
           </p>
@@ -264,7 +288,12 @@ const AgentDemoCards: React.FC = () => {
                               </div>
                             ))}
                           </div>
-                          <button className="agent-more-about-button">More About {aiCFOContent.title}</button>
+                          <button
+                            className="agent-more-about-button"
+                            onClick={() => handleMoreAbout('cfo', 'ai-cfo')}
+                          >
+                            More About {aiCFOContent.title}
+                          </button>
                         </div>
                       </>
                     ) : (
@@ -280,7 +309,12 @@ const AgentDemoCards: React.FC = () => {
                               </div>
                             ))}
                           </div>
-                          <button className="agent-more-about-button">More About {aiCFOContent.title}</button>
+                          <button
+                            className="agent-more-about-button"
+                            onClick={() => handleMoreAbout('cfo', 'ai-cfo')}
+                          >
+                            More About {aiCFOContent.title}
+                          </button>
                         </div>
                         {/* Visual on right */}
                         <div className="agent-visual-panel-stacked">
@@ -332,42 +366,29 @@ const AgentDemoCards: React.FC = () => {
                         {/* Visual on left */}
                         <div className="agent-visual-panel-stacked">
                           <div className="agent-video-container">
-                            {agent.id === 'agent-1' ? (
-                              <img
-                                className="agent-video"
-                                src={agent.video}
-                                alt={`${agent.name} demo`}
-                                style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '24px', display: 'block' }}
-                                onError={(e) => {
-                                  console.error('Image failed to load:', agent.video);
-                                  console.error('Full path:', window.location.origin + agent.video);
-                                }}
-                              />
-                            ) : (
-                              <video
-                                ref={(el) => {
-                                  videoRefs.current[agent.id] = el;
-                                  if (el) {
-                                    el.dataset.cardId = agent.id;
-                                  }
-                                }}
-                                className="agent-video"
-                                src={agent.video}
-                                muted={mutedCards[agent.id] !== undefined ? mutedCards[agent.id] : true}
-                                loop={true}
-                                autoPlay
-                                playsInline
-                                preload="metadata"
-                                onPlay={() => setPlayingCards(prev => ({ ...prev, [agent.id]: true }))}
-                                onPause={() => setPlayingCards(prev => ({ ...prev, [agent.id]: false }))}
-                                onLoadedMetadata={(e) => {
-                                  const video = e.currentTarget;
-                                  if (video) {
-                                    video.style.display = 'block';
-                                  }
-                                }}
-                              />
-                            )}
+                            <video
+                              ref={(el) => {
+                                videoRefs.current[agent.id] = el;
+                                if (el) {
+                                  el.dataset.cardId = agent.id;
+                                }
+                              }}
+                              className="agent-video"
+                              src={agent.video}
+                              muted={mutedCards[agent.id] !== undefined ? mutedCards[agent.id] : true}
+                              loop={true}
+                              autoPlay
+                              playsInline
+                              preload="metadata"
+                              onPlay={() => setPlayingCards(prev => ({ ...prev, [agent.id]: true }))}
+                              onPause={() => setPlayingCards(prev => ({ ...prev, [agent.id]: false }))}
+                              onLoadedMetadata={(e) => {
+                                const video = e.currentTarget;
+                                if (video) {
+                                  video.style.display = 'block';
+                                }
+                              }}
+                            />
                           </div>
                         </div>
                         {/* Content on right */}
@@ -401,7 +422,12 @@ const AgentDemoCards: React.FC = () => {
                               </div>
                             </div>
                           )}
-                          <button className="agent-more-about-button">More About {agent.name}</button>
+                          <button
+                            className="agent-more-about-button"
+                            onClick={() => handleMoreAbout('agent', agent.id)}
+                          >
+                            More About {agent.name}
+                          </button>
                           {agent.id === 'agent-2' && (
                             <video
                               ref={(el) => {
@@ -449,7 +475,12 @@ const AgentDemoCards: React.FC = () => {
                               </div>
                             </div>
                           )}
-                          <button className="agent-more-about-button">More About {agent.name}</button>
+                          <button
+                            className="agent-more-about-button"
+                            onClick={() => handleMoreAbout('agent', agent.id)}
+                          >
+                            More About {agent.name}
+                          </button>
                           {agent.id === 'agent-2' && (
                             <video
                               ref={(el) => {
@@ -466,42 +497,29 @@ const AgentDemoCards: React.FC = () => {
                         {/* Visual on right */}
                         <div className="agent-visual-panel-stacked">
                           <div className="agent-video-container">
-                            {agent.id === 'agent-1' ? (
-                              <img
-                                className="agent-video"
-                                src={agent.video}
-                                alt={`${agent.name} demo`}
-                                style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '24px', display: 'block' }}
-                                onError={(e) => {
-                                  console.error('Image failed to load:', agent.video);
-                                  console.error('Full path:', window.location.origin + agent.video);
-                                }}
-                              />
-                            ) : (
-                              <video
-                                ref={(el) => {
-                                  videoRefs.current[agent.id] = el;
-                                  if (el) {
-                                    el.dataset.cardId = agent.id;
-                                  }
-                                }}
-                                className="agent-video"
-                                src={agent.video}
-                                muted={mutedCards[agent.id] !== undefined ? mutedCards[agent.id] : true}
-                                loop={true}
-                                autoPlay
-                                playsInline
-                                preload="metadata"
-                                onPlay={() => setPlayingCards(prev => ({ ...prev, [agent.id]: true }))}
-                                onPause={() => setPlayingCards(prev => ({ ...prev, [agent.id]: false }))}
-                                onLoadedMetadata={(e) => {
-                                  const video = e.currentTarget;
-                                  if (video) {
-                                    video.style.display = 'block';
-                                  }
-                                }}
-                              />
-                            )}
+                            <video
+                              ref={(el) => {
+                                videoRefs.current[agent.id] = el;
+                                if (el) {
+                                  el.dataset.cardId = agent.id;
+                                }
+                              }}
+                              className="agent-video"
+                              src={agent.video}
+                              muted={mutedCards[agent.id] !== undefined ? mutedCards[agent.id] : true}
+                              loop={true}
+                              autoPlay
+                              playsInline
+                              preload="metadata"
+                              onPlay={() => setPlayingCards(prev => ({ ...prev, [agent.id]: true }))}
+                              onPause={() => setPlayingCards(prev => ({ ...prev, [agent.id]: false }))}
+                              onLoadedMetadata={(e) => {
+                                const video = e.currentTarget;
+                                if (video) {
+                                  video.style.display = 'block';
+                                }
+                              }}
+                            />
                           </div>
                         </div>
                       </>

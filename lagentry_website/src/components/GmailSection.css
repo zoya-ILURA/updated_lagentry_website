@@ -141,7 +141,7 @@
   font-size: 1rem;
   font-weight: 600;
   padding: 12px 24px;
-  background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 50%, #C084FC 100%);
+  background: var(--btn-purple-gradient);
   color: #ffffff;
   border: none;
   border-radius: 8px;

@@ -44,6 +44,14 @@ code {
   font-family: 'Geist', sans-serif;
 }
 
+/* Shared purple gradient text utility for highlighted headings */
+.gradient-purple-text {
+  background: linear-gradient(135deg, #a855f7 0%, #c084fc 50%, #e9d5ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* Show default scrollbar only for body/html, hide for carousel */
 body::-webkit-scrollbar,
 html::-webkit-scrollbar {
@@ -64,4 +72,9 @@ html::-webkit-scrollbar-thumb {
 body::-webkit-scrollbar-thumb:hover,
 html::-webkit-scrollbar-thumb:hover {
   background: #777;
+}
+
+/* Global dark‑purple gradient button token */
+:root {
+  --btn-purple-gradient: linear-gradient(135deg, #1a0033 0%, #4a1a6e 50%, #6b2d91 100%);
 }

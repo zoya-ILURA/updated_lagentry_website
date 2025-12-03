@@ -18,7 +18,7 @@
   overflow-x: hidden;
   overflow-y: visible;
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  font-family: 'Georgia', serif;
+  font-family: 'Geist', sans-serif;
 }
 
 /* Top image container with overlay form */
@@ -563,7 +563,7 @@
 }
 
 .submit-button.gradient {
-  background: linear-gradient(135deg, var(--accentA), var(--accentB));
+  background: var(--btn-purple-gradient);
   box-shadow: 0 8px 20px rgba(155, 92, 255, 0.35);
 }
 

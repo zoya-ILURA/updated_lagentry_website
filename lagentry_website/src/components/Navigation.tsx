@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Navigation.css';
 
@@ -6,6 +6,8 @@ const Navigation: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isAgentsOpen, setIsAgentsOpen] = useState(false);
+  const agentsHoverTimeoutRef = useRef<number | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -47,12 +49,23 @@ const Navigation: React.FC = () => {
   };
 
   const handleAgentsClick = () => {
-    if (location.pathname !== '/') {
-      navigate('/');
-      setTimeout(() => scrollToSection('.templates-section', 15, 150), 200);
-    } else {
-      scrollToSection('.templates-section');
+    navigate('/agents');
+  };
+
+  const handleAgentsMouseEnter = () => {
+    if (agentsHoverTimeoutRef.current) {
+      window.clearTimeout(agentsHoverTimeoutRef.current);
+      agentsHoverTimeoutRef.current = null;
     }
+    setIsAgentsOpen(true);
+  };
+
+  const handleAgentsMouseLeave = () => {
+    // Small delay so the menu doesn't close the instant the cursor hits the gap
+    agentsHoverTimeoutRef.current = window.setTimeout(() => {
+      setIsAgentsOpen(false);
+      agentsHoverTimeoutRef.current = null;
+    }, 120);
   };
 
   const handleFeaturesClick = () => {
@@ -80,7 +93,83 @@ const Navigation: React.FC = () => {
 
           {/* Desktop Navigation Menu */}
           <div className="nav-menu desktop-menu">
-          <div className="nav-item" onClick={handleAgentsClick} style={{ cursor: 'pointer' }}>Agents</div>
+          <div
+            className="nav-item nav-item-agents"
+            onClick={handleAgentsClick}
+            style={{ cursor: 'pointer', position: 'relative' }}
+            onMouseEnter={handleAgentsMouseEnter}
+            onMouseLeave={handleAgentsMouseLeave}
+          >
+            <span>Agents</span>
+            <div className={`agents-dropdown ${isAgentsOpen ? 'open' : ''}`}>
+              <button type="button" onClick={() => navigate('/agents/gtm-sales')}>
+                <div className="agents-dropdown-pill">
+                  <div className="agents-dropdown-blob agents-blob-sales" />
+                  <div className="agents-dropdown-copy">
+                    <span className="agents-dropdown-title">GTM &amp; Sales Agent</span>
+                    <span className="agents-dropdown-subtitle">
+                      Drive outreach, qualify intent, and keep deals in motion.
+                    </span>
+                  </div>
+                </div>
+              </button>
+              <button type="button" onClick={() => navigate('/agents/hr-recruitment')}>
+                <div className="agents-dropdown-pill">
+                  <div className="agents-dropdown-blob agents-blob-hr" />
+                  <div className="agents-dropdown-copy">
+                    <span className="agents-dropdown-title">HR &amp; Recruitment</span>
+                    <span className="agents-dropdown-subtitle">
+                      Orchestrate hiring, onboarding, and people ops flows.
+                    </span>
+                  </div>
+                </div>
+              </button>
+              <button type="button" onClick={() => navigate('/agents/cfo-finance')}>
+                <div className="agents-dropdown-pill">
+                  <div className="agents-dropdown-blob agents-blob-cfo" />
+                  <div className="agents-dropdown-copy">
+                    <span className="agents-dropdown-title">CFO &amp; Finance</span>
+                    <span className="agents-dropdown-subtitle">
+                      See cash, margin, and risk in one focused lane.
+                    </span>
+                  </div>
+                </div>
+              </button>
+              <button type="button" onClick={() => navigate('/agents/customer-support')}>
+                <div className="agents-dropdown-pill">
+                  <div className="agents-dropdown-blob agents-blob-support" />
+                  <div className="agents-dropdown-copy">
+                    <span className="agents-dropdown-title">Customer Support</span>
+                    <span className="agents-dropdown-subtitle">
+                      Always-on help that feeds product with real signals.
+                    </span>
+                  </div>
+                </div>
+              </button>
+              <button type="button" onClick={() => navigate('/agents/real-estate')}>
+                <div className="agents-dropdown-pill">
+                  <div className="agents-dropdown-blob agents-blob-realestate" />
+                  <div className="agents-dropdown-copy">
+                    <span className="agents-dropdown-title">Real Estate &amp; Property</span>
+                    <span className="agents-dropdown-subtitle">
+                      From leads to leases and maintenance, handled quietly.
+                    </span>
+                  </div>
+                </div>
+              </button>
+              <button type="button" onClick={() => navigate('/agents/healthcare')}>
+                <div className="agents-dropdown-pill">
+                  <div className="agents-dropdown-blob agents-blob-healthcare" />
+                  <div className="agents-dropdown-copy">
+                    <span className="agents-dropdown-title">Healthcare</span>
+                    <span className="agents-dropdown-subtitle">
+                      Coordinate intake, scheduling, and follow‑ups with care.
+                    </span>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
           <div className="nav-item" onClick={handleFeaturesClick} style={{ cursor: 'pointer' }}>Features</div>
           <div className="nav-item" onClick={() => navigate('/pricing')} style={{ cursor: 'pointer' }}>Pricing</div>
           <div className="nav-item" onClick={handleContactClick} style={{ cursor: 'pointer' }}>Contact Us</div>

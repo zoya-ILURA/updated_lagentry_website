@@ -122,7 +122,7 @@
 .join-button {
   width: 100%;
   margin-top: 18px;
-  background: linear-gradient(135deg, #1a0033 0%, #4a1a6e 50%, #6b2d91 100%);
+  background: var(--btn-purple-gradient);
   color: #ffffff;
   border: 0;
   border-radius: 16px;
@@ -572,7 +572,7 @@
 }
 
 .submit-button {
-  background: linear-gradient(135deg, #9b5cff, #6a5acd);
+  background: var(--btn-purple-gradient);
   color: #fff;
   border: 0;
   border-radius: 12px;

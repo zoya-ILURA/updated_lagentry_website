@@ -113,7 +113,7 @@
   font-size: 1rem;
   font-weight: 500;
   color: #ffffff;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--btn-purple-gradient);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   padding: 0.875rem 1.5rem;
@@ -124,7 +124,7 @@
 }
 
 .ai-sales-gtm-button:hover {
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--btn-purple-gradient);
   border-color: rgba(255, 255, 255, 0.4);
   transform: translateY(-2px);
 }
@@ -254,9 +254,9 @@
 }
 
 .agent-demo-container {
-  max-width: 95%; /* Cover almost full width */
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 3rem;
   width: 100%;
 }
 
@@ -264,15 +264,15 @@
 .agent-cards-stack {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 4.5rem;
   width: 100%;
-  align-items: stretch;
+  align-items: center; /* center cards horizontally */
 }
 
 .agent-card-stacked {
   width: 100%;
-  max-width: 100%;
-  min-height: 550px;
+  max-width: 1100px; /* slightly wider cards */
+  min-height: 600px;
   border: 3px solid #808080;
   border-radius: 24px;
   background-size: cover !important;
@@ -301,11 +301,11 @@
 
 .agent-card-inner-stacked {
   display: grid;
-  grid-template-columns: 0.4fr 0.6fr; /* Video takes 40%, text takes 60% */
-  gap: 3rem; /* Proper gap between video and text */
+  grid-template-columns: 0.45fr 0.55fr; /* give video a bit more space */
+  gap: 3.25rem; /* slightly more breathing room */
   align-items: center;
   justify-items: stretch;
-  padding: 3rem 4rem;
+  padding: 3.25rem 4.25rem;
   position: relative;
   z-index: 1;
   width: 100%;
@@ -353,11 +353,11 @@
 
 .agent-visual-panel-stacked .agent-video-container {
   width: 100%;
-  aspect-ratio: 1 / 1; /* Square aspect ratio */
+  aspect-ratio: 16 / 10; /* slightly wider video card */
   max-width: 100%;
   height: auto;
-  min-height: 400px;
-  max-height: 500px;
+  min-height: 420px;
+  max-height: 540px;
   border-radius: 24px; /* Rounded corners */
   overflow: hidden;
   background: rgba(0, 0, 0, 0.3);
@@ -450,7 +450,7 @@
 .agent-content-panel-stacked .agent-more-about-button {
   margin-top: 0.5rem;
   padding: 0.875rem 2rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--btn-purple-gradient);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   color: #ffffff;
@@ -464,7 +464,7 @@
 }
 
 .agent-content-panel-stacked .agent-more-about-button:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--btn-purple-gradient);
   border-color: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
 }
@@ -583,10 +583,6 @@
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #ffffff 0%, #A78BFA 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .agent-demo-subtitle {
@@ -1250,7 +1246,7 @@ video {
   font-size: 1rem;
   font-weight: 500;
   color: #ffffff;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--btn-purple-gradient);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   padding: 0.875rem 1.5rem;
@@ -1261,7 +1257,7 @@ video {
 }
 
 .agent-more-about-button:hover {
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--btn-purple-gradient);
   border-color: rgba(255, 255, 255, 0.4);
   transform: translateY(-2px);
 }

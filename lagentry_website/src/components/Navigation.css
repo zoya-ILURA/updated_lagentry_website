@@ -124,6 +124,131 @@
   color: #8b5cf6;
 }
 
+.nav-item-agents {
+  position: relative;
+}
+
+.agents-dropdown {
+  position: absolute;
+  top: 135%;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px) scale(0.96);
+  min-width: 520px;
+  max-width: 680px;
+  padding: 0.8rem 0.9rem;
+  border-radius: 18px;
+  background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(2, 6, 23, 0.98));
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(148, 163, 184, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: top center;
+  transition: opacity 0.18s ease, transform 0.24s cubic-bezier(0.16, 0.84, 0.44, 1);
+  z-index: 1200;
+}
+
+.agents-dropdown.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.agents-dropdown button {
+  width: 100%;
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border-radius: 14px;
+  border: none;
+  background: transparent;
+  color: rgba(241, 245, 249, 0.9);
+  font-size: 0.9rem;
+  font-family: 'Geist', sans-serif;
+  cursor: pointer;
+  transition: background 0.16s ease, color 0.16s ease, transform 0.16s ease;
+}
+
+.agents-dropdown button:hover {
+  background: rgba(15, 23, 42, 0.95);
+  color: #e5e7eb;
+  transform: translateY(-1px);
+}
+
+.agents-dropdown-label {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.agents-dropdown-pill {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.agents-dropdown-blob {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  background: radial-gradient(circle at 30% 20%, #a855f7, #4c1d95);
+  box-shadow:
+    0 0 0 1px rgba(148, 163, 184, 0.35),
+    0 10px 20px rgba(15, 23, 42, 0.9),
+    0 0 30px rgba(88, 28, 135, 0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+.agents-dropdown-blob::after {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle at 10% 0%, rgba(255, 255, 255, 0.4), transparent 55%);
+  mix-blend-mode: screen;
+  opacity: 0.9;
+}
+
+/* Variant hues per agent type (subtle) */
+.agents-blob-sales {
+  background: radial-gradient(circle at 30% 20%, #f97316, #a855f7);
+}
+
+.agents-blob-hr {
+  background: radial-gradient(circle at 30% 20%, #22c55e, #4f46e5);
+}
+
+.agents-blob-cfo {
+  background: radial-gradient(circle at 30% 20%, #38bdf8, #0ea5e9);
+}
+
+.agents-blob-support {
+  background: radial-gradient(circle at 30% 20%, #facc15, #f97316);
+}
+
+.agents-blob-realestate {
+  background: radial-gradient(circle at 30% 20%, #f97316, #16a34a);
+}
+
+.agents-blob-healthcare {
+  background: radial-gradient(circle at 30% 20%, #22c55e, #06b6d4);
+}
+
+.agents-dropdown-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.agents-dropdown-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.agents-dropdown-subtitle {
+  font-size: 0.9rem;
+  color: rgba(148, 163, 184, 0.9);
+}
+
 .nav-actions {
   display: flex;
   align-items: center;
