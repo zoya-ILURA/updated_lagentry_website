@@ -127,19 +127,21 @@ const Features: React.FC = () => {
                     loop
                     muted
                     playsInline
-                    preload="metadata"
+                    preload="none"
+                    crossOrigin="anonymous"
                     onError={(e) => {
                       console.error(`Video ${video.id} (${video.video}) loading error:`, e);
                       const videoElement = e.currentTarget;
                       if (videoElement && videoElement.error) {
                         console.error('Video src:', videoElement.src);
                         console.error('Video error code:', videoElement.error.code);
+                        console.error('Video error message:', videoElement.error.message);
                         // Try alternative paths with different cases and formats
                         const videoName = `v${video.id}`;
-                        const publicUrl = process.env.PUBLIC_URL || '';
                         const alternatives = [
                           `/${videoName}.mp4`,  // Try absolute path first (best for Netlify)
-                          `/${videoName}.MP4`  // Try uppercase extension
+                          `/${videoName}.MP4`,  // Try uppercase extension
+                          `${window.location.origin}/${videoName}.mp4`  // Try full URL
                         ];
                         let currentIndex = 0;
                         const tryNext = () => {
@@ -147,7 +149,8 @@ const Features: React.FC = () => {
                             const newSrc = alternatives[currentIndex];
                             // Check if src is different (handle both relative and absolute URLs)
                             const currentSrc = videoElement.src.replace(window.location.origin, '');
-                            if (currentSrc !== newSrc) {
+                            if (currentSrc !== newSrc && !videoElement.src.includes(newSrc)) {
+                              console.log(`Trying alternative path: ${newSrc}`);
                               videoElement.src = newSrc;
                               videoElement.load();
                             }
@@ -156,8 +159,16 @@ const Features: React.FC = () => {
                             console.error(`All paths failed for ${videoName}.mp4. Please ensure the file exists in public folder.`);
                             console.error('Tried paths:', alternatives);
                             console.error('Current video src:', videoElement.src);
-                            // Hide video on persistent error
+                            // Hide video on persistent error but show a placeholder
                             videoElement.style.display = 'none';
+                            const wrapper = videoElement.closest('.horizontal-video-wrapper');
+                            if (wrapper && !wrapper.querySelector('.video-error-placeholder')) {
+                              const placeholder = document.createElement('div');
+                              placeholder.className = 'video-error-placeholder';
+                              placeholder.textContent = 'Video unavailable';
+                              placeholder.style.cssText = 'display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background: #1a1a1a; color: #888;';
+                              wrapper.appendChild(placeholder);
+                            }
                           }
                         };
                         videoElement.addEventListener('error', tryNext, { once: true });

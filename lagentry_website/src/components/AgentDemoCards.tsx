@@ -152,7 +152,10 @@ const AgentDemoCards: React.FC = () => {
           const cardId = video.dataset.cardId || (video === aiCFOVideoRef.current ? 'ai-cfo-agent' : '');
           if (entry.isIntersecting) {
             video.play().catch((error) => {
-              console.error('Error autoplaying video:', error);
+              // Only log if it's not a common browser restriction error
+              if (error.name !== 'NotAllowedError' && error.name !== 'NotSupportedError') {
+                console.warn('Video autoplay prevented:', error.name);
+              }
             });
             setPlayingCards(prev => ({ ...prev, [cardId]: true }));
           } else {
@@ -262,7 +265,8 @@ const AgentDemoCards: React.FC = () => {
                               loop={true}
                               autoPlay
                               playsInline
-                              preload="auto"
+                              preload="metadata"
+                              crossOrigin="anonymous"
                               style={{ display: 'block', opacity: 1 }}
                               onPlay={() => setPlayingCards(prev => ({ ...prev, 'ai-cfo-agent': true }))}
                               onPause={() => setPlayingCards(prev => ({ ...prev, 'ai-cfo-agent': false }))}
@@ -274,27 +278,77 @@ const AgentDemoCards: React.FC = () => {
                                 }
                               }}
                               onError={(e) => {
-                                console.error('CFO Video loading error:', e);
                                 const video = e.currentTarget;
                                 if (video && video.error) {
-                                  console.error('Video src:', video.src);
-                                  console.error('Video error code:', video.error.code);
-                                  // Try alternative paths - try lowercase first (actual file name)
-                                  const alternatives = ['/AICFO.mp4', '/AICFO.MP4'];
+                                  const errorCode = video.error.code;
+                                  const errorMessage = video.error.message || 'Unknown error';
+                                  
+                                  // Log detailed diagnostics
+                                  console.error('AICFO Video Error Details:', {
+                                    errorCode,
+                                    errorMessage,
+                                    videoSrc: video.src,
+                                    networkState: video.networkState,
+                                    readyState: video.readyState,
+                                    canPlayType: video.canPlayType('video/mp4'),
+                                    location: window.location.href
+                                  });
+                                  
+                                  // Error code 4 = MEDIA_ERR_SRC_NOT_SUPPORTED
+                                  // This usually means format/codec issue or file corruption
+                                  if (errorCode === 4) {
+                                    console.error('Video format not supported. Possible causes:');
+                                    console.error('1. Video codec not supported by browser');
+                                    console.error('2. File is corrupted');
+                                    console.error('3. File size too large');
+                                    console.error('4. MIME type issue on server');
+                                    
+                                    // Try to fetch the file to check if it's accessible
+                                    fetch(video.src, { method: 'HEAD' })
+                                      .then(response => {
+                                        console.log('Video file HTTP status:', response.status);
+                                        console.log('Video file Content-Type:', response.headers.get('Content-Type'));
+                                        console.log('Video file Content-Length:', response.headers.get('Content-Length'));
+                                        if (!response.ok) {
+                                          console.error('Video file is not accessible:', response.status, response.statusText);
+                                        }
+                                      })
+                                      .catch(err => {
+                                        console.error('Cannot access video file:', err);
+                                      });
+                                  }
+                                  
+                                  // Try alternative paths
+                                  const alternatives = [
+                                    '/AICFO.mp4', 
+                                    '/AICFO.mp4',
+                                    `${window.location.origin}/AICFO.mp4`
+                                  ];
                                   let currentIndex = 0;
                                   const tryNext = () => {
                                     if (currentIndex < alternatives.length && video.error) {
                                       const newSrc = alternatives[currentIndex];
-                                      // Check if src is different (handle both relative and absolute URLs)
                                       const currentSrc = video.src.replace(window.location.origin, '');
-                                      if (currentSrc !== newSrc) {
+                                      if (currentSrc !== newSrc && !video.src.includes(newSrc)) {
+                                        console.log(`Trying alternative path: ${newSrc}`);
                                         video.src = newSrc;
                                         video.load();
                                       }
                                       currentIndex++;
                                     } else if (video.error) {
-                                      console.error('All AICFO video paths failed. Please ensure AICFO.mp4 exists in public folder.');
-                                      console.error('Current video src:', video.src);
+                                      console.error('All AICFO video paths failed.');
+                                      console.error('Final video src:', video.src);
+                                      console.error('Error code:', video.error.code);
+                                      // Don't hide video, show a placeholder instead
+                                      video.style.display = 'none';
+                                      const container = video.parentElement;
+                                      if (container && !container.querySelector('.video-error-placeholder')) {
+                                        const placeholder = document.createElement('div');
+                                        placeholder.className = 'video-error-placeholder';
+                                        placeholder.textContent = 'Video unavailable';
+                                        placeholder.style.cssText = 'display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background: #1a1a1a; color: #888; font-size: 14px;';
+                                        container.appendChild(placeholder);
+                                      }
                                     }
                                   };
                                   video.addEventListener('error', tryNext, { once: true });
@@ -354,7 +408,8 @@ const AgentDemoCards: React.FC = () => {
                               loop={true}
                               autoPlay
                               playsInline
-                              preload="auto"
+                              preload="metadata"
+                              crossOrigin="anonymous"
                               style={{ display: 'block', opacity: 1 }}
                               onPlay={() => setPlayingCards(prev => ({ ...prev, 'ai-cfo-agent': true }))}
                               onPause={() => setPlayingCards(prev => ({ ...prev, 'ai-cfo-agent': false }))}
@@ -366,27 +421,77 @@ const AgentDemoCards: React.FC = () => {
                                 }
                               }}
                               onError={(e) => {
-                                console.error('CFO Video loading error:', e);
                                 const video = e.currentTarget;
                                 if (video && video.error) {
-                                  console.error('Video src:', video.src);
-                                  console.error('Video error code:', video.error.code);
-                                  // Try alternative paths - try lowercase first (actual file name)
-                                  const alternatives = ['/AICFO.mp4', '/AICFO.MP4'];
+                                  const errorCode = video.error.code;
+                                  const errorMessage = video.error.message || 'Unknown error';
+                                  
+                                  // Log detailed diagnostics
+                                  console.error('AICFO Video Error Details:', {
+                                    errorCode,
+                                    errorMessage,
+                                    videoSrc: video.src,
+                                    networkState: video.networkState,
+                                    readyState: video.readyState,
+                                    canPlayType: video.canPlayType('video/mp4'),
+                                    location: window.location.href
+                                  });
+                                  
+                                  // Error code 4 = MEDIA_ERR_SRC_NOT_SUPPORTED
+                                  // This usually means format/codec issue or file corruption
+                                  if (errorCode === 4) {
+                                    console.error('Video format not supported. Possible causes:');
+                                    console.error('1. Video codec not supported by browser');
+                                    console.error('2. File is corrupted');
+                                    console.error('3. File size too large');
+                                    console.error('4. MIME type issue on server');
+                                    
+                                    // Try to fetch the file to check if it's accessible
+                                    fetch(video.src, { method: 'HEAD' })
+                                      .then(response => {
+                                        console.log('Video file HTTP status:', response.status);
+                                        console.log('Video file Content-Type:', response.headers.get('Content-Type'));
+                                        console.log('Video file Content-Length:', response.headers.get('Content-Length'));
+                                        if (!response.ok) {
+                                          console.error('Video file is not accessible:', response.status, response.statusText);
+                                        }
+                                      })
+                                      .catch(err => {
+                                        console.error('Cannot access video file:', err);
+                                      });
+                                  }
+                                  
+                                  // Try alternative paths
+                                  const alternatives = [
+                                    '/AICFO.mp4', 
+                                    '/AICFO.mp4',
+                                    `${window.location.origin}/AICFO.mp4`
+                                  ];
                                   let currentIndex = 0;
                                   const tryNext = () => {
                                     if (currentIndex < alternatives.length && video.error) {
                                       const newSrc = alternatives[currentIndex];
-                                      // Check if src is different (handle both relative and absolute URLs)
                                       const currentSrc = video.src.replace(window.location.origin, '');
-                                      if (currentSrc !== newSrc) {
+                                      if (currentSrc !== newSrc && !video.src.includes(newSrc)) {
+                                        console.log(`Trying alternative path: ${newSrc}`);
                                         video.src = newSrc;
                                         video.load();
                                       }
                                       currentIndex++;
                                     } else if (video.error) {
-                                      console.error('All AICFO video paths failed. Please ensure AICFO.mp4 exists in public folder.');
-                                      console.error('Current video src:', video.src);
+                                      console.error('All AICFO video paths failed.');
+                                      console.error('Final video src:', video.src);
+                                      console.error('Error code:', video.error.code);
+                                      // Don't hide video, show a placeholder instead
+                                      video.style.display = 'none';
+                                      const container = video.parentElement;
+                                      if (container && !container.querySelector('.video-error-placeholder')) {
+                                        const placeholder = document.createElement('div');
+                                        placeholder.className = 'video-error-placeholder';
+                                        placeholder.textContent = 'Video unavailable';
+                                        placeholder.style.cssText = 'display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background: #1a1a1a; color: #888; font-size: 14px;';
+                                        container.appendChild(placeholder);
+                                      }
                                     }
                                   };
                                   video.addEventListener('error', tryNext, { once: true });

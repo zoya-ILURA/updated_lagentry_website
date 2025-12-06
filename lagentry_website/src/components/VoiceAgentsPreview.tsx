@@ -96,7 +96,10 @@ const VoiceAgentsPreview: React.FC = () => {
         setTimeout(() => {
             clearInterval(checkSDK);
             if (!vapiSDKLoadedRef.current && !window.Vapi) {
-                console.error('VAPI SDK not found after 5 seconds.');
+                // Only log in development to avoid console spam
+                if (process.env.NODE_ENV === 'development') {
+                    console.warn('VAPI SDK not found after 5 seconds. Make sure the VAPI script is loaded in index.html.');
+                }
             }
         }, 5000);
 
@@ -141,13 +144,26 @@ const VoiceAgentsPreview: React.FC = () => {
         try {
             // Get agent ID from backend
             // In development, use proxy from package.json (http://localhost:5001)
-            // In production, use environment variable or default to port 5001
-            const isDevelopment = process.env.NODE_ENV === 'development';
-            const backendUrl = isDevelopment 
-                ? '' // Use proxy in development (package.json has proxy: "http://localhost:5001")
-                : (process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001');
-            const apiUrl = `${backendUrl}/api/start-voice-call`;
-            console.log('Calling backend API:', apiUrl);
+            // In production, use environment variable - must be set in Netlify
+            const isDevelopment = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            let backendUrl: string;
+            
+            if (isDevelopment) {
+                // Use proxy in development (package.json has proxy: "http://localhost:5001")
+                backendUrl = '';
+            } else {
+                // In production, REACT_APP_BACKEND_URL must be set in Netlify environment variables
+                backendUrl = process.env.REACT_APP_BACKEND_URL || '';
+                if (!backendUrl) {
+                    console.error('REACT_APP_BACKEND_URL is not set. Voice call feature will not work.');
+                    throw new Error('Backend service is not configured. Please contact support.');
+                }
+                // Remove trailing slash if present
+                backendUrl = backendUrl.replace(/\/$/, '');
+            }
+            
+            const apiUrl = backendUrl ? `${backendUrl}/api/start-voice-call` : '/api/start-voice-call';
+            console.log('Calling backend API:', apiUrl, 'isDevelopment:', isDevelopment);
             const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: {
@@ -298,18 +314,31 @@ const VoiceAgentsPreview: React.FC = () => {
             if (error.message) {
                 errorMessage = error.message;
             } else if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
-                errorMessage = 'Failed to connect to backend server. Please ensure the backend server is running on port 5001.';
+                const isDev = process.env.NODE_ENV === 'development';
+                if (isDev) {
+                    errorMessage = 'Failed to connect to backend server. Please ensure the backend server is running on port 5001.';
+                } else {
+                    errorMessage = 'Failed to connect to backend server. The service may be temporarily unavailable. Please try again later.';
+                }
             }
             
-            // Don't show alert for user-initiated errors, just log them
-            // Only show alert for critical connection errors
-            if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
-                alert(`Failed to start call: ${errorMessage}\n\nPlease check:\n1. Backend server is running (http://localhost:5001)\n2. No firewall blocking the connection\n3. Check browser console for more details`);
+            // Show user-friendly error messages
+            if (error.message && (error.message.includes('Backend URL not configured') || error.message.includes('Backend service is not configured'))) {
+                // This should not happen in production if env var is set correctly
+                console.error('Configuration error:', errorMessage);
+                alert('Service configuration error. Please contact support.');
+            } else if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+                const isDev = process.env.NODE_ENV === 'development';
+                if (isDev) {
+                    alert(`Failed to start call: ${errorMessage}\n\nPlease check:\n1. Backend server is running (http://localhost:5001)\n2. No firewall blocking the connection\n3. Check browser console for more details`);
+                } else {
+                    // In production, show a more user-friendly message
+                    alert(`Unable to start call at this time. Please try again in a moment.\n\nIf the problem persists, please contact support.`);
+                }
             } else {
                 // For other errors, show a user-friendly message
                 console.error('Call failed:', errorMessage);
-                // You can optionally show a toast notification instead of alert
-                // For now, we'll just log it and let the UI show the error state
+                alert(`Unable to start call: ${errorMessage}`);
             }
         }
     };
@@ -327,10 +356,12 @@ const VoiceAgentsPreview: React.FC = () => {
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        const { name, value } = e.target;
+        console.log('Input change:', name, value);
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
     };
 
     return (
