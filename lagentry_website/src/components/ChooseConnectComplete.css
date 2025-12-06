@@ -31,11 +31,23 @@
   margin: 0 auto;
 }
 
+.section-title .agent-word-underlined {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-fill-color: #ffffff !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+}
+
 .agent-word-underlined {
   font-family: 'Geist', sans-serif;
   font-weight: 700;
   position: relative;
   display: inline-block;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-fill-color: #ffffff !important;
 }
 
 .agent-word-underlined::after {

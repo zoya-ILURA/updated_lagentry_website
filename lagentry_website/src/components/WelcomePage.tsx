@@ -82,7 +82,8 @@ const WelcomePage: React.FC = () => {
         </p>
 
         <div className="cta-section">
-          <button className="cta-button secondary-cta" onClick={() => navigate('/waitlist')}>
+          {/* Use the same visual style as the navbar "Book a Demo" button */}
+          <button className="demo-button" onClick={() => navigate('/waitlist')}>
             Join the Waitlist
             <span className="arrow">→</span>
           </button>

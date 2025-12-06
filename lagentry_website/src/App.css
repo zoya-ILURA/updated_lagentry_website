@@ -1,8 +1,7 @@
-/* GLOBAL BORDER RESET */
+/* Global reset: keep layout consistent but do NOT strip borders everywhere,
+   so components like Pricing cards can show their own borders and shadows. */
 *, *::before, *::after {
-  border: 0 !important;
-  box-shadow: none !important;
-  outline: 0 !important;
+  box-sizing: border-box;
 }
 
 /* CANVAS SPECIFIC RESET */
@@ -15,11 +14,8 @@ canvas {
 }
 
 html, body {
-  border: 0 !important;
   margin: 0;
   padding: 0;
-  box-shadow: none !important;
-  outline: 0 !important;
   background-color: #000000 !important;
 }
 
@@ -27,7 +23,4 @@ html, body {
   min-height: 100vh;
   background-color: #000000 !important;
   color: #ffffff;
-  border: 0 !important;
-  box-shadow: none !important;
-  outline: 0 !important;
 }

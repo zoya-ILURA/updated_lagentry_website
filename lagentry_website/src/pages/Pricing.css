@@ -51,12 +51,13 @@
   min-height: 700px;
   background: radial-gradient(1200px 400px at -10% -10%, rgba(155, 92, 255, 0.08), transparent), 
               rgba(3, 0, 20, 0.6);
-  border: 1px solid #9b5cff; /* brighter thin purple border for clear visibility */
+  border: 1px solid rgba(197, 147, 255, 0.9); /* bright thin purple border */
   border-radius: 20px;
   overflow: visible;
   position: relative;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 0 0 1px rgba(155, 92, 255, 0.55); /* subtle outer glow so border is visible on dark */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
@@ -64,17 +65,19 @@
 
 .pricing-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 20px 60px rgba(155, 92, 255, 0.2);
+  box-shadow:
+    0 0 0 1px rgba(212, 167, 255, 0.85),
+    0 20px 60px rgba(155, 92, 255, 0.35);
 }
 
 .pricing-card.popular {
-  border: 2px solid #9b5cff;
-  box-shadow: 0 0 30px rgba(155, 92, 255, 0.3);
+  border: 1px solid #9b5cff; /* keep border thin but highlight with glow */
+  box-shadow: 0 0 30px rgba(155, 92, 255, 0.35);
 }
 
 .pricing-card.best-value {
-  border: 2px solid #6a5acd;
-  box-shadow: 0 0 30px rgba(106, 90, 205, 0.3);
+  border: 1px solid #6a5acd; /* thin purple border */
+  box-shadow: 0 0 30px rgba(106, 90, 205, 0.35);
 }
 
 .card-halo {
@@ -282,7 +285,7 @@
 
 .cta-button:hover {
   transform: translateY(-2px);
-  background: linear-gradient(135deg, #5b21b6, #3730a3, #312e81);
+  background: var(--btn-purple-gradient);
   box-shadow: 0 6px 20px rgba(76, 29, 149, 0.4);
 }
 

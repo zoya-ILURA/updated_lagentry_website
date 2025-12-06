@@ -31,6 +31,31 @@
   letter-spacing: 2px;
 }
 
+/* Voice Agents Preview Section */
+.voice-agents-preview-section {
+  margin-bottom: 80px;
+  width: 100%;
+}
+
+.voice-agents-preview-section .voice-agents-preview-container {
+  width: 100%;
+}
+
+.voice-agents-preview-section .lead-qualification-wrapper {
+  padding-top: 0;
+  min-height: auto;
+  height: auto;
+  background: transparent;
+}
+
+.voice-agents-preview-section .lead-qualification-container {
+  padding-top: 0;
+  height: auto;
+  min-height: 600px;
+  max-height: none;
+  background: transparent;
+}
+
 /* Test Agent Section - New Layout */
 .test-agent-section {
   padding: 40px 0;

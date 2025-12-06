@@ -112,7 +112,7 @@ const Header: React.FC = () => {
         
         {/* Copyright */}
         <div className={`copyright-text ${showCopyright ? 'visible' : ''} ${!showCopyright && showLagentry ? 'hidden' : ''}`}>
-          <p>© 2024 Lagentry. All rights reserved.</p>
+          <p>© 2025 Lagentry. All rights reserved.</p>
         </div>
         
         {/* Lagentry Year + Logo */}

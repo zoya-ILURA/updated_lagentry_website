@@ -655,22 +655,9 @@ const BookDemo: React.FC = () => {
       {/* MENA Card Section */}
       {/* <MenaCard theme={theme} /> */}
 
-      {/* Bottom image */}
+      {/* Bottom image only (no video) */}
       <div className="demo-bottom-image-wrap">
         <img src="/images/demo1.png" alt="Demo visual" className="demo-bottom-image" />
-        <div className="demo-bottom-video">
-          <video
-            src="/demo1.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-          />
-          <div className="demo-bottom-video-caption">
-            <h3 className="demo-bottom-video-title">Built for the MENA World</h3>
-            <p className="demo-bottom-video-subtitle">Understands Your Market, Language, and Law.</p>
-          </div>
-        </div>
       </div>
     </div>
   );

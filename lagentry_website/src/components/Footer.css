@@ -56,6 +56,13 @@
 .footer-section {
   display: flex;
   flex-direction: column;
+  min-width: 0; /* Allow flex items to shrink below their content size */
+}
+
+/* First footer section (Lagentry logo section) should have proper width */
+.footer-content > .footer-section:first-child {
+  max-width: 100%;
+  width: 100%;
 }
 
 /* Logo Section */
@@ -139,10 +146,14 @@
 .footer-description {
   font-family: 'Geist', sans-serif;
   font-size: 0.95rem;
-  line-height: 1.6;
+  line-height: 1.7;
   color: #cccccc;
   margin-bottom: 2rem;
-  max-width: 300px;
+  max-width: 100%;
+  width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
   filter: none !important;
   -webkit-filter: none !important;
   text-shadow: none !important;

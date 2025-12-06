@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');
 
 .agent-demo-section {
-  padding: 6rem 2rem;
+  padding: 6rem 16px;
   background: #000000;
   color: #ffffff;
   position: relative;
@@ -256,7 +256,7 @@
 .agent-demo-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 3rem;
+  padding: 0 16px;
   width: 100%;
 }
 
@@ -274,7 +274,7 @@
   max-width: 1100px; /* slightly wider cards */
   min-height: 600px;
   border: 3px solid #808080;
-  border-radius: 24px;
+  border-radius: 24px; /* back to earlier card rounding */
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
@@ -284,6 +284,26 @@
   display: flex;
   align-items: stretch;
   margin: 0 auto;
+}
+
+/* CFO card - ensure it can expand to show all text */
+.cfo-card {
+  max-width: 1200px; /* Slightly wider for CFO card to accommodate longer text */
+}
+
+.cfo-card .agent-card-inner-stacked {
+  overflow: visible;
+}
+
+/* Apply same max-width to all agent cards for consistency */
+.agent-card-stacked.layout-left-visual,
+.agent-card-stacked.layout-right-visual {
+  max-width: 1200px; /* Same width as CFO card */
+}
+
+.agent-card-stacked.layout-left-visual .agent-card-inner-stacked,
+.agent-card-stacked.layout-right-visual .agent-card-inner-stacked {
+  overflow: visible;
 }
 
 .agent-card-stacked::before {
@@ -301,7 +321,7 @@
 
 .agent-card-inner-stacked {
   display: grid;
-  grid-template-columns: 0.45fr 0.55fr; /* give video a bit more space */
+  grid-template-columns: 0.45fr 0.55fr; /* video 45%, text 55% */
   gap: 3.25rem; /* slightly more breathing room */
   align-items: center;
   justify-items: stretch;
@@ -312,14 +332,63 @@
   min-height: 550px;
 }
 
-/* Alternating layouts - video and text positions alternate */
-.agent-card-stacked.layout-left-visual .agent-card-inner-stacked {
-  grid-template-columns: 0.4fr 0.6fr; /* Video left (40%), text right (60%) */
+/* Ensure grid columns don't shrink below content size */
+.agent-card-inner-stacked > * {
+  min-width: 0;
 }
 
-.agent-card-stacked.layout-right-visual .agent-card-inner-stacked {
-  grid-template-columns: 0.6fr 0.4fr; /* Text left (60%), video right (40%) */
+/* Alternating layouts - video and text positions alternate */
+.agent-card-stacked.layout-left-visual .agent-card-inner-stacked {
+  grid-template-columns: 0.45fr 0.55fr; /* Video left (45%), text right (55%) - larger video */
 }
+
+/* CFO card - give more space for text to prevent truncation */
+.cfo-card .agent-card-inner-stacked {
+  grid-template-columns: 0.45fr 0.55fr; /* video 45%, text 55% - larger video size */
+  min-width: 0; /* Allow grid to shrink below content size */
+}
+
+.cfo-card .agent-content-panel-stacked {
+  min-width: 0; /* Allow flex item to shrink */
+  overflow: visible; /* Show all text */
+}
+
+/* Apply same grid layout to all agent cards */
+.agent-card-stacked.layout-left-visual .agent-card-inner-stacked {
+  grid-template-columns: 0.45fr 0.55fr; /* video 45%, text 55% - larger video size */
+  min-width: 0;
+  overflow: visible;
+}
+
+.agent-card-stacked.layout-left-visual .agent-content-panel-stacked {
+  min-width: 0;
+  overflow: visible;
+}
+
+/* Right visual layout (Real Estate, HR) - text left, video right */
+.agent-card-stacked.layout-right-visual .agent-card-inner-stacked {
+  grid-template-columns: 0.55fr 0.45fr; /* text 55%, video 45% - larger video size */
+  gap: 3.5rem; /* Reasonable gap between video and text */
+  min-width: 0;
+  overflow: visible;
+}
+
+.agent-card-stacked.layout-right-visual .agent-content-panel-stacked {
+  min-width: 0;
+  overflow: visible;
+  padding-right: 2rem; /* Add right padding for spacing from video */
+  padding-left: 0; /* No left padding, align to left edge */
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.agent-card-stacked.layout-right-visual .agent-visual-panel-stacked {
+  padding-left: 0; /* No padding */
+  padding-right: 0;
+  margin-left: 0; /* No margin, gap handles spacing */
+  justify-content: flex-end; /* Align video to right */
+}
+
 
 /* Alternating order - video left for layout-left-visual, video right for layout-right-visual */
 .agent-card-stacked.layout-left-visual .agent-visual-panel-stacked {
@@ -349,6 +418,23 @@
   margin: 0;
   padding: 0;
   padding-top: 0; /* Start from top */
+  overflow: visible; /* Allow video container to show rounded corners */
+}
+
+/* Right visual layout - align video panel properly */
+.agent-card-stacked.layout-right-visual .agent-visual-panel-stacked {
+  justify-content: flex-end; /* Align video to right */
+  align-items: flex-start; /* Align to top */
+}
+
+/* CFO card: nudge video a bit further left inside its column */
+.cfo-card .agent-visual-panel-stacked {
+  justify-content: flex-start;
+}
+
+/* Keep CFO video fully visible inside its column */
+.cfo-card.layout-left-visual .agent-visual-panel-stacked .agent-video-container {
+  margin-left: 0; /* no horizontal shift to avoid clipping on the right */
 }
 
 .agent-visual-panel-stacked .agent-video-container {
@@ -356,16 +442,17 @@
   aspect-ratio: 16 / 10; /* slightly wider video card */
   max-width: 100%;
   height: auto;
-  min-height: 420px;
+  min-height: 420px;  /* reverted to earlier height */
   max-height: 540px;
-  border-radius: 24px; /* Rounded corners */
-  overflow: hidden;
+  border-radius: 24px; /* earlier rounded corners */
+  overflow: hidden !important;
   background: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0;
   position: relative;
+  isolation: isolate; /* Create new stacking context */
 }
 
 /* Ensure all videos and images are square and have rounded corners */
@@ -373,22 +460,79 @@
 .agent-visual-panel-stacked .agent-video-container img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Changed from contain to cover for better square fill */
-  border-radius: 24px;
+  object-fit: cover; /* Default fill for most videos */
+  border-radius: 24px !important;
   display: block;
+  overflow: hidden !important;
 }
 
 .agent-visual-panel-stacked .agent-video,
 .agent-visual-panel-stacked img.agent-video {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Cover to fill square frame */
+  object-fit: cover; /* Default: fill frame */
   display: block;
   background: transparent;
   filter: none !important;
   opacity: 1 !important;
-  border-radius: 24px; /* Rounded corners for all videos and images */
-  overflow: hidden;
+  border-radius: 24px !important; /* Rounded corners for all videos and images */
+  overflow: hidden !important;
+}
+
+/* CFO video: match Sales video dimensions/behavior */
+.agent-visual-panel-stacked .cfo-video {
+  object-fit: cover !important;   /* zoomed / fills frame like Sales */
+  object-position: top center;    /* keep upper part visible */
+  background: transparent;
+  border-radius: 24px;
+}
+
+/* HR / Real Estate card video: match Sales/CFO sizing/behavior */
+.agent-visual-panel-stacked .hr-video {
+  object-fit: cover !important;   /* zoomed / fills frame like Sales */
+  object-position: top center;    /* keep upper part visible */
+  background: transparent;
+  border-radius: 24px !important;
+  overflow: hidden !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Sales card video: use earlier zoomed look, but keep top of video visible */
+.agent-visual-panel-stacked .sales-video {
+  object-fit: cover !important;    /* zoomed / fills frame */
+  object-position: top center;     /* prioritize showing the upper part */
+  background: transparent;
+}
+
+.cfo-features {
+  /* Stack CFO features vertically with good spacing */
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+}
+
+.cfo-feature-item {
+  align-items: flex-start;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+  overflow: visible;
+}
+
+.cfo-feature-text {
+  font-size: 0.95rem;
+  text-align: left;
+  white-space: nowrap;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  display: block;
+  width: 100%;
+  overflow: visible;
 }
 
 /* Content Panel */
@@ -405,6 +549,86 @@
   max-width: 100%;
   margin-left: 1rem; /* Additional spacing from card edge */
   padding-top: 0; /* Match video top alignment */
+}
+
+/* CFO card content - remove box alignment, improve text flow */
+.cfo-card .agent-content-panel-stacked {
+  padding: 0;
+  margin-left: 0;
+  align-items: flex-start;
+  gap: 1.25rem;
+  min-width: 0;
+  flex: 1;
+  overflow: visible;
+}
+
+.cfo-card .agent-card-name {
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.cfo-card .agent-card-description {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+/* Apply same styling to all agent cards (Real Estate, AI Sales, HR) */
+.agent-card-stacked.layout-left-visual .agent-content-panel-stacked,
+.agent-card-stacked.layout-right-visual .agent-content-panel-stacked {
+  padding: 0;
+  margin-left: 0;
+  align-items: flex-start;
+  gap: 1.25rem;
+  min-width: 0;
+  flex: 1;
+  overflow: visible;
+}
+
+.agent-card-stacked.layout-left-visual .agent-card-name,
+.agent-card-stacked.layout-right-visual .agent-card-name {
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  width: 100%;
+}
+
+.agent-card-stacked.layout-left-visual .agent-card-description,
+.agent-card-stacked.layout-right-visual .agent-card-description {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+  width: 100%;
+}
+
+/* Apply same feature text styling to all agent cards */
+.agent-card-stacked.layout-left-visual .agent-feature-text,
+.agent-card-stacked.layout-right-visual .agent-feature-text {
+  font-size: 0.95rem;
+  text-align: left;
+  white-space: nowrap;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+.agent-card-stacked.layout-left-visual .agent-feature-item,
+.agent-card-stacked.layout-right-visual .agent-feature-item {
+  align-items: flex-start;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+  overflow: visible;
+}
+
+.agent-card-stacked.layout-left-visual .agent-features,
+.agent-card-stacked.layout-right-visual .agent-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
 }
 
 .agent-content-panel-stacked .agent-card-name {
@@ -473,7 +697,7 @@
 @media (max-width: 968px) {
   .agent-demo-container {
     max-width: 100%;
-    padding: 0 1rem;
+    padding: 0 16px;
   }
 
   .agent-demo-header {
