@@ -265,9 +265,20 @@ const AgentDemoCards: React.FC = () => {
                               loop={true}
                               autoPlay
                               playsInline
-                              preload="metadata"
+                              preload="auto"
                               crossOrigin="anonymous"
                               style={{ display: 'block', opacity: 1 }}
+                              onCanPlay={(e) => {
+                                const video = e.currentTarget;
+                                console.log('AICFO video can play - ready to play');
+                                video.style.display = 'block';
+                                video.style.opacity = '1';
+                              }}
+                              onLoadedData={(e) => {
+                                const video = e.currentTarget;
+                                console.log('AICFO video data loaded successfully');
+                                video.style.display = 'block';
+                              }}
                               onPlay={() => setPlayingCards(prev => ({ ...prev, 'ai-cfo-agent': true }))}
                               onPause={() => setPlayingCards(prev => ({ ...prev, 'ai-cfo-agent': false }))}
                               onLoadedMetadata={(e) => {
@@ -283,76 +294,140 @@ const AgentDemoCards: React.FC = () => {
                                   const errorCode = video.error.code;
                                   const errorMessage = video.error.message || 'Unknown error';
                                   
-                                  // Log detailed diagnostics
-                                  console.error('AICFO Video Error Details:', {
-                                    errorCode,
-                                    errorMessage,
-                                    videoSrc: video.src,
-                                    networkState: video.networkState,
-                                    readyState: video.readyState,
-                                    canPlayType: video.canPlayType('video/mp4'),
-                                    location: window.location.href
-                                  });
-                                  
-                                  // Error code 4 = MEDIA_ERR_SRC_NOT_SUPPORTED
-                                  // This usually means format/codec issue or file corruption
-                                  if (errorCode === 4) {
-                                    console.error('Video format not supported. Possible causes:');
-                                    console.error('1. Video codec not supported by browser');
-                                    console.error('2. File is corrupted');
-                                    console.error('3. File size too large');
-                                    console.error('4. MIME type issue on server');
-                                    
-                                    // Try to fetch the file to check if it's accessible
-                                    fetch(video.src, { method: 'HEAD' })
-                                      .then(response => {
-                                        console.log('Video file HTTP status:', response.status);
-                                        console.log('Video file Content-Type:', response.headers.get('Content-Type'));
-                                        console.log('Video file Content-Length:', response.headers.get('Content-Length'));
-                                        if (!response.ok) {
-                                          console.error('Video file is not accessible:', response.status, response.statusText);
-                                        }
-                                      })
-                                      .catch(err => {
-                                        console.error('Cannot access video file:', err);
+                                  // Check file size first - if it's too small, the file is corrupted
+                                  fetch(video.src, { method: 'HEAD' })
+                                    .then(response => {
+                                      const contentLength = response.headers.get('Content-Length');
+                                      const fileSize = contentLength ? parseInt(contentLength, 10) : 0;
+                                      
+                                      console.error('AICFO Video Error Details:', {
+                                        errorCode,
+                                        errorMessage,
+                                        videoSrc: video.src,
+                                        fileSize: fileSize,
+                                        fileSizeMB: (fileSize / (1024 * 1024)).toFixed(2),
+                                        networkState: video.networkState,
+                                        readyState: video.readyState,
+                                        canPlayType: video.canPlayType('video/mp4'),
+                                        httpStatus: response.status,
+                                        contentType: response.headers.get('Content-Type')
                                       });
-                                  }
-                                  
-                                  // Try alternative paths
-                                  const alternatives = [
-                                    '/AICFO.mp4', 
-                                    '/AICFO.mp4',
-                                    `${window.location.origin}/AICFO.mp4`
-                                  ];
-                                  let currentIndex = 0;
-                                  const tryNext = () => {
-                                    if (currentIndex < alternatives.length && video.error) {
-                                      const newSrc = alternatives[currentIndex];
-                                      const currentSrc = video.src.replace(window.location.origin, '');
-                                      if (currentSrc !== newSrc && !video.src.includes(newSrc)) {
-                                        console.log(`Trying alternative path: ${newSrc}`);
+                                      
+                                      // If file size is suspiciously small (< 1KB), it's likely corrupted or wrong file
+                                      if (fileSize < 1024) {
+                                        console.error('CRITICAL: Video file is too small (' + fileSize + ' bytes). File is corrupted or not uploaded correctly.');
+                                        console.error('Please verify AICFO.mp4 exists in public folder and is a valid video file.');
+                                        
+                                        // Try to reload the video with cache busting
+                                        const cacheBuster = '?t=' + Date.now();
+                                        const newSrc = video.src.split('?')[0] + cacheBuster;
+                                        console.log('Attempting to reload with cache busting:', newSrc);
                                         video.src = newSrc;
                                         video.load();
+                                        return;
                                       }
-                                      currentIndex++;
-                                    } else if (video.error) {
-                                      console.error('All AICFO video paths failed.');
-                                      console.error('Final video src:', video.src);
-                                      console.error('Error code:', video.error.code);
-                                      // Don't hide video, show a placeholder instead
-                                      video.style.display = 'none';
-                                      const container = video.parentElement;
-                                      if (container && !container.querySelector('.video-error-placeholder')) {
-                                        const placeholder = document.createElement('div');
-                                        placeholder.className = 'video-error-placeholder';
-                                        placeholder.textContent = 'Video unavailable';
-                                        placeholder.style.cssText = 'display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background: #1a1a1a; color: #888; font-size: 14px;';
-                                        container.appendChild(placeholder);
+                                      
+                                      // If file size is OK but still error, try different loading strategies
+                                      if (errorCode === 4 && fileSize > 1024) {
+                                        console.error('Video format issue. Attempting alternative loading methods...');
+                                        
+                                        // Strategy 1: Try loading as blob
+                                        fetch(video.src)
+                                          .then(res => {
+                                            if (res.ok && res.headers.get('Content-Type')?.includes('video')) {
+                                              return res.blob();
+                                            }
+                                            throw new Error('Invalid response');
+                                          })
+                                          .then(blob => {
+                                            if (blob.size > 1024) {
+                                              const blobUrl = URL.createObjectURL(blob);
+                                              console.log('Loading video from blob URL');
+                                              video.src = blobUrl;
+                                              video.load();
+                                            } else {
+                                              throw new Error('Blob too small');
+                                            }
+                                          })
+                                          .catch(err => {
+                                            console.error('Blob loading failed:', err);
+                                            // Fall back to retry with different path
+                                            retryWithAlternatives(video);
+                                          });
+                                      } else {
+                                        retryWithAlternatives(video);
                                       }
-                                    }
+                                    })
+                                    .catch(err => {
+                                      console.error('Cannot check video file:', err);
+                                      retryWithAlternatives(video);
+                                    });
+                                  
+                                  const retryWithAlternatives = (videoElement: HTMLVideoElement) => {
+                                    const alternatives = [
+                                      '/AICFO.mp4',
+                                      '/AICFO.mp4?t=' + Date.now(),
+                                      `${window.location.origin}/AICFO.mp4`,
+                                      `${window.location.origin}/AICFO.mp4?t=${Date.now()}`
+                                    ];
+                                    let currentIndex = 0;
+                                    const maxRetries = alternatives.length;
+                                    
+                                    const tryNext = () => {
+                                      if (currentIndex < maxRetries && videoElement.error) {
+                                        const newSrc = alternatives[currentIndex];
+                                        const currentSrc = videoElement.src.split('?')[0].replace(window.location.origin, '');
+                                        const newSrcPath = newSrc.split('?')[0].replace(window.location.origin, '');
+                                        
+                                        if (currentSrc !== newSrcPath) {
+                                          console.log(`Retry ${currentIndex + 1}/${maxRetries}: Trying path: ${newSrc}`);
+                                          videoElement.src = newSrc;
+                                          videoElement.load();
+                                        }
+                                        currentIndex++;
+                                        
+                                        // Wait a bit before next retry
+                                        if (currentIndex < maxRetries) {
+                                          setTimeout(() => {
+                                            if (videoElement.error) {
+                                              tryNext();
+                                            }
+                                          }, 500);
+                                        }
+                                      } else if (videoElement.error) {
+                                        console.error('All AICFO video loading attempts failed.');
+                                        console.error('Final video src:', videoElement.src);
+                                        console.error('Error code:', videoElement.error.code);
+                                        
+                                        // Show placeholder but keep trying in background
+                                        videoElement.style.display = 'none';
+                                        const container = videoElement.parentElement;
+                                        if (container && !container.querySelector('.video-error-placeholder')) {
+                                          const placeholder = document.createElement('div');
+                                          placeholder.className = 'video-error-placeholder';
+                                          placeholder.textContent = 'Loading video...';
+                                          placeholder.style.cssText = 'display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background: #1a1a1a; color: #888; font-size: 14px;';
+                                          container.appendChild(placeholder);
+                                          
+                                          // Keep trying periodically
+                                          const retryInterval = setInterval(() => {
+                                            if (!videoElement.error) {
+                                              clearInterval(retryInterval);
+                                              placeholder.remove();
+                                              videoElement.style.display = 'block';
+                                            } else {
+                                              console.log('Retrying video load...');
+                                              videoElement.src = '/AICFO.mp4?retry=' + Date.now();
+                                              videoElement.load();
+                                            }
+                                          }, 5000);
+                                        }
+                                      }
+                                    };
+                                    
+                                    videoElement.addEventListener('error', tryNext, { once: true });
+                                    setTimeout(tryNext, 100);
                                   };
-                                  video.addEventListener('error', tryNext, { once: true });
-                                  tryNext();
                                 }
                               }}
                             />
@@ -408,9 +483,20 @@ const AgentDemoCards: React.FC = () => {
                               loop={true}
                               autoPlay
                               playsInline
-                              preload="metadata"
+                              preload="auto"
                               crossOrigin="anonymous"
                               style={{ display: 'block', opacity: 1 }}
+                              onCanPlay={(e) => {
+                                const video = e.currentTarget;
+                                console.log('AICFO video can play - ready to play');
+                                video.style.display = 'block';
+                                video.style.opacity = '1';
+                              }}
+                              onLoadedData={(e) => {
+                                const video = e.currentTarget;
+                                console.log('AICFO video data loaded successfully');
+                                video.style.display = 'block';
+                              }}
                               onPlay={() => setPlayingCards(prev => ({ ...prev, 'ai-cfo-agent': true }))}
                               onPause={() => setPlayingCards(prev => ({ ...prev, 'ai-cfo-agent': false }))}
                               onLoadedMetadata={(e) => {
@@ -426,76 +512,140 @@ const AgentDemoCards: React.FC = () => {
                                   const errorCode = video.error.code;
                                   const errorMessage = video.error.message || 'Unknown error';
                                   
-                                  // Log detailed diagnostics
-                                  console.error('AICFO Video Error Details:', {
-                                    errorCode,
-                                    errorMessage,
-                                    videoSrc: video.src,
-                                    networkState: video.networkState,
-                                    readyState: video.readyState,
-                                    canPlayType: video.canPlayType('video/mp4'),
-                                    location: window.location.href
-                                  });
-                                  
-                                  // Error code 4 = MEDIA_ERR_SRC_NOT_SUPPORTED
-                                  // This usually means format/codec issue or file corruption
-                                  if (errorCode === 4) {
-                                    console.error('Video format not supported. Possible causes:');
-                                    console.error('1. Video codec not supported by browser');
-                                    console.error('2. File is corrupted');
-                                    console.error('3. File size too large');
-                                    console.error('4. MIME type issue on server');
-                                    
-                                    // Try to fetch the file to check if it's accessible
-                                    fetch(video.src, { method: 'HEAD' })
-                                      .then(response => {
-                                        console.log('Video file HTTP status:', response.status);
-                                        console.log('Video file Content-Type:', response.headers.get('Content-Type'));
-                                        console.log('Video file Content-Length:', response.headers.get('Content-Length'));
-                                        if (!response.ok) {
-                                          console.error('Video file is not accessible:', response.status, response.statusText);
-                                        }
-                                      })
-                                      .catch(err => {
-                                        console.error('Cannot access video file:', err);
+                                  // Check file size first - if it's too small, the file is corrupted
+                                  fetch(video.src, { method: 'HEAD' })
+                                    .then(response => {
+                                      const contentLength = response.headers.get('Content-Length');
+                                      const fileSize = contentLength ? parseInt(contentLength, 10) : 0;
+                                      
+                                      console.error('AICFO Video Error Details:', {
+                                        errorCode,
+                                        errorMessage,
+                                        videoSrc: video.src,
+                                        fileSize: fileSize,
+                                        fileSizeMB: (fileSize / (1024 * 1024)).toFixed(2),
+                                        networkState: video.networkState,
+                                        readyState: video.readyState,
+                                        canPlayType: video.canPlayType('video/mp4'),
+                                        httpStatus: response.status,
+                                        contentType: response.headers.get('Content-Type')
                                       });
-                                  }
-                                  
-                                  // Try alternative paths
-                                  const alternatives = [
-                                    '/AICFO.mp4', 
-                                    '/AICFO.mp4',
-                                    `${window.location.origin}/AICFO.mp4`
-                                  ];
-                                  let currentIndex = 0;
-                                  const tryNext = () => {
-                                    if (currentIndex < alternatives.length && video.error) {
-                                      const newSrc = alternatives[currentIndex];
-                                      const currentSrc = video.src.replace(window.location.origin, '');
-                                      if (currentSrc !== newSrc && !video.src.includes(newSrc)) {
-                                        console.log(`Trying alternative path: ${newSrc}`);
+                                      
+                                      // If file size is suspiciously small (< 1KB), it's likely corrupted or wrong file
+                                      if (fileSize < 1024) {
+                                        console.error('CRITICAL: Video file is too small (' + fileSize + ' bytes). File is corrupted or not uploaded correctly.');
+                                        console.error('Please verify AICFO.mp4 exists in public folder and is a valid video file.');
+                                        
+                                        // Try to reload the video with cache busting
+                                        const cacheBuster = '?t=' + Date.now();
+                                        const newSrc = video.src.split('?')[0] + cacheBuster;
+                                        console.log('Attempting to reload with cache busting:', newSrc);
                                         video.src = newSrc;
                                         video.load();
+                                        return;
                                       }
-                                      currentIndex++;
-                                    } else if (video.error) {
-                                      console.error('All AICFO video paths failed.');
-                                      console.error('Final video src:', video.src);
-                                      console.error('Error code:', video.error.code);
-                                      // Don't hide video, show a placeholder instead
-                                      video.style.display = 'none';
-                                      const container = video.parentElement;
-                                      if (container && !container.querySelector('.video-error-placeholder')) {
-                                        const placeholder = document.createElement('div');
-                                        placeholder.className = 'video-error-placeholder';
-                                        placeholder.textContent = 'Video unavailable';
-                                        placeholder.style.cssText = 'display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background: #1a1a1a; color: #888; font-size: 14px;';
-                                        container.appendChild(placeholder);
+                                      
+                                      // If file size is OK but still error, try different loading strategies
+                                      if (errorCode === 4 && fileSize > 1024) {
+                                        console.error('Video format issue. Attempting alternative loading methods...');
+                                        
+                                        // Strategy 1: Try loading as blob
+                                        fetch(video.src)
+                                          .then(res => {
+                                            if (res.ok && res.headers.get('Content-Type')?.includes('video')) {
+                                              return res.blob();
+                                            }
+                                            throw new Error('Invalid response');
+                                          })
+                                          .then(blob => {
+                                            if (blob.size > 1024) {
+                                              const blobUrl = URL.createObjectURL(blob);
+                                              console.log('Loading video from blob URL');
+                                              video.src = blobUrl;
+                                              video.load();
+                                            } else {
+                                              throw new Error('Blob too small');
+                                            }
+                                          })
+                                          .catch(err => {
+                                            console.error('Blob loading failed:', err);
+                                            // Fall back to retry with different path
+                                            retryWithAlternatives(video);
+                                          });
+                                      } else {
+                                        retryWithAlternatives(video);
                                       }
-                                    }
+                                    })
+                                    .catch(err => {
+                                      console.error('Cannot check video file:', err);
+                                      retryWithAlternatives(video);
+                                    });
+                                  
+                                  const retryWithAlternatives = (videoElement: HTMLVideoElement) => {
+                                    const alternatives = [
+                                      '/AICFO.mp4',
+                                      '/AICFO.mp4?t=' + Date.now(),
+                                      `${window.location.origin}/AICFO.mp4`,
+                                      `${window.location.origin}/AICFO.mp4?t=${Date.now()}`
+                                    ];
+                                    let currentIndex = 0;
+                                    const maxRetries = alternatives.length;
+                                    
+                                    const tryNext = () => {
+                                      if (currentIndex < maxRetries && videoElement.error) {
+                                        const newSrc = alternatives[currentIndex];
+                                        const currentSrc = videoElement.src.split('?')[0].replace(window.location.origin, '');
+                                        const newSrcPath = newSrc.split('?')[0].replace(window.location.origin, '');
+                                        
+                                        if (currentSrc !== newSrcPath) {
+                                          console.log(`Retry ${currentIndex + 1}/${maxRetries}: Trying path: ${newSrc}`);
+                                          videoElement.src = newSrc;
+                                          videoElement.load();
+                                        }
+                                        currentIndex++;
+                                        
+                                        // Wait a bit before next retry
+                                        if (currentIndex < maxRetries) {
+                                          setTimeout(() => {
+                                            if (videoElement.error) {
+                                              tryNext();
+                                            }
+                                          }, 500);
+                                        }
+                                      } else if (videoElement.error) {
+                                        console.error('All AICFO video loading attempts failed.');
+                                        console.error('Final video src:', videoElement.src);
+                                        console.error('Error code:', videoElement.error.code);
+                                        
+                                        // Show placeholder but keep trying in background
+                                        videoElement.style.display = 'none';
+                                        const container = videoElement.parentElement;
+                                        if (container && !container.querySelector('.video-error-placeholder')) {
+                                          const placeholder = document.createElement('div');
+                                          placeholder.className = 'video-error-placeholder';
+                                          placeholder.textContent = 'Loading video...';
+                                          placeholder.style.cssText = 'display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background: #1a1a1a; color: #888; font-size: 14px;';
+                                          container.appendChild(placeholder);
+                                          
+                                          // Keep trying periodically
+                                          const retryInterval = setInterval(() => {
+                                            if (!videoElement.error) {
+                                              clearInterval(retryInterval);
+                                              placeholder.remove();
+                                              videoElement.style.display = 'block';
+                                            } else {
+                                              console.log('Retrying video load...');
+                                              videoElement.src = '/AICFO.mp4?retry=' + Date.now();
+                                              videoElement.load();
+                                            }
+                                          }, 5000);
+                                        }
+                                      }
+                                    };
+                                    
+                                    videoElement.addEventListener('error', tryNext, { once: true });
+                                    setTimeout(tryNext, 100);
                                   };
-                                  video.addEventListener('error', tryNext, { once: true });
-                                  tryNext();
                                 }
                               }}
                             />
