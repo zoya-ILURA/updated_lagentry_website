@@ -41,6 +41,24 @@ const WhyChooseLagentry: React.FC = () => {
                 muted
                 loop
                 playsInline
+                onError={(e) => {
+                  console.error('IMG_4388 video error:', e);
+                  const video = e.currentTarget;
+                  console.error('Video src:', video.src);
+                  console.error('Video error code:', video.error?.code);
+                  // Try alternative paths
+                  const alternatives = ['/IMG_4388.mp4', '/images/IMG_4388.MP4', '/images/IMG_4388.mp4'];
+                  let currentIndex = 0;
+                  const tryNext = () => {
+                    if (currentIndex < alternatives.length) {
+                      video.src = `${process.env.PUBLIC_URL}${alternatives[currentIndex]}`;
+                      video.load();
+                      currentIndex++;
+                    }
+                  };
+                  video.addEventListener('error', tryNext, { once: true });
+                  tryNext();
+                }}
               />
             </div>
           </div>

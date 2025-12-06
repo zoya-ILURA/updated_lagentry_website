@@ -6,8 +6,8 @@ import realVoiceDemo from '../realvoicedemo.mp3';
 const salesVideo = `${process.env.PUBLIC_URL}/sales.mp4`;
 import agentBg from './agentbg2.png';
 // Video paths - files should be in public folder
-// Files are in: public/AICFO.MP4, public/HRvc.gif, public/vim1.mp4, public/vim2.mp4
-const aiCFOVideo = `${process.env.PUBLIC_URL}/AICFO.MP4`;
+// Files are in: public/AICFO.mp4, public/HRvc.gif, public/vim1.mp4, public/vim2.mp4
+const aiCFOVideo = `${process.env.PUBLIC_URL}/AICFO.mp4`;
 const hrVideo = '/HRvc.mp4';
 
 interface AgentCard {
@@ -276,6 +276,18 @@ const AgentDemoCards: React.FC = () => {
                                 if (video) {
                                   console.error('Video src:', video.src);
                                   console.error('Video error code:', video.error?.code);
+                                  // Try alternative paths with different cases
+                                  const alternatives = ['/AICFO.mp4', '/AICFO.MP4', '/images/AICFO.mp4', '/images/AICFO.MP4'];
+                                  let currentIndex = 0;
+                                  const tryNext = () => {
+                                    if (currentIndex < alternatives.length) {
+                                      video.src = `${process.env.PUBLIC_URL}${alternatives[currentIndex]}`;
+                                      video.load();
+                                      currentIndex++;
+                                    }
+                                  };
+                                  video.addEventListener('error', tryNext, { once: true });
+                                  tryNext();
                                 }
                               }}
                             />
@@ -348,6 +360,18 @@ const AgentDemoCards: React.FC = () => {
                                 if (video) {
                                   console.error('Video src:', video.src);
                                   console.error('Video error code:', video.error?.code);
+                                  // Try alternative paths with different cases
+                                  const alternatives = ['/AICFO.mp4', '/AICFO.MP4', '/images/AICFO.mp4', '/images/AICFO.MP4'];
+                                  let currentIndex = 0;
+                                  const tryNext = () => {
+                                    if (currentIndex < alternatives.length) {
+                                      video.src = `${process.env.PUBLIC_URL}${alternatives[currentIndex]}`;
+                                      video.load();
+                                      currentIndex++;
+                                    }
+                                  };
+                                  video.addEventListener('error', tryNext, { once: true });
+                                  tryNext();
                                 }
                               }}
                             />
