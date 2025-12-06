@@ -140,7 +140,15 @@ const VoiceAgentsPreview: React.FC = () => {
 
         try {
             // Get agent ID from backend
-            const response = await fetch('http://localhost:3001/api/start-voice-call', {
+            // In development, use proxy from package.json (http://localhost:5001)
+            // In production, use environment variable or default to port 5001
+            const isDevelopment = process.env.NODE_ENV === 'development';
+            const backendUrl = isDevelopment 
+                ? '' // Use proxy in development (package.json has proxy: "http://localhost:5001")
+                : (process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001');
+            const apiUrl = `${backendUrl}/api/start-voice-call`;
+            console.log('Calling backend API:', apiUrl);
+            const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -155,8 +163,22 @@ const VoiceAgentsPreview: React.FC = () => {
                 }),
             });
 
+            console.log('Response status:', response.status, response.statusText);
+
             if (!response.ok) {
-                throw new Error('Failed to start voice call');
+                // Try to read error message from response
+                let errorMessage = 'Failed to start voice call';
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.error || errorData.message || errorMessage;
+                    if (errorData.details) {
+                        errorMessage += `: ${errorData.details}`;
+                    }
+                } catch (e) {
+                    // If response is not JSON, use status text
+                    errorMessage = `Failed to start voice call (${response.status}: ${response.statusText})`;
+                }
+                throw new Error(errorMessage);
             }
 
             const data = await response.json();
@@ -265,16 +287,30 @@ const VoiceAgentsPreview: React.FC = () => {
 
         } catch (error: any) {
             console.error('Voice call error:', error);
+            console.error('Error details:', {
+                message: error.message,
+                stack: error.stack,
+                name: error.name
+            });
             setCallState('ended');
             
             let errorMessage = 'Unknown error occurred.';
             if (error.message) {
                 errorMessage = error.message;
             } else if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
-                errorMessage = 'Failed to connect to backend server. Please ensure the backend server is running on port 3001.';
+                errorMessage = 'Failed to connect to backend server. Please ensure the backend server is running on port 5001.';
             }
             
-            alert(`Failed to start call: ${errorMessage}\n\nPlease check:\n1. Backend server is running (http://localhost:3001)\n2. No firewall blocking the connection\n3. Check browser console for more details`);
+            // Don't show alert for user-initiated errors, just log them
+            // Only show alert for critical connection errors
+            if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+                alert(`Failed to start call: ${errorMessage}\n\nPlease check:\n1. Backend server is running (http://localhost:5001)\n2. No firewall blocking the connection\n3. Check browser console for more details`);
+            } else {
+                // For other errors, show a user-friendly message
+                console.error('Call failed:', errorMessage);
+                // You can optionally show a toast notification instead of alert
+                // For now, we'll just log it and let the UI show the error state
+            }
         }
     };
 

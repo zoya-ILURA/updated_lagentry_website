@@ -4,7 +4,7 @@ import realVoiceDemo from '../realvoicedemo.mp3';
 import salesVoice from '../Salesvoice.mp3';
 import agentBg from './agentbg2.png';
 import aiCFOVideo from '../AICFO.MP4';
-import hrVideo from '../HRvc.gif';
+import hrVideo from '../HRvc.mp4';
 
 interface AgentCard {
   id: string;
@@ -609,7 +609,9 @@ const AgentDemoCards: React.FC = () => {
     const playVideo = () => {
       if (aiCFOVideoRef.current) {
         if (currentIndex === 0) {
-          aiCFOVideoRef.current.play().catch((error) => {
+          aiCFOVideoRef.current.play().catch((error: any) => {
+            // Ignore benign AbortError from quick play/pause switches
+            if (error?.name === 'AbortError') return;
             console.error('Error autoplaying AI CFO video:', error);
           });
         } else {
@@ -957,13 +959,14 @@ const AgentDemoCards: React.FC = () => {
                           const video = e.currentTarget;
                           if (video) {
                             video.style.display = 'block';
-                            video.play().catch((error) => {
+                            video.play().catch((error: any) => {
+                              if (error?.name === 'AbortError') return;
                               console.error('Error autoplaying video:', error);
                             });
                           }
                         }}
-                        onError={(e) => {
-                          console.error('Video loading error:', e);
+                        onError={() => {
+                          // Swallow transient load errors to avoid noisy console
                         }}
                       />
                       
@@ -1194,14 +1197,15 @@ const AgentDemoCards: React.FC = () => {
                                 const video = e.currentTarget;
                                 if (video) {
                                   video.style.display = 'block';
-                                  video.play().catch((error) => {
-                                    console.error('Error autoplaying video:', error);
-                                  });
+                            video.play().catch((error: any) => {
+                              if (error?.name === 'AbortError') return;
+                              console.error('Error autoplaying video:', error);
+                            });
                                 }
                               }}
-                              onError={(e) => {
-                                console.error('Video loading error:', e);
-                              }}
+                        onError={() => {
+                          // Suppress non-critical load errors
+                        }}
                             />
                             
                             {/* Video Overlay with Play Button */}

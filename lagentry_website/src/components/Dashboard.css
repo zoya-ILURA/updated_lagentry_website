@@ -244,15 +244,30 @@
 
 @media (max-width: 768px) {
   .dashboard-section {
-    padding: 60px 0;
+    padding: 60px 16px;
+    min-height: auto;
+  }
+
+  .dashboard-content {
+    padding: 0 10px;
+  }
+  
+  .dashboard-header {
+    margin-bottom: 40px;
+    padding: 0 1rem;
   }
   
   .dashboard-title {
     font-size: 2rem;
+    line-height: 1.2;
+    word-wrap: break-word;
+    padding: 0 0.5rem;
   }
   
   .dashboard-subtitle {
     font-size: 1rem;
+    padding: 0 0.5rem;
+    line-height: 1.5;
   }
   
   .dashboard-gif-container {

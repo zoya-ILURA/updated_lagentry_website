@@ -359,10 +359,16 @@
   
   .pricing-title {
     font-size: 2rem;
+    line-height: 1.2;
+    word-wrap: break-word;
+    padding: 0 0.25rem;
   }
   
   .pricing-subtitle {
     font-size: 1rem;
+    line-height: 1.5;
+    word-wrap: break-word;
+    padding: 0 0.25rem;
   }
   
   .pricing-card {

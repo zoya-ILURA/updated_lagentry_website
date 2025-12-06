@@ -371,9 +371,38 @@
     height: 60vh;
   }
 
+  .sliding-text {
+    width: 90%;
+    max-width: 90vw;
+    padding: 0 1rem;
+  }
+
+  .sliding-text-content {
+    width: 100%;
+    max-width: 100%;
+  }
+
   .sliding-text h2 {
-    font-size: 1.3rem;
-    white-space: nowrap;
-    line-height: 1.2;
+    font-size: 1.5rem;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.3;
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sliding-text {
+    width: 95%;
+    max-width: 95vw;
+    padding: 0 0.75rem;
+  }
+
+  .sliding-text h2 {
+    font-size: 1.2rem;
+    line-height: 1.4;
+    padding: 0 0.25rem;
   }
 }

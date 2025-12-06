@@ -24,19 +24,12 @@ const Dashboard: React.FC = () => {
             <img src={DashGif} alt="Dashboard Analytics" className="dashboard-gif" />
           </div>
 
-          {/* Exact copy: embed built stacked-slides-app */}
-          <div className="embedded-slides">
-            <div className="embedded-slides-frame-wrap">
-              <iframe
-                className="embedded-slides-frame"
-                src={`${process.env.PUBLIC_URL}/videos/stacked-slides-app/index.html`}
-                title="Stacked Slides"
-                loading="eager"
-                allow="autoplay; fullscreen"
-                allowFullScreen
-              />
-            </div>
-          </div>
+          {/* NOTE: The previous embedded "stacked-slides-app" iframe pointed to
+              /videos/stacked-slides-app/index.html, which does not exist in this
+              project and caused React Router "No routes matched" console errors.
+              If you want to embed that app, copy its built files into
+              public/videos/stacked-slides-app and restore the iframe.
+              For now, the broken iframe has been removed to avoid errors. */}
         </div>
       </div>
     </div>

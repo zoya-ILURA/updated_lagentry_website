@@ -3,11 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import './AgentDemoCards.css';
 import realVoiceDemo from '../realvoicedemo.mp3';
 // Sales video path - file should be in public folder
-const salesVideo = `${process.env.PUBLIC_URL}/sales.mp4`;
+// Use absolute path for Netlify deployment compatibility
+const salesVideo = '/sales.mp4';
 import agentBg from './agentbg2.png';
 // Video paths - files should be in public folder
 // Files are in: public/AICFO.mp4, public/HRvc.gif, public/vim1.mp4, public/vim2.mp4
-const aiCFOVideo = `${process.env.PUBLIC_URL}/AICFO.mp4`;
+// Note: File is AICFO.mp4 (lowercase) - Netlify is case-sensitive
+// Use absolute paths for Netlify deployment compatibility
+const aiCFOVideo = '/AICFO.mp4';
 const hrVideo = '/HRvc.mp4';
 
 interface AgentCard {
@@ -50,7 +53,7 @@ const agents: AgentCard[] = [
     id: 'agent-3',
     name: 'HR Agent',
     description: 'Streamline your human resources operations with intelligent automation that handles recruitment, employee management, and HR workflows efficiently.',
-    video: `${process.env.PUBLIC_URL}/vim2.mp4`,
+    video: '/vim2.mp4',
     color: '#C084FC',
     features: [
       'Automated recruitment processes',
@@ -273,17 +276,25 @@ const AgentDemoCards: React.FC = () => {
                               onError={(e) => {
                                 console.error('CFO Video loading error:', e);
                                 const video = e.currentTarget;
-                                if (video) {
+                                if (video && video.error) {
                                   console.error('Video src:', video.src);
-                                  console.error('Video error code:', video.error?.code);
-                                  // Try alternative paths with different cases
-                                  const alternatives = ['/AICFO.mp4', '/AICFO.MP4', '/images/AICFO.mp4', '/images/AICFO.MP4'];
+                                  console.error('Video error code:', video.error.code);
+                                  // Try alternative paths - try lowercase first (actual file name)
+                                  const alternatives = ['/AICFO.mp4', '/AICFO.MP4'];
                                   let currentIndex = 0;
                                   const tryNext = () => {
-                                    if (currentIndex < alternatives.length) {
-                                      video.src = `${process.env.PUBLIC_URL}${alternatives[currentIndex]}`;
-                                      video.load();
+                                    if (currentIndex < alternatives.length && video.error) {
+                                      const newSrc = alternatives[currentIndex];
+                                      // Check if src is different (handle both relative and absolute URLs)
+                                      const currentSrc = video.src.replace(window.location.origin, '');
+                                      if (currentSrc !== newSrc) {
+                                        video.src = newSrc;
+                                        video.load();
+                                      }
                                       currentIndex++;
+                                    } else if (video.error) {
+                                      console.error('All AICFO video paths failed. Please ensure AICFO.mp4 exists in public folder.');
+                                      console.error('Current video src:', video.src);
                                     }
                                   };
                                   video.addEventListener('error', tryNext, { once: true });
@@ -357,17 +368,25 @@ const AgentDemoCards: React.FC = () => {
                               onError={(e) => {
                                 console.error('CFO Video loading error:', e);
                                 const video = e.currentTarget;
-                                if (video) {
+                                if (video && video.error) {
                                   console.error('Video src:', video.src);
-                                  console.error('Video error code:', video.error?.code);
-                                  // Try alternative paths with different cases
-                                  const alternatives = ['/AICFO.mp4', '/AICFO.MP4', '/images/AICFO.mp4', '/images/AICFO.MP4'];
+                                  console.error('Video error code:', video.error.code);
+                                  // Try alternative paths - try lowercase first (actual file name)
+                                  const alternatives = ['/AICFO.mp4', '/AICFO.MP4'];
                                   let currentIndex = 0;
                                   const tryNext = () => {
-                                    if (currentIndex < alternatives.length) {
-                                      video.src = `${process.env.PUBLIC_URL}${alternatives[currentIndex]}`;
-                                      video.load();
+                                    if (currentIndex < alternatives.length && video.error) {
+                                      const newSrc = alternatives[currentIndex];
+                                      // Check if src is different (handle both relative and absolute URLs)
+                                      const currentSrc = video.src.replace(window.location.origin, '');
+                                      if (currentSrc !== newSrc) {
+                                        video.src = newSrc;
+                                        video.load();
+                                      }
                                       currentIndex++;
+                                    } else if (video.error) {
+                                      console.error('All AICFO video paths failed. Please ensure AICFO.mp4 exists in public folder.');
+                                      console.error('Current video src:', video.src);
                                     }
                                   };
                                   video.addEventListener('error', tryNext, { once: true });

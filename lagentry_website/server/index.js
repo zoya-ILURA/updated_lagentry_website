@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 const WebSocket = require('ws');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5001;
 
 // VAPI configuration
 const VAPI_API_KEY = 'f59d5ef2-204a-4b3a-9b99-2f2552a45a08'; // Private key for server-side

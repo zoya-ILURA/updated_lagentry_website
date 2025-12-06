@@ -36,7 +36,7 @@ const WhyChooseLagentry: React.FC = () => {
             <div className="video-placeholder">
               <video
                 className="feature-video"
-                src={`${process.env.PUBLIC_URL}/IMG_4388.MP4`}
+                src="/IMG_4388.MP4"
                 autoPlay
                 muted
                 loop
@@ -47,13 +47,20 @@ const WhyChooseLagentry: React.FC = () => {
                   console.error('Video src:', video.src);
                   console.error('Video error code:', video.error?.code);
                   // Try alternative paths
-                  const alternatives = ['/IMG_4388.mp4', '/images/IMG_4388.MP4', '/images/IMG_4388.mp4'];
+                  const alternatives = ['/IMG_4388.MP4', '/IMG_4388.mp4'];
                   let currentIndex = 0;
                   const tryNext = () => {
-                    if (currentIndex < alternatives.length) {
-                      video.src = `${process.env.PUBLIC_URL}${alternatives[currentIndex]}`;
-                      video.load();
+                    if (currentIndex < alternatives.length && video.error) {
+                      const newSrc = alternatives[currentIndex];
+                      const currentSrc = video.src.replace(window.location.origin, '');
+                      if (currentSrc !== newSrc) {
+                        video.src = newSrc;
+                        video.load();
+                      }
                       currentIndex++;
+                    } else if (video.error) {
+                      console.error('IMG_4388.MP4 video not found. Please ensure the file exists in public folder.');
+                      console.error('Current video src:', video.src);
                     }
                   };
                   video.addEventListener('error', tryNext, { once: true });
@@ -81,11 +88,41 @@ const WhyChooseLagentry: React.FC = () => {
             <div className="video-placeholder">
               <video
                 className="feature-video"
-                src={`${process.env.PUBLIC_URL}/voice.mp4`}
+                src="/clone.mp4"
                 autoPlay
                 muted
                 loop
                 playsInline
+                onError={(e) => {
+                  console.error('clone video error:', e);
+                  const video = e.currentTarget;
+                  if (video && video.error) {
+                    console.error('Video src:', video.src);
+                    console.error('Video error code:', video.error.code);
+                    // Try alternative paths/formats as fallback (mp4 only - no MOV)
+                    const alternatives = ['/clone.mp4', '/clone.MP4'];
+                    let currentIndex = 0;
+                    const tryNext = () => {
+                      if (currentIndex < alternatives.length && video.error) {
+                        const newSrc = alternatives[currentIndex];
+                        // Check if src is different (handle both relative and absolute URLs)
+                        const currentSrc = video.src.replace(window.location.origin, '');
+                        if (currentSrc !== newSrc) {
+                          video.src = newSrc;
+                          video.load();
+                        }
+                        currentIndex++;
+                      } else if (video.error) {
+                        console.error('clone.mp4 video not found. Please ensure clone.mp4 exists in public folder.');
+                        console.error('Current video src:', video.src);
+                        // Hide video on persistent error
+                        video.style.display = 'none';
+                      }
+                    };
+                    video.addEventListener('error', tryNext, { once: true });
+                    tryNext();
+                  }
+                }}
               />
             </div>
           </div>

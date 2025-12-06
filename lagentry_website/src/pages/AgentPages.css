@@ -141,16 +141,99 @@
 }
 
 @media (max-width: 768px) {
+  .agent-page {
+    overflow-x: hidden;
+  }
+
   .agent-hero {
     padding: 6rem 1.5rem 3rem;
+  }
+
+  .agent-hero-inner {
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+
+  .agent-hero-title {
+    font-size: 2rem;
+    line-height: 1.2;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 0 0.5rem;
+  }
+
+  .agent-hero-overview {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    word-wrap: break-word;
+    padding: 0 0.5rem;
+    max-width: 100%;
   }
 
   .agent-video-section {
     padding: 0 1.5rem 2.5rem;
   }
 
+  .agent-video-frame {
+    max-width: 100%;
+    border-radius: 16px;
+  }
+
   .agent-features-section {
     padding: 2.5rem 1.5rem 4rem;
+  }
+
+  .agent-features-header h2 {
+    font-size: 1.75rem;
+    word-wrap: break-word;
+    padding: 0 0.5rem;
+  }
+
+  .agent-feature-title {
+    font-size: 1.25rem;
+    word-wrap: break-word;
+  }
+
+  .agent-feature-description {
+    font-size: 0.9rem;
+    word-wrap: break-word;
+  }
+}
+
+@media (max-width: 480px) {
+  .agent-hero {
+    padding: 5rem 1rem 2rem;
+  }
+
+  .agent-hero-title {
+    font-size: 1.75rem;
+    padding: 0 0.25rem;
+  }
+
+  .agent-hero-overview {
+    font-size: 0.85rem;
+    padding: 0 0.25rem;
+  }
+
+  .agent-video-section {
+    padding: 0 1rem 2rem;
+  }
+
+  .agent-features-section {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .agent-features-header h2 {
+    font-size: 1.5rem;
+    padding: 0 0.25rem;
+  }
+
+  .agent-feature-title {
+    font-size: 1.1rem;
+  }
+
+  .agent-feature-description {
+    font-size: 0.85rem;
   }
 }
 

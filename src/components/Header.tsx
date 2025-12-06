@@ -121,6 +121,8 @@ const Header: React.FC = () => {
 
   // removed custom shooting star logic
 
+  // Note: The early return above should prevent reaching here if animation should be skipped
+
   return (
     <header className={`header ${hideHeader ? 'header-hidden' : ''}`}>
       <div
@@ -155,7 +157,7 @@ const Header: React.FC = () => {
         
         {/* Copyright */}
         <div className={`copyright-text ${showCopyright ? 'visible' : ''} ${!showCopyright && showLagentry ? 'hidden' : ''}`}>
-          <p>© 2024 Lagentry. All rights reserved.</p>
+          <p>© 2025 Lagentry. All rights reserved.</p>
         </div>
         
         {/* Lagentry Image */}

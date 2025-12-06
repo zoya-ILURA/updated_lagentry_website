@@ -843,16 +843,49 @@
 }
 
 @media (max-width: 768px) {
+  .why-choose-section {
+    padding: 60px 16px;
+  }
+
+  .section-header {
+    margin-bottom: 50px;
+  }
+
   .section-header h2 {
     font-size: 2rem;
+    line-height: 1.3;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 0 1rem;
+  }
+
+  .section-header .subtitle {
+    font-size: 1rem;
+    padding: 0 1rem;
   }
 
   .test-agent-header h2 {
     font-size: 2rem;
+    padding: 0 1rem;
+    word-wrap: break-word;
   }
 
   .feature-content h3 {
-    font-size: 2rem;
+    font-size: 1.75rem;
+    line-height: 1.3;
+    word-wrap: break-word;
+    padding: 0 0.5rem;
+  }
+
+  .feature-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    padding: 0 0.5rem;
+  }
+
+  .feature-list {
+    font-size: 0.9rem;
+    padding: 0 0.5rem;
   }
 
   .agent-selection-layout {
@@ -861,9 +894,101 @@
 
   .form-modal {
     padding: 24px;
+    max-width: 95vw;
+    margin: 0 auto;
   }
 
   .call-active-modal {
-    padding: 30px;
+    padding: 30px 20px;
+    max-width: 95vw;
+    margin: 0 auto;
+  }
+
+  .feature-block, .feature-block.reverse {
+    padding: 0 1rem;
+  }
+
+  .feature-media {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .video-placeholder {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .feature-video {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .pes-grid {
+    gap: 20px;
+  }
+
+  .pes-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .pes-row-main {
+    width: 100%;
+  }
+
+  .pes-row-price {
+    width: 100%;
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .why-choose-section {
+    padding: 40px 12px;
+  }
+
+  .section-header h2 {
+    font-size: 1.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .section-header .subtitle {
+    font-size: 0.85rem;
+    padding: 0 0.5rem;
+  }
+
+  .test-agent-header h2 {
+    font-size: 1.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .feature-content h3 {
+    font-size: 1.5rem;
+    padding: 0 0.25rem;
+  }
+
+  .feature-description {
+    font-size: 0.85rem;
+    padding: 0 0.25rem;
+  }
+
+  .feature-list {
+    font-size: 0.8rem;
+    padding: 0 0.25rem;
+  }
+
+  .form-modal {
+    padding: 20px 16px;
+    max-width: 98vw;
+  }
+
+  .call-active-modal {
+    padding: 24px 16px;
+    max-width: 98vw;
+  }
+
+  .agent-selection-layout {
+    padding: 16px;
   }
 }

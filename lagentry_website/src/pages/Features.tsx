@@ -10,11 +10,19 @@ const Features: React.FC = () => {
   const [playingVideo, setPlayingVideo] = useState<number | null>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
+  // Helper to get correct video path for Netlify deployment
+  // Use absolute paths starting with / for better Netlify compatibility
+  const getVideoPath = (videoName: string) => {
+    // On Netlify, absolute paths work better than PUBLIC_URL
+    // Use /videoName.mp4 format which works in both dev and production
+    return `/${videoName}`;
+  };
+
   const videos = [
-    { id: 1, video: `${process.env.PUBLIC_URL}/v1.mp4`, title: 'Customer Support Voice Agent' },
-    { id: 2, video: `${process.env.PUBLIC_URL}/v2.mp4`, title: 'Real Estate' },
-    { id: 3, video: `${process.env.PUBLIC_URL}/v3.mp4`, title: 'Sales' },
-    { id: 4, video: `${process.env.PUBLIC_URL}/v4.mp4`, title: 'Marketing' }
+    { id: 1, video: '/v1.mp4', title: 'Customer Support Voice Agent' },
+    { id: 2, video: '/v2.mp4', title: 'Real Estate' },
+    { id: 3, video: '/v3.mp4', title: 'Sales' },
+    { id: 4, video: '/v4.mp4', title: 'Marketing' }
   ];
 
   // Initialize videos - don't autoplay, let user control
@@ -120,6 +128,48 @@ const Features: React.FC = () => {
                     muted
                     playsInline
                     preload="metadata"
+                    onError={(e) => {
+                      console.error(`Video ${video.id} (${video.video}) loading error:`, e);
+                      const videoElement = e.currentTarget;
+                      if (videoElement && videoElement.error) {
+                        console.error('Video src:', videoElement.src);
+                        console.error('Video error code:', videoElement.error.code);
+                        // Try alternative paths with different cases and formats
+                        const videoName = `v${video.id}`;
+                        const publicUrl = process.env.PUBLIC_URL || '';
+                        const alternatives = [
+                          `/${videoName}.mp4`,  // Try absolute path first (best for Netlify)
+                          `/${videoName}.MP4`  // Try uppercase extension
+                        ];
+                        let currentIndex = 0;
+                        const tryNext = () => {
+                          if (currentIndex < alternatives.length && videoElement.error) {
+                            const newSrc = alternatives[currentIndex];
+                            // Check if src is different (handle both relative and absolute URLs)
+                            const currentSrc = videoElement.src.replace(window.location.origin, '');
+                            if (currentSrc !== newSrc) {
+                              videoElement.src = newSrc;
+                              videoElement.load();
+                            }
+                            currentIndex++;
+                          } else if (videoElement.error) {
+                            console.error(`All paths failed for ${videoName}.mp4. Please ensure the file exists in public folder.`);
+                            console.error('Tried paths:', alternatives);
+                            console.error('Current video src:', videoElement.src);
+                            // Hide video on persistent error
+                            videoElement.style.display = 'none';
+                          }
+                        };
+                        videoElement.addEventListener('error', tryNext, { once: true });
+                        tryNext();
+                      }
+                    }}
+                    onLoadedMetadata={() => {
+                      const videoElement = videoRefs.current[index];
+                      if (videoElement) {
+                        videoElement.style.display = 'block';
+                      }
+                    }}
                   />
                   <div
                     className={`horizontal-video-overlay ${playingVideo === video.id ? 'playing' : ''}`}

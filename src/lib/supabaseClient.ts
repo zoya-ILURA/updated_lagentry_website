@@ -16,13 +16,18 @@ const supabaseUrl =
   process.env.REACT_APP_SUPABASE_URL ||
   'https://zlcijmyouoasydkamyeb.supabase.co';
 
+// If the key is missing, we still provide a non-empty placeholder string so that
+// Supabase doesn't throw at import time. Real projects should override this via .env.
 const supabaseKey =
   process.env.REACT_APP_SUPABASE_ANON_KEY ||
   process.env.REACT_APP_SUPABASE_KEY ||
-  '';
+  'supabase-public-anon-key-not-configured';
 
 // Validate that we have the required credentials
-if (!supabaseKey) {
+if (
+  !process.env.REACT_APP_SUPABASE_ANON_KEY &&
+  !process.env.REACT_APP_SUPABASE_KEY
+) {
   console.error(
     '⚠️ Supabase API key is missing!\n' +
     'Please add REACT_APP_SUPABASE_ANON_KEY to your .env file\n' +
