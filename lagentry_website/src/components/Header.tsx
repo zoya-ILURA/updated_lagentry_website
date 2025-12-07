@@ -2,59 +2,69 @@ import React, { useEffect, useRef, useState } from 'react';
 import './Header.css';
 import lagentryImage from '../Lagentry-main.png';
 import { ShaderBackground } from './ShaderBackground';
+import { hasIntroCompleted, markIntroCompleted } from '../introState';
 
 const Header: React.FC = () => {
+  // Only show the intro once per hard refresh.
+  const [isActive, setIsActive] = useState(() => !hasIntroCompleted());
   const [showText, setShowText] = useState(false);
   const [showCopyright, setShowCopyright] = useState(false);
   const [showLagentry, setShowLagentry] = useState(false);
   const [showNavigation, setShowNavigation] = useState(false);
   const [hideHeader, setHideHeader] = useState(false);
-  const [shouldShowIntro, setShouldShowIntro] = useState(true);
+  const [shouldShowIntro, setShouldShowIntro] = useState(isActive);
 
   useEffect(() => {
-    // Always show intro on page load (for now, can be controlled by sessionStorage later)
-    // Uncomment the line below to enable sessionStorage check
-    // const hasSessionStarted = sessionStorage.getItem('lagentry-session-started');
-    const hasSessionStarted = false; // Always show intro for now
+    if (!isActive) return;
     
-    if (!hasSessionStarted) {
-      // Fresh page load - show intro
+    // Fresh page load: play the intro once, then mark it as completed
+    // and deactivate this header so it unmounts.
       setShouldShowIntro(true);
       
-      // Mark session as started immediately
-      sessionStorage.setItem('lagentry-session-started', 'true');
-      
-      // Animation sequence timing - smooth intro
       const timeline = [
-        { delay: 200, action: () => {
+      {
+        delay: 200,
+        action: () => {
           setShowText(true);
-        }},
-        { delay: 1000, action: () => {
+        },
+      },
+      {
+        delay: 1000,
+        action: () => {
           setShowCopyright(true);
-        }},
-        { delay: 3000, action: () => {
-          // Hide text and copyright, show Lagentry
+        },
+      },
+      {
+        delay: 3000,
+        action: () => {
           setShowText(false);
           setShowCopyright(false);
           setShowLagentry(true);
-        }},
-        { delay: 5000, action: () => {
-          // Slide out the intro
+        },
+      },
+      {
+        delay: 5000,
+        action: () => {
           setShowLagentry(false);
           setShowNavigation(true);
           setHideHeader(true);
-        }}
+          markIntroCompleted();
+          setShouldShowIntro(false);
+          setIsActive(false);
+        },
+      },
       ];
 
+    const timers: number[] = [];
       timeline.forEach(({ delay, action }) => {
-        setTimeout(action, delay);
-      });
-    } else {
-      // Already in session - hide immediately
-      setHideHeader(true);
-      setShouldShowIntro(false);
-    }
-  }, []);
+      const id = window.setTimeout(action, delay);
+      timers.push(id);
+    });
+
+    return () => {
+      timers.forEach((id) => window.clearTimeout(id));
+    };
+  }, [isActive]);
 
   const bgRef = useRef<HTMLDivElement>(null);
 
@@ -75,8 +85,8 @@ const Header: React.FC = () => {
     el.style.setProperty('--glowOpacity', '0');
   };
 
-  // Don't render if intro shouldn't show
-  if (!shouldShowIntro && hideHeader) {
+  // If intro is no longer active (already played this load), render nothing.
+  if (!isActive) {
     return null;
   }
 
@@ -102,12 +112,13 @@ const Header: React.FC = () => {
         
         {/* Copyright */}
         <div className={`copyright-text ${showCopyright ? 'visible' : ''} ${!showCopyright && showLagentry ? 'hidden' : ''}`}>
-          <p>© 2024 Lagentry. All rights reserved.</p>
+          <p>© 2025 Lagentry. All rights reserved.</p>
         </div>
         
-        {/* Lagentry Image */}
+        {/* Lagentry Year + Logo */}
         <div className={`background-lagentry-text ${showLagentry ? 'visible' : ''}`}>
-          <img src={lagentryImage} alt="Lagentry" className="lagentry-image" />
+          <span className="lagentry-year">2025</span>
+          <img src={lagentryImage} alt="LAGENTRY logo" className="lagentry-image" />
         </div>
       </div>
     </header>

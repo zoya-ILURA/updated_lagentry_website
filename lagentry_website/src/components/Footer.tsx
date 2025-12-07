@@ -9,11 +9,11 @@ const Footer: React.FC = () => {
           {/* Lagentry Section */}
           <div className="footer-section">
             <div className="footer-logo">
-              <span className="logo-l">L</span>
-              <span className="logo-text">
-                <span className="logo-underlined">agent</span>
-                <span className="logo-part">ry</span>
-              </span>
+              <img
+                src="/images/lagentry1.png"
+                alt="Lagentry"
+                className="footer-logo-image"
+              />
             </div>
             <p className="footer-description">
               Empowering businesses to create intelligent AI <span className="agents-word-clear">agents</span> with simple prompts. 

@@ -6,19 +6,48 @@ const GmailSection: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState<string | null>(null);
 
   const handleVideoClick = () => {
     setShowForm(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Submitted:', { name, email });
-    // Close the form after submission
-    setShowForm(false);
-    setEmail('');
-    setName('');
+    setSubmitMessage(null);
+
+    try {
+      setIsSubmitting(true);
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result?.message || 'Failed to submit. Please try again.');
+      }
+
+      setSubmitMessage('Submitted successfully!');
+      // Optionally close the form after a short delay
+      setTimeout(() => {
+        setShowForm(false);
+        setEmail('');
+        setName('');
+        setSubmitMessage(null);
+      }, 1200);
+    } catch (err: any) {
+      console.error('Contact submit error:', err);
+      setSubmitMessage(err.message || 'Something went wrong. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleClose = () => {
@@ -69,7 +98,14 @@ const GmailSection: React.FC = () => {
                   placeholder="Enter your email"
                 />
               </div>
-              <button type="submit" className="email-form-submit">Submit</button>
+              {submitMessage && (
+                <div className="email-form-message">
+                  {submitMessage}
+                </div>
+              )}
+              <button type="submit" className="email-form-submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Submitting...' : 'Submit'}
+              </button>
             </form>
           </div>
         </div>

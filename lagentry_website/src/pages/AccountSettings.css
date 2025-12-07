@@ -11,7 +11,7 @@
 .form-field input{background:#0b0c12;border:1px solid #23283a;color:#e6e9ef;border-radius:10px;padding:12px 14px}
 .form-field input:focus{border-color:#6a5acd;box-shadow:0 0 0 3px rgba(106,90,205,.25);outline:none}
 .actions{margin-top:14px;text-align:right}
-.save-button{background:linear-gradient(135deg,#9b5cff,#6a5acd);color:#fff;border:0;border-radius:12px;padding:12px 16px;font-weight:700}
+.save-button{background:var(--btn-purple-gradient);color:#fff;border:0;border-radius:12px;padding:12px 16px;font-weight:700}
 @media(max-width:900px){.settings-grid{grid-template-columns:1fr}}
 
 

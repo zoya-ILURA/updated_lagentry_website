@@ -37,7 +37,7 @@ const LeftPanel: React.FC<LeftPanelProps> = ({ selectedId, onSelect }) => {
                             <BarsIcon />
                         </div>
                         <div className="preview-text">
-                            <span className="preview-title">Lead Qualification · Buyer</span>
+                            <span className="preview-title">Lead Qualification · Layla</span>
                             <span className="preview-tags">#Real-Time Booking  #Lead Qualification</span>
                         </div>
                     </div>

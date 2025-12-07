@@ -122,7 +122,7 @@
 .join-button {
   width: 100%;
   margin-top: 18px;
-  background: linear-gradient(135deg, #1a0033 0%, #4a1a6e 50%, #6b2d91 100%);
+  background: var(--btn-purple-gradient);
   color: #ffffff;
   border: 0;
   border-radius: 16px;
@@ -155,7 +155,21 @@
 .join-button:hover { filter: brightness(1.05); }
 
 @media (max-width: 640px) {
-  .join-title { font-size: 40px; }
+  .waitlist-overlay {
+    padding: 16px;
+  }
+
+  .join-card {
+    padding: 36px 24px 28px;
+    max-width: 98vw;
+  }
+
+  .join-title { 
+    font-size: 32px;
+    line-height: 1.2;
+    word-wrap: break-word;
+    padding: 0 0.5rem;
+  }
   
   .join-logo {
     width: 100px;
@@ -168,11 +182,33 @@
   }
   
   .join-subtitle {
-    font-size: 24px;
+    font-size: 20px;
+    word-wrap: break-word;
+    padding: 0 0.5rem;
   }
   
   .join-desc {
-    font-size: 16px;
+    font-size: 14px;
+    word-wrap: break-word;
+    padding: 0 0.5rem;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 480px) {
+  .join-title {
+    font-size: 28px;
+    padding: 0 0.25rem;
+  }
+
+  .join-subtitle {
+    font-size: 18px;
+    padding: 0 0.25rem;
+  }
+
+  .join-desc {
+    font-size: 13px;
+    padding: 0 0.25rem;
   }
 }
 
@@ -572,7 +608,7 @@
 }
 
 .submit-button {
-  background: linear-gradient(135deg, #9b5cff, #6a5acd);
+  background: var(--btn-purple-gradient);
   color: #fff;
   border: 0;
   border-radius: 12px;

@@ -43,7 +43,32 @@ const Navigation: React.FC = () => {
 
           {/* Desktop Navigation Menu */}
           <div className="nav-menu desktop-menu">
-          <div className="nav-item" onClick={() => navigate('/agents')}>Agents</div>
+          <div
+            className="nav-item nav-item-agents"
+            onClick={() => navigate('/agents')}
+          >
+            <span>Agents</span>
+            <div className="agents-dropdown">
+              <button onClick={() => navigate('/agents/gtm-sales')}>
+                <span className="agents-dropdown-label">GTM &amp; Sales Agent</span>
+              </button>
+              <button onClick={() => navigate('/agents/hr-recruitment')}>
+                <span className="agents-dropdown-label">HR &amp; Recruitment Agent</span>
+              </button>
+              <button onClick={() => navigate('/agents/cfo-finance')}>
+                <span className="agents-dropdown-label">CFO &amp; Finance Agent</span>
+              </button>
+              <button onClick={() => navigate('/agents/customer-support')}>
+                <span className="agents-dropdown-label">Customer Support Agent</span>
+              </button>
+              <button onClick={() => navigate('/agents/real-estate')}>
+                <span className="agents-dropdown-label">Real Estate &amp; Property Agent</span>
+              </button>
+              <button onClick={() => navigate('/agents/healthcare')}>
+                <span className="agents-dropdown-label">Healthcare Agent</span>
+              </button>
+            </div>
+          </div>
           <div className="nav-item" onClick={() => navigate('/features')}>Features</div>
           <div className="nav-item" onClick={() => navigate('/pricing')}>Pricing</div>
           <div className="nav-item">Contact Us</div>

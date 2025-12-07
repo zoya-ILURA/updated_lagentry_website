@@ -53,37 +53,50 @@ const RightPanel: React.FC<RightPanelProps> = ({
                         <h3>Start Your Call with {selectedAgent.title}</h3>
                         <button className="close-form-btn" onClick={onCloseForm}>×</button>
                     </div>
-                    <form onSubmit={onFormSubmit} className="call-form">
+                    <form onSubmit={onFormSubmit} className="call-form" onClick={(e) => e.stopPropagation()}>
                         <div className="form-field">
-                            <label>Your Name</label>
+                            <label htmlFor="name-input">Your Name</label>
                             <input
+                                id="name-input"
                                 type="text"
                                 name="name"
                                 value={formData.name}
                                 onChange={onFormChange}
                                 placeholder="Enter your full name"
                                 required
+                                autoFocus
+                                autoComplete="name"
+                                tabIndex={1}
+                                onFocus={(e) => e.target.select()}
                             />
                         </div>
                         <div className="form-field">
-                            <label>Email</label>
+                            <label htmlFor="email-input">Email</label>
                             <input
+                                id="email-input"
                                 type="email"
                                 name="email"
                                 value={formData.email}
                                 onChange={onFormChange}
                                 placeholder="you@example.com"
                                 required
+                                autoComplete="email"
+                                tabIndex={2}
+                                onFocus={(e) => e.target.select()}
                             />
                         </div>
                         <div className="form-field">
-                            <label>Phone Number (Optional)</label>
+                            <label htmlFor="phone-input">Phone Number (Optional)</label>
                             <input
+                                id="phone-input"
                                 type="tel"
                                 name="phone"
                                 value={formData.phone}
                                 onChange={onFormChange}
                                 placeholder="+1 (555) 123-4567"
+                                autoComplete="tel"
+                                tabIndex={3}
+                                onFocus={(e) => e.target.select()}
                             />
                         </div>
                         <button type="submit" className="call-button" style={{

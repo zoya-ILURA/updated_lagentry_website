@@ -31,11 +31,23 @@
   margin: 0 auto;
 }
 
+.section-title .agent-word-underlined {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-fill-color: #ffffff !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+}
+
 .agent-word-underlined {
   font-family: 'Geist', sans-serif;
   font-weight: 700;
   position: relative;
   display: inline-block;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-fill-color: #ffffff !important;
 }
 
 .agent-word-underlined::after {
@@ -295,16 +307,25 @@
     padding: 2rem 1rem;
   }
 
+  .section-header {
+    margin-bottom: 2.5rem;
+    padding: 0 0.5rem;
+  }
+
   .section-title {
     font-size: 1.25rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+    padding: 0 0.25rem;
   }
 
   .step-title {
     font-size: 1.25rem;
+    word-wrap: break-word;
   }
 
   .step-description {
     font-size: 0.85rem;
+    word-wrap: break-word;
   }
 }
-

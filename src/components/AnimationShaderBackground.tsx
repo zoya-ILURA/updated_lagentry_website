@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 
-// Flowing waves animation with spectral colors - shows for 5 seconds
-export const AnimationShaderBackground = () => {
+// Track whether the purple shader intro has been shown for this page load
+let shaderIntroShownForThisLoad = false;
+
+// Inner component that actually renders the shader animation
+const AnimationShaderBackgroundInner = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isVisible, setIsVisible] = useState(true);
   const [opacity, setOpacity] = useState(1);
   
   useEffect(() => {
+    // Hide animation after 5 seconds with fade out
     // Hide animation after 5 seconds with fade out
     const fadeOutDuration = 500; // 0.5 seconds fade out
     const totalDuration = 5000; // 5 seconds total
@@ -229,3 +233,12 @@ export const AnimationShaderBackground = () => {
   );
 };
 
+// Wrapper that ensures the purple animation only shows once per hard refresh
+export const AnimationShaderBackground = () => {
+  if (shaderIntroShownForThisLoad) {
+    return null;
+  }
+
+  shaderIntroShownForThisLoad = true;
+  return <AnimationShaderBackgroundInner />;
+};

@@ -23,20 +23,6 @@ const Dashboard: React.FC = () => {
             {/* Main Dashboard GIF */}
             <img src={DashGif} alt="Dashboard Analytics" className="dashboard-gif" />
           </div>
-
-          {/* Exact copy: embed built stacked-slides-app */}
-          <div className="embedded-slides">
-            <div className="embedded-slides-frame-wrap">
-              <iframe
-                className="embedded-slides-frame"
-                src={`${process.env.PUBLIC_URL}/videos/stacked-slides-app/index.html`}
-                title="Stacked Slides"
-                loading="eager"
-                allow="autoplay; fullscreen"
-                allowFullScreen
-              />
-            </div>
-          </div>
         </div>
       </div>
     </div>

@@ -390,7 +390,7 @@
   font-weight: 400;
   font-family: 'Geist', sans-serif;
   color: #ffffff !important;
-  background: linear-gradient(135deg, #3A025b 0%, #4A036F 50%, #5A0483 100%) !important;
+  background: var(--btn-purple-gradient) !important;
   border: 2px solid rgba(255, 255, 255, 0.4) !important;
   border-radius: 8px;
   cursor: pointer;
@@ -433,7 +433,7 @@
     0 0 60px rgba(58, 2, 91, 0.4),
     0 0 90px rgba(58, 2, 91, 0.2),
     inset 0 0 30px rgba(255, 255, 255, 0.2);
-  background: linear-gradient(135deg, #4A036F 0%, #5A0483 50%, #6A0597 100%);
+  background: var(--btn-purple-gradient);
   border-color: rgba(255, 255, 255, 0.4);
 }
 
@@ -911,6 +911,66 @@
   .horizontal-video-item {
     min-width: 150px;
     max-width: 200px;
+  }
+
+  .voice-agents-heading {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .video-section-heading {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .horizontal-video-title {
+    font-size: 0.85rem;
+    word-wrap: break-word;
+    padding: 0 0.5rem;
+  }
+
+  .detailed-calculator-section {
+    padding: 0 1rem;
+  }
+
+  .calculator-panels {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .calculator-panel {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .features-page {
+    padding: 80px 16px 40px;
+  }
+
+  .voice-agents-heading {
+    font-size: 1.25rem;
+    padding: 15px 8px 10px 8px;
+  }
+
+  .video-section-heading {
+    font-size: 0.9rem;
+    padding: 0 16px;
+  }
+
+  .horizontal-videos-grid {
+    gap: 12px;
+    padding: 0 8px;
+  }
+
+  .horizontal-video-item {
+    min-width: 140px;
+    max-width: 180px;
+  }
+
+  .horizontal-video-title {
+    font-size: 0.75rem;
+    padding: 0 0.25rem;
   }
 }
 

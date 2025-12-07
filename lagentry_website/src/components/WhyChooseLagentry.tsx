@@ -5,6 +5,7 @@ import RightPanel from './LeadQualification/RightPanel';
 import './WhyChooseLagentry.css';
 import './LeadQualification/LeadQualificationPage.css';
 
+<<<<<<< HEAD
 // Declare VAPI SDK types
 declare global {
   interface Window {
