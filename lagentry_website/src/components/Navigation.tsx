@@ -48,7 +48,10 @@ const Navigation: React.FC = () => {
     tryScroll();
   };
 
-  const handleAgentsClick = () => {
+  const handleAgentsClick = (e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
     navigate('/agents');
   };
 
@@ -66,6 +69,12 @@ const Navigation: React.FC = () => {
       setIsAgentsOpen(false);
       agentsHoverTimeoutRef.current = null;
     }, 120);
+  };
+
+  const handleAgentItemClick = (path: string, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering parent click
+    setIsAgentsOpen(false); // Close dropdown
+    navigate(path); // Navigate to agent page
   };
 
   const handleFeaturesClick = () => {
@@ -95,14 +104,16 @@ const Navigation: React.FC = () => {
           <div className="nav-menu desktop-menu">
           <div
             className="nav-item nav-item-agents"
-            onClick={handleAgentsClick}
             style={{ cursor: 'pointer', position: 'relative' }}
             onMouseEnter={handleAgentsMouseEnter}
             onMouseLeave={handleAgentsMouseLeave}
           >
-            <span>Agents</span>
-            <div className={`agents-dropdown ${isAgentsOpen ? 'open' : ''}`}>
-              <button type="button" onClick={() => navigate('/agents/gtm-sales')}>
+            <span onClick={handleAgentsClick}>Agents</span>
+            <div 
+              className={`agents-dropdown ${isAgentsOpen ? 'open' : ''}`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button type="button" onClick={(e) => handleAgentItemClick('/agents/gtm-sales', e)}>
                 <div className="agents-dropdown-pill">
                   <div className="agents-dropdown-blob agents-blob-sales" />
                   <div className="agents-dropdown-copy">
@@ -113,7 +124,7 @@ const Navigation: React.FC = () => {
                   </div>
                 </div>
               </button>
-              <button type="button" onClick={() => navigate('/agents/hr-recruitment')}>
+              <button type="button" onClick={(e) => handleAgentItemClick('/agents/hr-recruitment', e)}>
                 <div className="agents-dropdown-pill">
                   <div className="agents-dropdown-blob agents-blob-hr" />
                   <div className="agents-dropdown-copy">
@@ -124,7 +135,7 @@ const Navigation: React.FC = () => {
                   </div>
                 </div>
               </button>
-              <button type="button" onClick={() => navigate('/agents/cfo-finance')}>
+              <button type="button" onClick={(e) => handleAgentItemClick('/agents/cfo-finance', e)}>
                 <div className="agents-dropdown-pill">
                   <div className="agents-dropdown-blob agents-blob-cfo" />
                   <div className="agents-dropdown-copy">
@@ -135,7 +146,7 @@ const Navigation: React.FC = () => {
                   </div>
                 </div>
               </button>
-              <button type="button" onClick={() => navigate('/agents/customer-support')}>
+              <button type="button" onClick={(e) => handleAgentItemClick('/agents/customer-support', e)}>
                 <div className="agents-dropdown-pill">
                   <div className="agents-dropdown-blob agents-blob-support" />
                   <div className="agents-dropdown-copy">
@@ -146,7 +157,7 @@ const Navigation: React.FC = () => {
                   </div>
                 </div>
               </button>
-              <button type="button" onClick={() => navigate('/agents/real-estate')}>
+              <button type="button" onClick={(e) => handleAgentItemClick('/agents/real-estate', e)}>
                 <div className="agents-dropdown-pill">
                   <div className="agents-dropdown-blob agents-blob-realestate" />
                   <div className="agents-dropdown-copy">
@@ -157,7 +168,7 @@ const Navigation: React.FC = () => {
                   </div>
                 </div>
               </button>
-              <button type="button" onClick={() => navigate('/agents/healthcare')}>
+              <button type="button" onClick={(e) => handleAgentItemClick('/agents/healthcare', e)}>
                 <div className="agents-dropdown-pill">
                   <div className="agents-dropdown-blob agents-blob-healthcare" />
                   <div className="agents-dropdown-copy">

@@ -1,231 +1,374 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap');
+
 .agent-page {
   min-height: 100vh;
-  background: radial-gradient(circle at top, #0b1020 0%, #020617 45%, #000000 100%);
+  background: #000000;
   color: #ffffff;
   font-family: 'Geist', sans-serif;
+  padding-top: 80px;
+  position: relative;
+  overflow-x: hidden;
 }
 
+/* Hero Section - Cinematic & Bold */
 .agent-hero {
-  padding: 7rem 8vw 4rem;
+  padding: 8rem 8vw 5rem;
+  text-align: center;
+  position: relative;
+}
+
+.agent-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  background: radial-gradient(
+    ellipse 80% 50% at 50% 0%,
+    rgba(139, 92, 246, 0.15) 0%,
+    rgba(139, 92, 246, 0.05) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
 }
 
 .agent-hero-inner {
-  max-width: 880px;
+  max-width: 900px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .agent-hero-eyebrow {
-  letter-spacing: 0.18em;
+  display: inline-block;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  font-size: 0.8rem;
-  color: rgba(156, 163, 175, 0.9);
-  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(139, 92, 246, 0.8);
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 50px;
 }
 
 .agent-hero-title {
-  font-size: clamp(2.8rem, 4vw, 3.4rem);
-  line-height: 1.05;
-  margin: 0 0 1.2rem;
-  font-weight: 700;
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  line-height: 1.1;
+  margin: 0 0 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 50%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
 }
 
 .agent-hero-overview {
-  max-width: 620px;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: rgba(209, 213, 219, 0.9);
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: rgba(209, 213, 219, 0.85);
+  font-weight: 400;
 }
 
+/* Video Section - Clean & Centered */
 .agent-video-section {
-  margin-top: -1.5rem;
-  padding: 0 6vw 3rem;
+  padding: 0 8vw 6rem;
+  position: relative;
 }
 
 .agent-video-frame {
-  max-width: 960px;
+  max-width: 1100px;
   margin: 0 auto;
-  border-radius: 24px;
+  border-radius: 28px;
   overflow: hidden;
-  background: radial-gradient(circle at top left, #111827, #020617);
+  background: #0a0a0a;
   box-shadow:
-    0 26px 60px rgba(0, 0, 0, 0.9),
-    0 0 0 1px rgba(148, 163, 184, 0.2);
+    0 30px 80px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  position: relative;
+}
+
+.agent-video-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.1) 0%,
+    transparent 50%,
+    rgba(139, 92, 246, 0.05) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
 }
 
 .agent-video-element {
   display: block;
   width: 100%;
   height: auto;
+  position: relative;
+  z-index: 0;
 }
 
+/* Features Section - Grid Layout */
 .agent-features-section {
-  padding: 3rem 8vw 5rem;
+  padding: 6rem 8vw 8rem;
+  position: relative;
 }
 
 .agent-features-header {
-  max-width: 880px;
-  margin: 0 auto 2.25rem;
+  max-width: 1100px;
+  margin: 0 auto 4rem;
+  text-align: center;
 }
 
 .agent-features-header h2 {
-  font-size: 1.5rem;
-  margin: 0 0 0.5rem;
-}
-
-.agent-features-header p {
-  margin: 0;
-  font-size: 0.95rem;
-  color: rgba(148, 163, 184, 0.9);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  margin: 0 0 1rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.01em;
 }
 
 .agent-features-grid {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
 }
 
+/* Feature Cards - Cinematic & Clean */
 .agent-feature-card {
-  background: radial-gradient(circle at top left, rgba(31, 41, 55, 0.9), rgba(15, 23, 42, 0.98));
-  border-radius: 18px;
-  padding: 1.5rem 1.6rem;
-  border: 1px solid rgba(55, 65, 81, 0.9);
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.8) 0%,
+    rgba(2, 6, 23, 0.9) 100%
+  );
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow:
-    0 18px 40px rgba(0, 0, 0, 0.9),
-    0 0 0 1px rgba(15, 23, 42, 0.9);
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 1rem;
   position: relative;
   overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.agent-feature-card::after {
+.agent-feature-card::before {
   content: '';
   position: absolute;
-  inset: -40%;
-  background: radial-gradient(circle at top, rgba(244, 244, 245, 0.06), transparent 60%);
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.1) 0%,
+    transparent 50%,
+    rgba(139, 92, 246, 0.05) 100%
+  );
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: opacity 0.3s ease;
 }
 
-.agent-feature-card:hover::after {
+.agent-feature-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(139, 92, 246, 0.3);
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(139, 92, 246, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 40px rgba(139, 92, 246, 0.1);
+}
+
+.agent-feature-card:hover::before {
   opacity: 1;
-  transform: translateY(0);
 }
 
 .agent-feature-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at top left, #4c1d95, #111827);
-  font-size: 1rem;
-  margin-bottom: 0.4rem;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(139, 92, 246, 0.1) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .agent-feature-title {
-  font-size: 1.05rem;
+  font-size: 1.25rem;
+  font-weight: 700;
   margin: 0;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  position: relative;
+  z-index: 1;
 }
 
 .agent-feature-description {
   margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: rgba(209, 213, 219, 0.9);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(209, 213, 219, 0.8);
+  font-weight: 400;
+  position: relative;
+  z-index: 1;
+}
+
+/* Mobile Responsive */
+@media (max-width: 968px) {
+  .agent-hero {
+    padding: 6rem 4vw 4rem;
+  }
+
+  .agent-hero-title {
+    font-size: clamp(2.25rem, 8vw, 3rem);
+  }
+
+  .agent-hero-overview {
+    font-size: 1.05rem;
+  }
+
+  .agent-video-section {
+    padding: 0 4vw 4rem;
+  }
+
+  .agent-features-section {
+    padding: 4rem 4vw 6rem;
+  }
+
+  .agent-features-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
 }
 
 @media (max-width: 768px) {
   .agent-page {
-    overflow-x: hidden;
+    padding-top: 70px;
   }
 
   .agent-hero {
-    padding: 6rem 1.5rem 3rem;
+    padding: 5rem 1.5rem 3rem;
   }
 
-  .agent-hero-inner {
-    max-width: 100%;
-    padding: 0 0.5rem;
+  .agent-hero-eyebrow {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.8rem;
   }
 
   .agent-hero-title {
     font-size: 2rem;
     line-height: 1.2;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    padding: 0 0.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .agent-hero-overview {
-    font-size: 0.95rem;
+    font-size: 1rem;
     line-height: 1.6;
-    word-wrap: break-word;
-    padding: 0 0.5rem;
-    max-width: 100%;
   }
 
   .agent-video-section {
-    padding: 0 1.5rem 2.5rem;
+    padding: 0 1.5rem 3rem;
   }
 
   .agent-video-frame {
-    max-width: 100%;
-    border-radius: 16px;
+    border-radius: 20px;
   }
 
   .agent-features-section {
-    padding: 2.5rem 1.5rem 4rem;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  .agent-features-header {
+    margin-bottom: 3rem;
   }
 
   .agent-features-header h2 {
     font-size: 1.75rem;
-    word-wrap: break-word;
-    padding: 0 0.5rem;
+  }
+
+  .agent-features-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .agent-feature-card {
+    padding: 1.75rem;
+  }
+
+  .agent-feature-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 1.35rem;
   }
 
   .agent-feature-title {
-    font-size: 1.25rem;
-    word-wrap: break-word;
+    font-size: 1.15rem;
   }
 
   .agent-feature-description {
     font-size: 0.9rem;
-    word-wrap: break-word;
   }
 }
 
 @media (max-width: 480px) {
   .agent-hero {
-    padding: 5rem 1rem 2rem;
+    padding: 4rem 1rem 2.5rem;
   }
 
   .agent-hero-title {
     font-size: 1.75rem;
-    padding: 0 0.25rem;
+    margin-bottom: 1.25rem;
   }
 
   .agent-hero-overview {
-    font-size: 0.85rem;
-    padding: 0 0.25rem;
+    font-size: 0.95rem;
   }
 
   .agent-video-section {
-    padding: 0 1rem 2rem;
+    padding: 0 1rem 2.5rem;
+  }
+
+  .agent-video-frame {
+    border-radius: 16px;
   }
 
   .agent-features-section {
-    padding: 2rem 1rem 3rem;
+    padding: 2.5rem 1rem 4rem;
   }
 
   .agent-features-header h2 {
     font-size: 1.5rem;
-    padding: 0 0.25rem;
+  }
+
+  .agent-feature-card {
+    padding: 1.5rem;
+  }
+
+  .agent-feature-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.25rem;
   }
 
   .agent-feature-title {
@@ -236,5 +379,3 @@
     font-size: 0.85rem;
   }
 }
-
-
