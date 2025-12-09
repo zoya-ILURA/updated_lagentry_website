@@ -57,23 +57,18 @@ cssFiles.forEach(filePath => {
         return `aspect-ratio: ${decimal};`;
       });
       
-      // AGGRESSIVE FIX: Remove ALL forward slashes from background shorthand
-      // Process the entire content to handle multi-line background properties
+      // FIX: Remove forward slashes from background shorthand - SIMPLE APPROACH
+      // Only fix single-line background properties to avoid breaking structure
       const lines = content.split('\n');
       const fixedLines = [];
       let inComment = false;
-      let inMultiLineProperty = false;
-      let currentProperty = '';
-      let propertyName = '';
       
       for (let i = 0; i < lines.length; i++) {
         let line = lines[i];
-        const originalLine = line;
         
         // Track comment state
         if (line.includes('/*')) {
           inComment = true;
-          // Check if comment closes on same line
           if (line.includes('*/')) {
             inComment = false;
           }
@@ -96,50 +91,23 @@ cssFiles.forEach(filePath => {
           continue;
         }
         
-        // Handle multi-line CSS properties
-        if (line.includes('{')) {
-          inMultiLineProperty = true;
-          currentProperty = '';
-          propertyName = line.match(/([^{]+)\{/)?.[1]?.trim() || '';
+        // Only fix background shorthand on single lines (not multi-line)
+        // Pattern: background: ... position / size ...
+        if (line.includes('background:') && line.includes(' / ') && !line.includes('background-') && line.includes(';')) {
+          // Check if forward slash is in a URL
+          const urlRegex = /url\([^)]*\)/g;
+          const urls = line.match(urlRegex) || [];
+          let hasSlashInUrl = urls.some(url => url.includes(' / '));
+          
+          if (!hasSlashInUrl) {
+            // Remove forward slashes from background shorthand
+            // Pattern: "center / cover" or "0 0 / 100%"
+            line = line.replace(/(\b(?:center|top|bottom|left|right|\d+(?:px|%|em|rem)?)\s+)\/\s+([a-zA-Z-]+|\d+(?:px|%|em|rem)?)/g, '$1');
+            line = line.replace(/(\d+(?:px|%|em|rem)?)\s+\/\s+(\d+(?:px|%|em|rem)?)/g, '$1');
+          }
         }
         
-        if (inMultiLineProperty) {
-          currentProperty += line + '\n';
-          if (line.includes('}')) {
-            inMultiLineProperty = false;
-            // Process the complete property block
-            if (currentProperty.includes('background:') && currentProperty.includes(' / ')) {
-              // Check if forward slash is in a URL
-              const urlRegex = /url\([^)]*\)/g;
-              const urls = currentProperty.match(urlRegex) || [];
-              let hasSlashInUrl = urls.some(url => url.includes(' / '));
-              
-              if (!hasSlashInUrl) {
-                // Remove forward slashes from background shorthand
-                currentProperty = currentProperty.replace(/(\b(?:center|top|bottom|left|right|\d+(?:px|%|em|rem)?)\s+)\/\s+([a-zA-Z-]+|\d+(?:px|%|em|rem)?)/g, '$1');
-                currentProperty = currentProperty.replace(/(\d+(?:px|%|em|rem)?)\s+\/\s+(\d+(?:px|%|em|rem)?)/g, '$1');
-              }
-            }
-            fixedLines.push(...currentProperty.trim().split('\n'));
-            currentProperty = '';
-            continue;
-          }
-        } else {
-          // Single-line properties
-          if (line.includes('background:') && line.includes(' / ') && !line.includes('background-')) {
-            // Check if forward slash is in a URL
-            const urlRegex = /url\([^)]*\)/g;
-            const urls = line.match(urlRegex) || [];
-            let hasSlashInUrl = urls.some(url => url.includes(' / '));
-            
-            if (!hasSlashInUrl) {
-              // Remove forward slashes from background shorthand
-              line = line.replace(/(\b(?:center|top|bottom|left|right|\d+(?:px|%|em|rem)?)\s+)\/\s+([a-zA-Z-]+|\d+(?:px|%|em|rem)?)/g, '$1');
-              line = line.replace(/(\d+(?:px|%|em|rem)?)\s+\/\s+(\d+(?:px|%|em|rem)?)/g, '$1');
-            }
-          }
-          fixedLines.push(line);
-        }
+        fixedLines.push(line);
       }
       
       content = fixedLines.join('\n');
