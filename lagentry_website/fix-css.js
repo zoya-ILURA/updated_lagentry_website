@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-// Recursively find all CSS files
 function findCssFiles(dir, fileList = []) {
   try {
     const files = fs.readdirSync(dir);
@@ -14,13 +13,9 @@ function findCssFiles(dir, fileList = []) {
         } else if (file.endsWith('.css')) {
           fileList.push(filePath);
         }
-      } catch (e) {
-        // Skip files we can't access
-      }
+      } catch (e) {}
     });
-  } catch (e) {
-    // Skip directories we can't access
-  }
+  } catch (e) {}
   return fileList;
 }
 
@@ -62,33 +57,57 @@ cssFiles.forEach(filePath => {
         return `aspect-ratio: ${decimal};`;
       });
       
-      // AGGRESSIVE FIX: Remove ALL forward slashes from background shorthand
-      // This handles patterns like "center / cover", "0 0 / 100%", etc.
-      // Process line by line to better handle context
+      // CRITICAL FIX: Remove forward slashes from background shorthand
+      // The CSS minimizer has issues with "position / size" syntax in background shorthand
+      // We'll split these into separate background-position and background-size properties
       const lines = content.split('\n');
-      const fixedLines = lines.map((line, lineIndex) => {
-        // Skip comments
-        if (line.trim().startsWith('/*') || line.trim().startsWith('*')) {
-          return line;
+      const fixedLines = [];
+      let inComment = false;
+      
+      for (let i = 0; i < lines.length; i++) {
+        let line = lines[i];
+        const originalLine = line;
+        
+        // Track comment state
+        if (line.includes('/*')) inComment = true;
+        if (line.includes('*/')) inComment = false;
+        if (inComment) {
+          fixedLines.push(line);
+          continue;
         }
         
-        // Skip @import lines
+        // Skip @import
         if (line.includes('@import')) {
-          return line;
+          fixedLines.push(line);
+          continue;
         }
         
-        // Fix background properties with forward slashes
+        // Fix background shorthand with forward slashes
         // Pattern: background: ... position / size ...
-        if (line.includes('background') && line.includes(' / ')) {
-          // Check if it's inside a url()
-          if (!line.includes('url(') || (line.indexOf('url(') > line.lastIndexOf(' / '))) {
-            // Remove the forward slash and size part
+        if (line.includes('background:') && line.includes(' / ') && !line.includes('background-')) {
+          // Check if forward slash is inside a url()
+          const urlRegex = /url\([^)]*\)/g;
+          const urls = line.match(urlRegex) || [];
+          let slashInUrl = false;
+          
+          for (const url of urls) {
+            if (url.includes(' / ')) {
+              slashInUrl = true;
+              break;
+            }
+          }
+          
+          if (!slashInUrl) {
+            // Remove forward slashes from background shorthand
+            // Replace "position / size" with just "position"
             line = line.replace(/(\b(?:center|top|bottom|left|right|\d+(?:px|%|em|rem)?)\s+)\/\s+([a-zA-Z-]+|\d+(?:px|%|em|rem)?)/g, '$1');
+            // Also handle numeric patterns like "50% / 100%"
+            line = line.replace(/(\d+(?:px|%|em|rem)?)\s+\/\s+(\d+(?:px|%|em|rem)?)/g, '$1');
           }
         }
         
-        return line;
-      });
+        fixedLines.push(line);
+      }
       
       content = fixedLines.join('\n');
       
