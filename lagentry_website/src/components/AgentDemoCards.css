@@ -2176,7 +2176,6 @@ to {
     align-self: flex-start;
     order: 3;
   }
-}
 
 .agent-demo-section {
     padding: 3rem 1rem;
@@ -2339,7 +2338,6 @@ to {
     flex: 0 0 calc(100vw - 2rem);
     max-width: calc(100vw - 2rem);
   }
-}
 
 .agent-demo-section {
     padding: 2rem 0.75rem;
@@ -2454,5 +2452,4 @@ to {
 .agent-cards-carousel {
     padding: 0 0.75rem;
     scroll-padding: 0 0.75rem;
-  }
-}
+  }
