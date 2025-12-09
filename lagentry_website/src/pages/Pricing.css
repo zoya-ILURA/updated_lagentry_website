@@ -115,6 +115,19 @@
   flex-direction: column;
 }
 
+.pricing-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/images/pricingbackgroundimage.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+  z-index: 0;
+  opacity: 1;
+}
+
 .pricing-card:hover {
   transform: translateY(-10px);
   box-shadow:

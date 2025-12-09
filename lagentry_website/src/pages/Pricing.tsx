@@ -167,12 +167,6 @@ const Pricing: React.FC = () => {
           <div 
             key={tier.id} 
             className={`pricing-card`}
-            style={{
-              backgroundImage: 'url(/images/pricingbackgroundimage.png)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat'
-            }}
           >
             <div className="card-halo" />
             <div className="stars-overlay" />
