@@ -167,7 +167,7 @@ body {
 }
 
 .card {
-  aspect-ratio: 16;
+  aspect-ratio: 1.777778;
   transform-origin: center;
   cursor: none;
   background: #000;

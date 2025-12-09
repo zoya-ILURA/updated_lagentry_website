@@ -551,7 +551,7 @@
   /* no horizontal shift to avoid clipping on the right */
   max-width: 100%;
   /* Full width - wider videos */
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 1.777778;
   /* Ensure rectangular format */
 }
 
@@ -565,7 +565,7 @@
   /* Auto height to match content */
   min-height: 550px;
   /* Increased height for better proportions */
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 1.777778;
   /* Maintain video aspect ratio */
   border-radius: 24px !important;
   /* Rounded corners */
@@ -1116,7 +1116,7 @@
     max-width: 100% !important;
     width: 100% !important;
     /* Full width videos on mobile */
-    aspect-ratio: 1 / 1 !important;
+    aspect-ratio: 1;
     /* Square aspect ratio */
     min-height: auto !important;
     max-height: 250px !important;
@@ -1133,7 +1133,7 @@
     min-height: auto !important;
     max-height: 250px !important;
     height: 250px !important;
-    aspect-ratio: 1 / 1 !important;
+    aspect-ratio: 1;
   }
 
   /* Ensure video element itself respects the container */
@@ -1271,7 +1271,7 @@
     min-height: auto !important;
     max-height: 220px !important;
     height: 220px !important;
-    aspect-ratio: 1 / 1 !important;
+    aspect-ratio: 1;
   }
 
   .agent-content-panel-stacked {
@@ -1676,7 +1676,7 @@ video {
 
 .agent-visual-panel {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1;
   max-width: 100%;
   background: rgba(139, 92, 246, 0.05);
   border-radius: 16px;
@@ -1707,7 +1707,7 @@ video {
 .agent-visual-panel .agent-video-container {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1;
   border-radius: 16px;
   overflow: hidden;
   background: transparent;
@@ -1753,7 +1753,7 @@ video {
 .agent-video-container {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1;
   border-radius: 16px;
   overflow: hidden;
   background: transparent;

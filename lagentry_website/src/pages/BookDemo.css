@@ -982,7 +982,6 @@
   }
 
   /* Stack order revisions for mobile: Heading -> Image (Circle) -> Form */
-  /* Stack order revisions for mobile: Heading -> Image (Circle) -> Form */
   .demo-top-image-container {
     display: flex;
     flex-direction: column;
