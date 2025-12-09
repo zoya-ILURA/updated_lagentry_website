@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');
 
+  padding: 140px 16px 40px; /* Increased top padding to move title down */
 .pricing-container {
   background: #000000;
   min-height: 100vh;
-  padding: 140px 16px 40px; /* Increased top padding to move title down */
   color: #e6e9ef;
   display: flex;
   flex-direction: column;
@@ -24,6 +24,7 @@
   gap: 12px;
 }
 
+  min-width: 160px; /* Reduced from 200px */
 .billing-toggle {
   display: flex;
   background: rgba(255, 255, 255, 0.1);
@@ -31,16 +32,15 @@
   padding: 3px;
   gap: 3px;
   width: auto;
-  min-width: 160px; /* Reduced from 200px */
 }
 
-.toggle-option {
   padding: 6px 16px; /* Reduced from 10px 24px */
+  font-size: 0.85rem; /* Reduced from 1rem */
+.toggle-option {
   border: none;
   background: transparent;
   color: #9aa3b2;
   font-family: 'Geist', sans-serif;
-  font-size: 0.85rem; /* Reduced from 1rem */
   font-weight: 500;
   cursor: pointer;
   border-radius: 5px;
@@ -84,32 +84,32 @@
   line-height: 1.5;
 }
 
-.pricing-grid {
   max-width: 100%; /* Changed to cover full screen */
+  padding: 0 16px; /* Add padding for edge spacing */
+.pricing-grid {
   margin: 0 auto;
   display: grid;
   gap: 24px;
   justify-content: center;
   align-items: stretch;
-  padding: 0 16px; /* Add padding for edge spacing */
 }
 
-.pricing-grid-4 {
   grid-template-columns: repeat(4, minmax(200px, 1fr)); /* Keep same column setup but will expand to full width */
+.pricing-grid-4 {
 }
 
+  /* Background image is set via inline styles, gradient overlay added via ::after */
+  border: 1px solid rgba(197, 147, 255, 0.9); /* bright thin purple border */
+  box-shadow: 0 0 0 1px rgba(155, 92, 255, 0.55); /* subtle outer glow so border is visible on dark */
 .pricing-card {
   width: 100%;
   min-height: 700px;
-  /* Background image is set via inline styles, gradient overlay added via ::after */
   background: rgba(3, 0, 20, 0.6);
-  border: 1px solid rgba(197, 147, 255, 0.9); /* bright thin purple border */
   border-radius: 20px;
   overflow: visible;
   position: relative;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 0 0 1px rgba(155, 92, 255, 0.55); /* subtle outer glow so border is visible on dark */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
@@ -132,13 +132,13 @@
     0 20px 60px rgba(155, 92, 255, 0.35);
 }
 
-.pricing-card.popular {
   border: 1px solid #9b5cff; /* keep border thin but highlight with glow */
+.pricing-card.popular {
   box-shadow: 0 0 30px rgba(155, 92, 255, 0.35);
 }
 
-.pricing-card.best-value {
   border: 1px solid #6a5acd; /* thin purple border */
+.pricing-card.best-value {
   box-shadow: 0 0 30px rgba(106, 90, 205, 0.35);
 }
 
@@ -182,9 +182,8 @@
   animation: twinkle 3s ease-in-out infinite;
 }
 
-@keyframes twinkle {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
+0%, 100% { opacity: 0.3; }
+50% { opacity: 1; }
 }
 
 .card-inner {
@@ -352,139 +351,136 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
-  .pricing-grid {
     max-width: 900px; /* Reduced for tablet and laptop */
+.pricing-grid {
   }
   
-  .pricing-grid-4 {
+.pricing-grid-4 {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
   
-  .pricing-card {
+.pricing-card {
     min-height: 650px;
   }
 
-  .card-inner {
+.card-inner {
     padding: 20px;
   }
   
-  .plan-title {
+.plan-title {
     font-size: 1.3rem;
   }
   
-  .price-main {
+.price-main {
     font-size: 2.2rem;
   }
   
-  .billing-toggle {
     min-width: 180px; /* Reduced from 220px */
+.billing-toggle {
   }
   
-  .toggle-option {
     padding: 6px 18px; /* Reduced from 10px 28px */
     font-size: 0.85rem; /* Reduced from 1rem */
+.toggle-option {
   }
 }
 
-@media (max-width: 768px) {
-  .pricing-container {
     padding: 120px 12px 30px; /* Increased top padding for mobile */
+.pricing-container {
   }
   
-  .pricing-title {
+.pricing-title {
     font-size: 2.5rem;
   }
   
-  .pricing-subtitle {
+.pricing-subtitle {
     font-size: 1.1rem;
   }
   
-  .pricing-grid-4 {
+.pricing-grid-4 {
     grid-template-columns: 1fr;
     gap: 20px;
   }
   
-  .pricing-card {
+.pricing-card {
     min-height: 600px;
   }
   
-  .card-inner {
+.card-inner {
     padding: 20px;
   }
   
-  .plan-title {
+.plan-title {
     font-size: 1.3rem;
   }
   
-  .price-main {
+.price-main {
     font-size: 2.2rem;
   }
   
-  .feature-item {
+.feature-item {
     font-size: 0.85rem;
   }
 }
 
-@media (max-width: 480px) {
-  .pricing-container {
     padding: 100px 12px 20px; /* Increased top padding for small mobile */
+.pricing-container {
   }
   
-  .billing-toggle {
+.billing-toggle {
     width: 100%;
     max-width: 280px;
   }
   
-  .toggle-option {
+.toggle-option {
     flex: 1;
     padding: 8px 16px;
     font-size: 0.85rem;
   }
   
-  .yearly-savings-text {
+.yearly-savings-text {
     font-size: 0.8rem;
     text-align: center;
     padding: 0 20px;
   }
   
-  .pricing-title {
+.pricing-title {
     font-size: 2rem;
     line-height: 1.2;
     word-wrap: break-word;
     padding: 0 0.25rem;
   }
   
-  .pricing-subtitle {
+.pricing-subtitle {
     font-size: 1rem;
     line-height: 1.5;
     word-wrap: break-word;
     padding: 0 0.25rem;
   }
   
-  .pricing-card {
+.pricing-card {
     min-height: 550px;
   }
   
-  .card-inner {
+.card-inner {
     padding: 18px;
   }
   
-  .plan-title {
+.plan-title {
     font-size: 1.2rem;
   }
   
-  .price-main {
+.price-main {
     font-size: 2rem;
   }
   
-  .feature-item {
+.feature-item {
     font-size: 0.8rem;
     margin-bottom: 6px;
   }
   
-  .cta-button {
+.cta-button {
     font-size: 0.9rem;
     padding: 10px 16px;
   }

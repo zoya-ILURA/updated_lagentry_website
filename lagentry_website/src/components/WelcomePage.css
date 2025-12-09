@@ -1,61 +1,62 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');
 
+  /* Space between left content and right shader */
+  /* Start below viewport */
+  /* Prevent overflow */
 .welcome-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* Space between left content and right shader */
   padding: 2rem 4rem;
   background: #000000;
   color: #ffffff;
   position: relative;
   z-index: 1;
   transform: translateY(100vh);
-  /* Start below viewport */
   opacity: 0;
   transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease-out;
   overflow: hidden;
-  /* Prevent overflow */
 }
 
 /* Slide up animation when intro completes */
+  /* Slide up to normal position */
 .welcome-container.intro-complete {
   transform: translateY(0);
-  /* Slide up to normal position */
   opacity: 1;
 }
 
+  /* Center text alignment */
+  /* Center vertically */
+  /* Center all items horizontally */
+  /* Remove bottom margin to pull up AgentDemoCards */
+  /* Ensure text is above shader */
 .welcome-content {
   flex: 0 0 50%;
   max-width: 50%;
   padding-right: 2rem;
   text-align: center;
-  /* Center text alignment */
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* Center vertically */
   align-items: center;
-  /* Center all items horizontally */
   min-height: 100vh;
   gap: 1rem;
   margin-bottom: 0;
-  /* Remove bottom margin to pull up AgentDemoCards */
   z-index: 2;
-  /* Ensure text is above shader */
   position: relative;
 }
 
+  /* Black background like in image */
+  /* Subtle white border */
+  /* Center the badge */
 .tagline-banner {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   background: #000000 !important;
-  /* Black background like in image */
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  /* Subtle white border */
   border-radius: 50px;
   padding: 8px 20px;
   margin-bottom: 0.75rem;
@@ -65,7 +66,6 @@
   transition: all 0.3s ease;
   position: relative;
   align-self: center;
-  /* Center the badge */
 }
 
 .nvidia-logo {
@@ -115,23 +115,23 @@
   pointer-events: none;
 }
 
+  /* Reduced gap between heading and animated text */
+  /* Center the heading */
 .main-heading {
   margin-bottom: 0.25rem;
-  /* Reduced gap between heading and animated text */
   animation: slideInFromBottomLeft 0.8s ease-out 0.2s both;
   text-align: center;
-  /* Center the heading */
   position: relative;
   z-index: 2;
   margin-top: 0;
   width: 100%;
 }
 
+  /* Reduced from 4rem */
 .heading-line1 {
   display: block;
   font-family: 'Geist', sans-serif;
   font-size: 3rem;
-  /* Reduced from 4rem */
   font-weight: 700;
   background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
   -webkit-background-clip: text;
@@ -141,15 +141,15 @@
   margin-bottom: 0;
 }
 
+  /* Center the animated text */
+  /* Center the animated text */
 .animated-text-container {
   margin-bottom: 0.5rem;
   text-align: center;
-  /* Center the animated text */
   height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Center the animated text */
   overflow: visible;
   animation: slideInFromBottomLeft 0.8s ease-out 0.4s both;
   position: relative;
@@ -166,10 +166,10 @@
   width: 100%;
 }
 
+  /* Reduced from 3.5rem */
 .animated-text-item {
   font-family: 'Geist', sans-serif;
   font-size: 2.5rem;
-  /* Reduced from 3.5rem */
   font-weight: 700;
   background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
   -webkit-background-clip: text;
@@ -207,18 +207,18 @@
   animation-delay: 8s;
 }
 
+  /* Reduced from 1.1rem */
+  /* Light gray text like in image */
+  /* Center aligned */
 .description-text {
   font-family: 'Geist', sans-serif;
   font-size: 0.95rem;
-  /* Reduced from 1.1rem */
   line-height: 1.6;
   color: #b0b0b0;
-  /* Light gray text like in image */
   margin: 0;
   max-width: 500px;
   animation: slideInFromBottomLeft 0.8s ease-out 0.6s both;
   text-align: center;
-  /* Center aligned */
   position: relative;
   z-index: 2;
   flex-shrink: 0;
@@ -226,11 +226,11 @@
   margin-bottom: 1.5rem;
 }
 
+  /* Center the button */
 .cta-section {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Center the button */
   gap: 20px;
   animation: slideInFromBottomLeft 0.8s ease-out 0.8s both;
   flex-wrap: wrap;
@@ -359,8 +359,8 @@
   background: linear-gradient(135deg, #A78BFA 0%, #C084FC 50%, #DDD6FE 100%);
 }
 
-.secondary-cta {
   /* Match the dark Book a Demo button style from the navbar exactly */
+.secondary-cta {
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%, #0a0a0a 100%);
   color: #ffffff;
   border-radius: 8px;
@@ -434,17 +434,14 @@
   transform: translateX(6px);
 }
 
-@keyframes ctaPulse {
-
-  0%,
-  100% {
+100% {
     box-shadow:
       0 4px 15px rgba(139, 92, 246, 0.4),
       0 0 30px rgba(139, 92, 246, 0.2),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 
-  50% {
+50% {
     box-shadow:
       0 6px 25px rgba(139, 92, 246, 0.6),
       0 0 50px rgba(139, 92, 246, 0.4),
@@ -452,41 +449,36 @@
   }
 }
 
-@keyframes shimmer {
-  0% {
+0% {
     left: -100%;
     top: -100%;
   }
 
-  100% {
+100% {
     left: 100%;
     top: 100%;
   }
 }
 
-@keyframes buttonShimmer {
-  0% {
+0% {
     left: -100%;
     top: -100%;
   }
 
-  100% {
+100% {
     left: 100%;
     top: 100%;
   }
 }
 
-@keyframes ctaPulseNav {
-
-  0%,
-  100% {
+100% {
     box-shadow:
       0 4px 20px rgba(0, 0, 0, 0.6),
       inset 0 1px 0 rgba(255, 255, 255, 0.15),
       inset 0 -1px 0 rgba(0, 0, 0, 0.5);
   }
 
-  50% {
+50% {
     box-shadow:
       0 6px 25px rgba(0, 0, 0, 0.7),
       0 0 30px rgba(255, 255, 255, 0.05),
@@ -495,14 +487,11 @@
   }
 }
 
-@keyframes borderGlowNav {
-
-  0%,
-  100% {
+100% {
     opacity: 0.3;
   }
 
-  50% {
+50% {
     opacity: 0.6;
   }
 }
@@ -539,6 +528,9 @@
   background-color: transparent !important;
 }
 
+  /* Ensure no default canvas background */
+  /* Force transparency */
+  /* Remove any default canvas styling */
 .shader-reminder canvas {
   border: none !important;
   outline: none !important;
@@ -548,177 +540,167 @@
   background: transparent !important;
   background-color: transparent !important;
   display: block;
-  /* Ensure no default canvas background */
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  /* Force transparency */
   opacity: 1;
   mix-blend-mode: normal;
-  /* Remove any default canvas styling */
   image-rendering: auto;
   -webkit-backface-visibility: visible;
   backface-visibility: visible;
 }
 
-@keyframes smoothFloat {
-  0% {
+0% {
     transform: translate(0px, 0px) scale(1) rotate(0deg);
   }
 
-  20% {
+20% {
     transform: translate(40px, -30px) scale(1.02) rotate(1deg);
   }
 
-  40% {
+40% {
     transform: translate(-30px, 40px) scale(0.98) rotate(-1deg);
   }
 
-  60% {
+60% {
     transform: translate(50px, 20px) scale(1.01) rotate(0.5deg);
   }
 
-  80% {
+80% {
     transform: translate(-20px, -40px) scale(0.99) rotate(-0.5deg);
   }
 
-  100% {
+100% {
     transform: translate(0px, 0px) scale(1) rotate(0deg);
   }
 }
 
-@keyframes slideInLeft {
-  from {
+from {
     opacity: 0;
     transform: translateX(-50px);
   }
 
-  to {
+to {
     opacity: 1;
     transform: translateX(0);
   }
 }
 
-@keyframes slideInFromBottomLeft {
-  from {
+from {
     opacity: 0;
     transform: translate(-50px, 50px);
   }
 
-  to {
+to {
     opacity: 1;
     transform: translate(0, 0);
   }
 }
 
-@keyframes slideInFromBottom {
-  from {
+from {
     opacity: 0;
     transform: translateY(50px);
   }
 
-  to {
+to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@keyframes textCycle {
-  0% {
+0% {
     opacity: 0;
     transform: translate(-50%, -50%) translateY(30px);
   }
 
-  10% {
+10% {
     opacity: 1;
     transform: translate(-50%, -50%) translateY(0);
   }
 
-  20% {
+20% {
     opacity: 1;
     transform: translate(-50%, -50%) translateY(0);
   }
 
-  30% {
+30% {
     opacity: 0;
     transform: translate(-50%, -50%) translateY(-30px);
   }
 
-  100% {
+100% {
     opacity: 0;
     transform: translate(-50%, -50%) translateY(-30px);
   }
 }
 
 /* Mobile Responsive Styles */
-@media (max-width: 968px) {
-  .welcome-container {
+.welcome-container {
     flex-direction: column;
     padding: 2rem 1rem;
     min-height: auto;
   }
 
-  .welcome-content {
+    /* Keep centered on mobile */
+    /* Keep centered on mobile */
+    /* Space for larger shader on mobile */
+.welcome-content {
     max-width: 100%;
     padding-right: 0;
     margin-bottom: 2rem;
     text-align: center;
-    /* Keep centered on mobile */
     align-items: center;
-    /* Keep centered on mobile */
     min-height: auto;
     padding-top: 350px;
-    /* Space for larger shader on mobile */
   }
 
-  .main-heading {
-    text-align: center;
     /* Keep centered on mobile */
+.main-heading {
+    text-align: center;
   }
 
-  .animated-text-container {
-    text-align: center;
     /* Keep centered on mobile */
+    /* Keep centered on mobile */
+.animated-text-container {
+    text-align: center;
     justify-content: center;
-    /* Keep centered on mobile */
   }
 
-  .tagline-banner {
+    /* Keep centered on mobile */
+.tagline-banner {
     align-self: center;
-    /* Keep centered on mobile */
   }
 
-  .top-shader-wrapper {
+    /* Center on mobile */
+    /* Moved SIGNIFICANTLY down (was 100px) */
+.top-shader-wrapper {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     right: auto;
     width: auto;
     justify-content: center;
-    /* Center on mobile */
     top: 250px;
-    /* Moved SIGNIFICANTLY down (was 100px) */
     height: auto;
     padding-bottom: 20px;
   }
 
-  .heading-line1 {
-    font-size: 3rem;
     /* Increased proportionally */
+.heading-line1 {
+    font-size: 3rem;
   }
 
-  .animated-text-item {
-    font-size: 2.5rem;
     /* Increased from 1.75rem for mobile */
+.animated-text-item {
+    font-size: 2.5rem;
   }
 
-  .description-text {
+.description-text {
     font-size: 0.95rem;
   }
 }
 
-@media (max-width: 768px) {
-  .welcome-container {
+.welcome-container {
     flex-direction: column;
     padding: 1.5rem 1rem;
     min-height: 100vh;
@@ -726,133 +708,132 @@
     align-items: center;
   }
 
-  .welcome-content {
+    /* Keep centered on mobile */
+    /* Keep centered on mobile */
+    /* Account for navbar */
+    /* Space for shader below navbar */
+.welcome-content {
     max-width: 100%;
     padding-right: 0;
     margin-bottom: 0;
     text-align: center;
-    /* Keep centered on mobile */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* Keep centered on mobile */
     min-height: calc(100vh - 80px);
-    /* Account for navbar */
     gap: 1rem;
     padding-top: 320px;
-    /* Space for shader below navbar */
   }
 
-  .main-heading {
-    text-align: center;
     /* Keep centered on mobile */
+.main-heading {
+    text-align: center;
   }
 
-  .animated-text-container {
-    text-align: center;
     /* Keep centered on mobile */
+    /* Keep centered on mobile */
+.animated-text-container {
+    text-align: center;
     justify-content: center;
-    /* Keep centered on mobile */
   }
 
-  .tagline-banner {
+    /* Keep centered on mobile */
+.tagline-banner {
     align-self: center;
-    /* Keep centered on mobile */
   }
 
-  .top-shader-wrapper {
+    /* Center on mobile */
+    /* Moved SIGNIFICANTLY down (was 80px) */
+.top-shader-wrapper {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     right: auto;
     width: auto;
     justify-content: center;
-    /* Center on mobile */
     top: 220px;
-    /* Moved SIGNIFICANTLY down (was 80px) */
     height: auto;
   }
 
-  .heading-line1 {
-    font-size: 2.5rem;
     /* Increased proportionally */
+.heading-line1 {
+    font-size: 2.5rem;
   }
 
-  .animated-text-item {
+.animated-text-item {
     font-size: 1.5rem;
   }
 
-  .animated-text-container {
+.animated-text-container {
     height: 2rem;
   }
 
-  .animated-text-line {
+.animated-text-line {
     height: 2rem;
   }
 
-  .description-text {
-    display: none;
     /* Remove subtext for mobile */
+.description-text {
+    display: none;
   }
 
-  .cta-section {
+.cta-section {
     justify-content: center;
     margin-top: 1rem;
   }
 
-  .animation-space {
-    display: none;
     /* Hide purple shader on mobile */
+.animation-space {
+    display: none;
   }
 
-  .tagline-banner {
+.tagline-banner {
     font-size: 0.85rem;
     padding: 6px 16px;
   }
 }
 
-@media (max-width: 480px) {
-  .welcome-container {
+.welcome-container {
     padding: 1rem 0.75rem;
     min-height: 100vh;
     justify-content: center;
     align-items: center;
   }
 
-  .welcome-content {
-    min-height: calc(100vh - 80px);
     /* Account for navbar */
+.welcome-content {
+    min-height: calc(100vh - 80px);
     gap: 0.75rem;
     justify-content: center;
     align-items: center;
   }
 
-  .heading-line1 {
-    font-size: 2rem;
     /* Increased proportionally */
+.heading-line1 {
+    font-size: 2rem;
   }
 
-  .animated-text-item {
+.animated-text-item {
     font-size: 1.25rem;
   }
 
-  .description-text {
-    display: none;
     /* Remove subtext for mobile */
-  }
-
-  .animation-space {
+.description-text {
     display: none;
-    /* Hide purple shader on mobile */
   }
 
-  .tagline-banner {
+    /* Hide purple shader on mobile */
+.animation-space {
+    display: none;
+  }
+
+.tagline-banner {
     font-size: 0.75rem;
     padding: 5px 12px;
   }
 
-  .cta-button {
+.cta-button {
     padding: 0.75rem 1.5rem;
     font-size: 0.9rem;
   }

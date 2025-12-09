@@ -1,3 +1,4 @@
+  /* remove bottom padding so bottom image can touch page edge */
 .book-demo-container {
   --bg: #030014;
   --card: #0e0f14;
@@ -11,7 +12,6 @@
   flex-direction: column;
   justify-content: flex-start;
   padding: 40px 16px 0;
-  /* remove bottom padding so bottom image can touch page edge */
   background: var(--bg);
   min-height: 100vh;
   box-sizing: border-box;
@@ -25,6 +25,7 @@
 /* Removed image containers - no longer needed */
 
 /* Caption bar above image (matches provided style) */
+  /* solid dark purple and blue to match image */
 .demo-top-caption {
   position: relative;
   width: 100%;
@@ -36,7 +37,6 @@
   justify-content: center;
   padding: 14px 18px;
   background: #070616;
-  /* solid dark purple and blue to match image */
   border: none;
   border-radius: 16px;
   text-align: center;
@@ -66,12 +66,12 @@
 }
 
 /* Slight corner continuity so caption visually attaches to image */
+  /* increase visible height slightly */
 .demo-top-image {
   width: 100%;
   max-width: 1100px;
   height: auto;
   max-height: 500px;
-  /* increase visible height slightly */
   display: block;
   object-fit: cover;
   border-radius: 8px 8px 20px 20px;
@@ -235,11 +235,11 @@
 
 }
 
+  /* Semi-transparent black */
+  /* Add blur for legibility */
 .book-demo-card {
   background: rgba(0, 0, 0, 0.2);
-  /* Semi-transparent black */
   backdrop-filter: blur(10px);
-  /* Add blur for legibility */
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 24px;
   padding: 40px;
@@ -302,11 +302,11 @@
   flex-shrink: 0;
 }
 
+  /* lighter, more transparent */
 .booking-selection {
   margin: 20px 0;
   padding: 16px;
   background: rgba(155, 92, 255, 0.05);
-  /* lighter, more transparent */
   border: 1px solid rgba(155, 92, 255, 0.4);
   border-radius: 12px;
 }
@@ -341,11 +341,11 @@
   opacity: 1;
 }
 
+  /* glassy strip */
 .trust-strip {
   margin-top: 18px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(9, 9, 20, 0.2);
-  /* glassy strip */
   border-radius: 12px;
   padding: 12px 14px;
   color: var(--muted);
@@ -605,6 +605,7 @@
 }
 
 /* Semi-circle decorative element - behind calendar on mobile */
+  /* Hidden by default, shown on mobile */
 .book-demo-semi-circle {
   position: absolute;
   top: 50%;
@@ -622,7 +623,6 @@
   z-index: 0;
   pointer-events: none;
   display: none;
-  /* Hidden by default, shown on mobile */
 }
 
 .book-demo-semi-circle::before {
@@ -689,25 +689,22 @@
 
 
 
-@keyframes blink {
-
-  0%,
-  50% {
+50% {
     opacity: 1;
   }
 
   51%,
-  100% {
+100% {
     opacity: 0.3;
   }
 }
 
 /* Image containers restored and added for new layout */
+  /* Increased size as requested */
 .demo-top-image-container {
   position: relative;
   width: 100%;
   max-width: 1300px;
-  /* Increased size as requested */
   margin: 100px auto 660px;
   height: 650px;
   display: flex;
@@ -760,10 +757,11 @@
   margin: 0;
 }
 
+  /* Exact production positioning */
+  /* Container is passthrough */
 .book-demo-grid-overlay {
   position: absolute;
   left: 50%;
-  /* Exact production positioning */
   bottom: -370px;
   transform: translateX(-50%);
   width: 100%;
@@ -773,22 +771,21 @@
   align-items: flex-end;
   padding: 0 20px;
   pointer-events: none;
-  /* Container is passthrough */
   z-index: 20;
   overflow: visible;
 }
 
+  /* Children are clickable */
 .book-demo-grid-overlay * {
   pointer-events: auto;
-  /* Children are clickable */
 }
 
 /* Wrapper for the second image (typing effect) */
+  /* Increased from 1100px */
 .demo-top-image-wrap {
   position: relative;
   width: 100%;
   max-width: 1300px;
-  /* Increased from 1100px */
   margin: 80px auto;
   display: flex;
   display: flex;
@@ -812,56 +809,54 @@
   display: block;
 }
 
-@media (max-width: 1200px) {
-  .form-calendar-layout {
+.form-calendar-layout {
     grid-template-columns: 1fr;
     gap: 24px;
   }
 
-  .demo-bottom-image-wrap {
+.demo-bottom-image-wrap {
     margin: 60px auto 60px auto;
   }
 
-  .demo-bottom-video {
+.demo-bottom-video {
     width: 84%;
     height: 62%;
     border-radius: 14px;
   }
 }
 
-@media (max-width: 768px) {
-  .book-demo-container {
+.book-demo-container {
     padding: 60px 16px 40px;
   }
 
-  .book-demo-title-section {
+.book-demo-title-section {
     margin: 80px auto 40px auto;
     padding: 0 16px;
   }
 
-  .book-demo-main-title {
+.book-demo-main-title {
     font-size: 2rem;
   }
 
-  .book-demo-subtitle {
+.book-demo-subtitle {
     font-size: 1rem;
   }
 
-  .book-demo-form-container {
+.book-demo-form-container {
     padding: 0 16px;
   }
 
-  .book-demo-card {
+.book-demo-card {
     padding: 24px;
   }
 
-  .demo-top-caption {
+.demo-top-caption {
     width: 90%;
     padding: 12px 16px;
     border-radius: 14px;
   }
 
-  .caption-title {
+.caption-title {
     font-size: 28px;
     white-space: normal;
     word-wrap: break-word;
@@ -869,130 +864,130 @@
     line-height: 1.3;
   }
 
-  .caption-subtitle {
+.caption-subtitle {
     font-size: 18px;
   }
 
-  .demo-top-image {
+.demo-top-image {
     max-height: 300px;
     border-radius: 8px 8px 14px 14px;
     margin-bottom: 20px;
   }
 
-  .demo-top-overlay {
+.demo-top-overlay {
     top: 18%;
     width: 88%;
     height: 30%;
     border-radius: 18px;
   }
 
-  .overlay-typing-text {
+.overlay-typing-text {
     font-size: 18px;
     max-width: 92%;
   }
 
-  .book-demo-grid {
+.book-demo-grid {
     grid-template-columns: 1fr;
     gap: 32px;
   }
 
-  .form-row {
+.form-row {
     grid-template-columns: 1fr;
   }
 
-  .form-calendar-layout {
+.form-calendar-layout {
     grid-template-columns: 1fr;
   }
 
-  .theme-toggle {
+.theme-toggle {
     top: 70px;
     right: 16px;
   }
 
-  .theme-toggle-btn {
+.theme-toggle-btn {
     width: 40px;
     height: 40px;
     font-size: 18px;
   }
 
-  .book-demo-title {
+.book-demo-title {
     font-size: 26px;
   }
 
-  .trust-strip {
+.trust-strip {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .book-demo-card {
+.book-demo-card {
     padding: 24px;
   }
 
-  .demo-bottom-image-wrap {
+.demo-bottom-image-wrap {
     margin: 40px auto 20px auto;
   }
 
-  .demo-bottom-image {
+.demo-bottom-image {
     border-radius: 16px;
   }
 
-  .demo-bottom-video {
+.demo-bottom-video {
     width: 90%;
     height: 52%;
     bottom: 6%;
     border-radius: 12px;
   }
 
-  .demo-bottom-video-caption {
+.demo-bottom-video-caption {
     top: 6px;
     padding: 0;
   }
 
-  .demo-bottom-video-title {
+.demo-bottom-video-title {
     font-size: 20px;
   }
 
-  .demo-bottom-video-subtitle {
+.demo-bottom-video-subtitle {
     font-size: 13px;
   }
 
-  .demo-cards-container {
+.demo-cards-container {
     grid-template-columns: 1fr;
     gap: 30px;
   }
 
-  .demo-card-video {
+.demo-card-video {
     height: 250px;
   }
 
-  .demo-card-content {
+.demo-card-content {
     padding: 25px;
   }
 
-  .demo-card-title {
+.demo-card-title {
     font-size: 22px;
   }
 
-  .demo-card-description {
+.demo-card-description {
     font-size: 15px;
   }
 
-  .demo-card-description {
+.demo-card-description {
     font-size: 14px;
   }
 
   /* Stack order revisions for mobile: Heading -> Image (Circle) -> Form */
-  .demo-top-image-container {
+    /* Reduced top margin for mobile */
+.demo-top-image-container {
     display: flex;
     flex-direction: column;
     margin: 80px auto 20px;
-    /* Reduced top margin for mobile */
     height: auto;
     min-height: 400px;
   }
 
   /* 1. Heading Top Most */
-  .demo-top-image-text-overlay {
+.demo-top-image-text-overlay {
     position: relative;
     top: auto;
     left: auto;
@@ -1006,11 +1001,11 @@
     border-radius: 0;
   }
 
-  .demo-top-image-title {
-    font-size: 24px !important;
     /* Fixed size approx 1.5rem */
-    white-space: normal !important;
     /* Allow wrapping to fix cut-off */
+.demo-top-image-title {
+    font-size: 24px !important;
+    white-space: normal !important;
     word-wrap: break-word;
     width: 100%;
     line-height: 1.3;
@@ -1018,7 +1013,7 @@
     text-align: center;
   }
 
-  .demo-top-image-subtitle {
+.demo-top-image-subtitle {
     font-size: 16px;
     white-space: normal;
     padding: 0 1rem;
@@ -1026,12 +1021,12 @@
   }
 
   /* 2. Semi-circle (Background Image) - Make visible */
-  .demo-top-background-image {
+    /* Constrain height */
+.demo-top-background-image {
     position: relative;
     order: 0;
     width: 100%;
     height: 300px;
-    /* Constrain height */
     object-fit: cover;
     margin-top: 0;
     opacity: 1;
@@ -1044,30 +1039,30 @@
   }
 
   /* 3. Booking Screen - Attached just below */
-  .book-demo-grid-overlay {
+    /* Slight overlap */
+.book-demo-grid-overlay {
     position: relative;
     bottom: auto;
     left: auto;
     transform: none;
     order: 1;
     margin-top: -60px;
-    /* Slight overlap */
     padding: 0 16px 20px;
     pointer-events: auto;
   }
 
-  .book-demo-card {
+    /* Darker background for contrast */
+.book-demo-card {
     padding: 20px 16px;
     backdrop-filter: blur(15px);
     background: rgba(0, 0, 0, 0.5);
-    /* Darker background for contrast */
     border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   /* 4. Laptop Animation - Increased Size */
-  .demo-top-image-wrap {
-    width: 120%;
     /* Make it wider than screen */
+.demo-top-image-wrap {
+    width: 120%;
     margin-left: -10%;
     display: block;
     top: 0;
@@ -1078,7 +1073,7 @@
     margin: 40px auto 30px auto;
   }
 
-  .triangle-image {
+.triangle-image {
     max-width: 100%;
   }
 }

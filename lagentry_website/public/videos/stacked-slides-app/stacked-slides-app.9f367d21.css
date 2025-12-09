@@ -87,8 +87,9 @@ body {
 .slide {
   z-index: 0;
   scroll-snap-align: start;
-  background: radial-gradient(#ffffff12 1px, #0000 1px) 0 0, url("Slide.bg.e9aa582d.png") center no-repeat, #000;
+  background: radial-gradient(#ffffff12 1px, #0000 1px), url("Slide.bg.e9aa582d.png") no-repeat, #000;
   background-position: 0 0, center, center;
+  background-size: auto, cover, auto;
   
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 24px;
@@ -321,17 +322,16 @@ body {
   transform: translateY(0);
 }
 
-@media (width <= 900px) {
-  .slide {
+.slide {
     grid-template-columns: 1fr;
     min-height: 100vh;
   }
 
-  .slide + .slide {
+.slide + .slide {
     margin-top: -10vh;
   }
 
-  .slide:has(.card:hover), .slide:has(.copy:hover) {
+.slide:has(.card:hover), .slide:has(.copy:hover) {
     grid-template-columns: 1fr;
   }
 }

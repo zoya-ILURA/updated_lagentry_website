@@ -283,28 +283,27 @@
   word-break: break-word;
 }
 
-@media (max-width: 768px) {
-  .admin-header {
+.admin-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
   }
 
-  .admin-header-actions {
+.admin-header-actions {
     width: 100%;
   }
 
   .admin-refresh-btn,
-  .admin-logout-btn {
+.admin-logout-btn {
     flex: 1;
   }
 
-  .admin-booking-header {
+.admin-booking-header {
     flex-direction: column;
     gap: 12px;
   }
 
-  .admin-booking-details {
+.admin-booking-details {
     grid-template-columns: 1fr;
   }
 }

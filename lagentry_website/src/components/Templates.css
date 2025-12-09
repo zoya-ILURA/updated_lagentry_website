@@ -176,44 +176,42 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
-  .templates-grid {
+.templates-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 25px;
   }
   
-  .templates-title {
+.templates-title {
     font-size: 2.5rem;
   }
 }
 
-@media (max-width: 768px) {
-  .templates-section {
+.templates-section {
     padding: 60px 20px;
   }
   
-  .templates-grid {
+.templates-grid {
     grid-template-columns: 1fr;
     gap: 20px;
   }
   
-  .templates-title {
+.templates-title {
     font-size: 2rem;
   }
   
-  .templates-subtitle {
+.templates-subtitle {
     font-size: 1rem;
   }
   
-  .template-card {
+.template-card {
     padding: 25px 20px;
   }
   
-  .template-name {
+.template-name {
     font-size: 1.5rem;
   }
   
-  .template-avatar {
+.template-avatar {
     width: 100px;
     height: 100px;
   }

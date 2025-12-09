@@ -53,16 +53,15 @@
   transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-@keyframes cardReveal {
-  0% {
+0% {
     opacity: 0;
     transform: translateY(60px) scale(0.95) rotateX(5deg);
     filter: blur(10px);
   }
-  50% {
+50% {
     filter: blur(2px);
   }
-  100% {
+100% {
     opacity: 1;
     transform: translateY(0) scale(1) rotateX(0deg);
     filter: blur(0);
@@ -92,11 +91,10 @@
   z-index: 0;
 }
 
-@keyframes rotateGlow {
-  from {
+from {
     transform: rotate(0deg);
   }
-  to {
+to {
     transform: rotate(360deg);
   }
 }
@@ -130,16 +128,15 @@
   animation: titleSlideIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
 }
 
-@keyframes titleSlideIn {
-  0% {
+0% {
     opacity: 0;
     transform: translateY(40px) scale(0.95);
     filter: blur(8px);
   }
-  50% {
+50% {
     filter: blur(2px);
   }
-  100% {
+100% {
     opacity: 1;
     transform: translateY(0) scale(1);
     filter: blur(0);
@@ -171,13 +168,12 @@
   animation: taglineFadeIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s forwards;
 }
 
-@keyframes taglineFadeIn {
-  0% {
+0% {
     opacity: 0;
     transform: translateY(30px);
     filter: blur(4px);
   }
-  100% {
+100% {
     opacity: 1;
     transform: translateY(0);
     filter: blur(0);
@@ -188,6 +184,7 @@
   color: var(--muted, #666666);
 }
 
+  /* Deep navy blue background - grid will be in SVG */
 .mena-map-container {
   position: relative;
   width: 100%;
@@ -196,7 +193,6 @@
   height: 600px;
   overflow: hidden;
   border-radius: 16px;
-  /* Deep navy blue background - grid will be in SVG */
   background: #0a0e1a;
   border: 1px solid rgba(0, 191, 255, 0.2);
   box-shadow: 
@@ -219,16 +215,15 @@
   transform: translateY(-5px) scale(1.02);
 }
 
-@keyframes mapReveal {
-  0% {
+0% {
     opacity: 0;
     transform: translateY(50px) scale(0.9) rotateY(-5deg);
     filter: blur(15px) brightness(0.5);
   }
-  50% {
+50% {
     filter: blur(5px) brightness(0.8);
   }
-  100% {
+100% {
     opacity: 1;
     transform: translateY(0) scale(1) rotateY(0deg);
     filter: blur(0) brightness(1);
@@ -261,18 +256,17 @@
   transform: translate(-50%, -50%);
 }
 
-@keyframes flowEastToWest {
-  0% {
+0% {
     transform: translate(-50%, -50%) translate(0, 0);
     opacity: 0;
   }
-  5% {
+5% {
     opacity: 1;
   }
-  95% {
+95% {
     opacity: 1;
   }
-  100% {
+100% {
     transform: translate(-50%, -50%) translate(var(--end-x, 0), var(--end-y, 0));
     opacity: 0;
   }
@@ -292,12 +286,11 @@
   animation: outlinePulse 4s ease-in-out infinite;
 }
 
-@keyframes outlinePulse {
-  0%, 100% {
+0%, 100% {
     opacity: 0.6;
     stroke-width: 2;
   }
-  50% {
+50% {
     opacity: 0.9;
     stroke-width: 2.5;
   }
@@ -307,11 +300,10 @@
   animation: borderPulse 5s ease-in-out infinite;
 }
 
-@keyframes borderPulse {
-  0%, 100% {
+0%, 100% {
     opacity: 0.3;
   }
-  50% {
+50% {
     opacity: 0.5;
   }
 }
@@ -320,12 +312,11 @@
   animation: dotPulse 3s ease-in-out infinite;
 }
 
-@keyframes dotPulse {
-  0%, 100% {
+0%, 100% {
     opacity: 0.4;
     r: 1.5;
   }
-  50% {
+50% {
     opacity: 0.8;
     r: 2;
   }
@@ -335,12 +326,11 @@
   animation: flarePulse 2s ease-in-out infinite;
 }
 
-@keyframes flarePulse {
-  0%, 100% {
+0%, 100% {
     opacity: 0.5;
     stroke-width: 2;
   }
-  50% {
+50% {
     opacity: 1;
     stroke-width: 3;
   }
@@ -350,12 +340,11 @@
   animation: haloPulse 3s ease-in-out infinite;
 }
 
-@keyframes haloPulse {
-  0%, 100% {
+0%, 100% {
     opacity: 0.2;
     transform: scale(1);
   }
-  50% {
+50% {
     opacity: 0.4;
     transform: scale(1.1);
   }
@@ -374,12 +363,11 @@
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
-@keyframes labelFadeIn {
-  from {
+from {
     opacity: 0;
     transform: translateY(-5px);
   }
-  to {
+to {
     opacity: 1;
     transform: translateY(0);
   }
@@ -413,57 +401,54 @@
   animation: landmarkPulse 2s ease-in-out infinite;
 }
 
-@keyframes landmarkPulse {
-  0%, 100% {
+0%, 100% {
     opacity: 0.5;
     transform: scale(1);
   }
-  50% {
+50% {
     opacity: 0.8;
     transform: scale(1.1);
   }
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-  .mena-card {
+.mena-card {
     padding: 40px 24px;
   }
 
-  .mena-card-title {
+.mena-card-title {
     font-size: 36px;
   }
 
-  .mena-card-tagline {
+.mena-card-tagline {
     font-size: 18px;
     margin-bottom: 40px;
   }
 
-  .mena-map-container {
+.mena-map-container {
     height: 350px;
   }
 }
 
-@media (max-width: 480px) {
-  .mena-card-section {
+.mena-card-section {
     padding: 60px 16px;
   }
 
-  .mena-card {
+.mena-card {
     padding: 32px 20px;
     border-radius: 20px;
   }
 
-  .mena-card-title {
+.mena-card-title {
     font-size: 28px;
   }
 
-  .mena-card-tagline {
+.mena-card-tagline {
     font-size: 16px;
     margin-bottom: 30px;
   }
 
-  .mena-map-container {
+.mena-map-container {
     height: 300px;
   }
 }

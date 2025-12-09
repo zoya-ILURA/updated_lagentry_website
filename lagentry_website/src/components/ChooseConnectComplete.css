@@ -61,12 +61,11 @@
   border-radius: 1px;
 }
 
-@keyframes fadeInUp {
-  from {
+from {
     opacity: 0;
     transform: translateY(20px);
   }
-  to {
+to {
     opacity: 1;
     transform: translateY(0);
   }
@@ -109,12 +108,12 @@
   transform: translateY(0);
 }
 
-.step-card.active {
   /* No special styling for active state - keep it clean */
+.step-card.active {
 }
 
-.step-card.current {
   /* No special styling for current state - keep it clean */
+.step-card.current {
 }
 
 /* Animation for Connect and Complete steps (step 2 and 3) */
@@ -256,75 +255,72 @@
 }
 
 /* Mobile Responsive Styles */
-@media (max-width: 968px) {
-  .choose-connect-complete-section {
+.choose-connect-complete-section {
     padding: 4rem 2rem;
   }
 
-  .section-title {
+.section-title {
     font-size: 1.75rem;
   }
 
-  .steps-container {
+.steps-container {
     gap: 2rem;
   }
 }
 
-@media (max-width: 768px) {
-  .choose-connect-complete-section {
+.choose-connect-complete-section {
     padding: 3rem 1rem;
   }
 
-  .section-title {
+.section-title {
     font-size: 1.5rem;
   }
 
-  .steps-container {
+.steps-container {
     flex-direction: column;
     gap: 2.5rem;
   }
 
-  .step-card {
+.step-card {
     min-width: 100%;
     max-width: 100%;
   }
 
-  .step-arrow {
+.step-arrow {
     display: none;
   }
 
-  .step-title {
+.step-title {
     font-size: 1.5rem;
   }
 
-  .step-description {
+.step-description {
     font-size: 0.9rem;
   }
 }
 
-@media (max-width: 480px) {
-  .choose-connect-complete-section {
+.choose-connect-complete-section {
     padding: 2rem 1rem;
   }
 
-  .section-header {
+.section-header {
     margin-bottom: 2.5rem;
     padding: 0 0.5rem;
   }
 
-  .section-title {
+.section-title {
     font-size: 1.25rem;
     line-height: 1.4;
     word-wrap: break-word;
     padding: 0 0.25rem;
   }
 
-  .step-title {
+.step-title {
     font-size: 1.25rem;
     word-wrap: break-word;
   }
 
-  .step-description {
+.step-description {
     font-size: 0.85rem;
     word-wrap: break-word;
   }

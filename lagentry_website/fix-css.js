@@ -57,20 +57,34 @@ cssFiles.forEach(filePath => {
         return `aspect-ratio: ${decimal};`;
       });
       
-      // CRITICAL FIX: Remove forward slashes from background shorthand
-      // The CSS minimizer has issues with "position / size" syntax in background shorthand
-      // We'll split these into separate background-position and background-size properties
+      // AGGRESSIVE FIX: Remove ALL forward slashes from background shorthand
+      // Process the entire content to handle multi-line background properties
       const lines = content.split('\n');
       const fixedLines = [];
       let inComment = false;
+      let inMultiLineProperty = false;
+      let currentProperty = '';
+      let propertyName = '';
       
       for (let i = 0; i < lines.length; i++) {
         let line = lines[i];
         const originalLine = line;
         
         // Track comment state
-        if (line.includes('/*')) inComment = true;
-        if (line.includes('*/')) inComment = false;
+        if (line.includes('/*')) {
+          inComment = true;
+          // Check if comment closes on same line
+          if (line.includes('*/')) {
+            inComment = false;
+          }
+          fixedLines.push(line);
+          continue;
+        }
+        if (line.includes('*/')) {
+          inComment = false;
+          fixedLines.push(line);
+          continue;
+        }
         if (inComment) {
           fixedLines.push(line);
           continue;
@@ -82,31 +96,50 @@ cssFiles.forEach(filePath => {
           continue;
         }
         
-        // Fix background shorthand with forward slashes
-        // Pattern: background: ... position / size ...
-        if (line.includes('background:') && line.includes(' / ') && !line.includes('background-')) {
-          // Check if forward slash is inside a url()
-          const urlRegex = /url\([^)]*\)/g;
-          const urls = line.match(urlRegex) || [];
-          let slashInUrl = false;
-          
-          for (const url of urls) {
-            if (url.includes(' / ')) {
-              slashInUrl = true;
-              break;
-            }
-          }
-          
-          if (!slashInUrl) {
-            // Remove forward slashes from background shorthand
-            // Replace "position / size" with just "position"
-            line = line.replace(/(\b(?:center|top|bottom|left|right|\d+(?:px|%|em|rem)?)\s+)\/\s+([a-zA-Z-]+|\d+(?:px|%|em|rem)?)/g, '$1');
-            // Also handle numeric patterns like "50% / 100%"
-            line = line.replace(/(\d+(?:px|%|em|rem)?)\s+\/\s+(\d+(?:px|%|em|rem)?)/g, '$1');
-          }
+        // Handle multi-line CSS properties
+        if (line.includes('{')) {
+          inMultiLineProperty = true;
+          currentProperty = '';
+          propertyName = line.match(/([^{]+)\{/)?.[1]?.trim() || '';
         }
         
-        fixedLines.push(line);
+        if (inMultiLineProperty) {
+          currentProperty += line + '\n';
+          if (line.includes('}')) {
+            inMultiLineProperty = false;
+            // Process the complete property block
+            if (currentProperty.includes('background:') && currentProperty.includes(' / ')) {
+              // Check if forward slash is in a URL
+              const urlRegex = /url\([^)]*\)/g;
+              const urls = currentProperty.match(urlRegex) || [];
+              let hasSlashInUrl = urls.some(url => url.includes(' / '));
+              
+              if (!hasSlashInUrl) {
+                // Remove forward slashes from background shorthand
+                currentProperty = currentProperty.replace(/(\b(?:center|top|bottom|left|right|\d+(?:px|%|em|rem)?)\s+)\/\s+([a-zA-Z-]+|\d+(?:px|%|em|rem)?)/g, '$1');
+                currentProperty = currentProperty.replace(/(\d+(?:px|%|em|rem)?)\s+\/\s+(\d+(?:px|%|em|rem)?)/g, '$1');
+              }
+            }
+            fixedLines.push(...currentProperty.trim().split('\n'));
+            currentProperty = '';
+            continue;
+          }
+        } else {
+          // Single-line properties
+          if (line.includes('background:') && line.includes(' / ') && !line.includes('background-')) {
+            // Check if forward slash is in a URL
+            const urlRegex = /url\([^)]*\)/g;
+            const urls = line.match(urlRegex) || [];
+            let hasSlashInUrl = urls.some(url => url.includes(' / '));
+            
+            if (!hasSlashInUrl) {
+              // Remove forward slashes from background shorthand
+              line = line.replace(/(\b(?:center|top|bottom|left|right|\d+(?:px|%|em|rem)?)\s+)\/\s+([a-zA-Z-]+|\d+(?:px|%|em|rem)?)/g, '$1');
+              line = line.replace(/(\d+(?:px|%|em|rem)?)\s+\/\s+(\d+(?:px|%|em|rem)?)/g, '$1');
+            }
+          }
+          fixedLines.push(line);
+        }
       }
       
       content = fixedLines.join('\n');

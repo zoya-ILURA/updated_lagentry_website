@@ -29,12 +29,12 @@
   padding: 24px;
 }
 
+  border-radius: 28px; /* softer, like reference */
 .join-card {
   width: 620px;
   max-width: 94vw;
   background: #000000;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 28px; /* softer, like reference */
   box-shadow: 0 22px 60px rgba(0, 0, 0, 0.55), 0 2px 0 rgba(255,255,255,0.04) inset;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -154,40 +154,39 @@
 
 .join-button:hover { filter: brightness(1.05); }
 
-@media (max-width: 640px) {
-  .waitlist-overlay {
+.waitlist-overlay {
     padding: 16px;
   }
 
-  .join-card {
+.join-card {
     padding: 36px 24px 28px;
     max-width: 98vw;
   }
 
-  .join-title { 
+.join-title { 
     font-size: 32px;
     line-height: 1.2;
     word-wrap: break-word;
     padding: 0 0.5rem;
   }
   
-  .join-logo {
+.join-logo {
     width: 100px;
     height: 100px;
   }
   
-  .join-logo img {
+.join-logo img {
     width: 80px;
     height: 80px;
   }
   
-  .join-subtitle {
+.join-subtitle {
     font-size: 20px;
     word-wrap: break-word;
     padding: 0 0.5rem;
   }
   
-  .join-desc {
+.join-desc {
     font-size: 14px;
     word-wrap: break-word;
     padding: 0 0.5rem;
@@ -195,24 +194,24 @@
   }
 }
 
-@media (max-width: 480px) {
-  .join-title {
+.join-title {
     font-size: 28px;
     padding: 0 0.25rem;
   }
 
-  .join-subtitle {
+.join-subtitle {
     font-size: 18px;
     padding: 0 0.25rem;
   }
 
-  .join-desc {
+.join-desc {
     font-size: 13px;
     padding: 0 0.25rem;
   }
 }
 
 /* Intro video overlay */
+  z-index: 900; /* keep below navbar (navbar is 1000) */
 .waitlist-intro-video {
   position: fixed;
   inset: 0;
@@ -220,7 +219,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 900; /* keep below navbar (navbar is 1000) */
 }
 
 .waitlist-intro-video video {
@@ -300,20 +298,19 @@
   background: rgba(10, 0, 18, 0.4);
 }
 
-@keyframes float {
-  0%, 100% {
+0%, 100% {
     transform: translate(0, 0) scale(1);
     opacity: 0.3;
   }
-  25% {
+25% {
     transform: translate(30px, -50px) scale(1.2);
     opacity: 0.6;
   }
-  50% {
+50% {
     transform: translate(-20px, -100px) scale(0.8);
     opacity: 0.4;
   }
-  75% {
+75% {
     transform: translate(40px, -30px) scale(1.1);
     opacity: 0.5;
   }
@@ -356,12 +353,11 @@
   animation-delay: 4s;
 }
 
-@keyframes pulse {
-  0%, 100% {
+0%, 100% {
     transform: scale(1);
     opacity: 0.4;
   }
-  50% {
+50% {
     transform: scale(1.2);
     opacity: 0.6;
   }
@@ -409,49 +405,47 @@
   animation: diamondPulse 3s ease-in-out forwards;
 }
 
-@keyframes diamondSequence {
-  0% {
+0% {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0) rotate(0deg);
   }
-  20% {
+20% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1) rotate(180deg);
   }
-  40% {
+40% {
     transform: translate(-50%, -50%) scale(1.2) rotate(360deg);
   }
-  60% {
+60% {
     transform: translate(-50%, -50%) scale(1) rotate(540deg);
   }
-  80% {
+80% {
     transform: translate(-50%, -50%) scale(1.1) rotate(720deg);
   }
-  100% {
+100% {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.5) rotate(900deg);
   }
 }
 
-@keyframes diamondPulse {
-  0% {
+0% {
     opacity: 0;
     transform: translate(-50%, -50%) rotate(45deg) scale(0);
   }
-  20% {
+20% {
     opacity: 0.6;
     transform: translate(-50%, -50%) rotate(45deg) scale(1);
   }
-  40% {
+40% {
     transform: translate(-50%, -50%) rotate(45deg) scale(1.5);
   }
-  60% {
+60% {
     transform: translate(-50%, -50%) rotate(45deg) scale(1);
   }
-  80% {
+80% {
     transform: translate(-50%, -50%) rotate(45deg) scale(1.3);
   }
-  100% {
+100% {
     opacity: 0;
     transform: translate(-50%, -50%) rotate(45deg) scale(0.8);
   }
@@ -479,8 +473,7 @@
   animation: softInUp 0.6s ease-out forwards;
 }
 
-@keyframes cardAppear {
-  to {
+to {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
@@ -517,8 +510,7 @@
   animation: softInUp 0.75s ease-out 0.16s forwards;
 }
 
-@keyframes fadeInUp {
-  to {
+to {
     opacity: 1;
     transform: translateY(0);
   }
@@ -536,8 +528,7 @@
   animation: fadeIn 0.6s ease-out 0.24s forwards;
 }
 
-@keyframes fadeIn {
-  to {
+to {
     opacity: 1;
   }
 }
@@ -629,12 +620,11 @@
   animation: softInUp 0.6s ease-out 0.36s forwards;
 }
 
-@keyframes softInUp {
-  from {
+from {
     opacity: 0;
     transform: translateY(12px) scale(0.98);
   }
-  to {
+to {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
@@ -680,8 +670,7 @@
   animation: slideDown 0.4s ease-out forwards;
 }
 
-@keyframes slideDown {
-  to {
+to {
     opacity: 1;
     transform: translateY(0);
   }
@@ -701,20 +690,19 @@
   backdrop-filter: blur(10px);
 }
 
-@media (max-width: 720px) {
-  .form-row {
+.form-row {
     grid-template-columns: 1fr;
   }
   
-  .waitlist-card {
+.waitlist-card {
     padding: 32px 24px;
   }
   
-  .waitlist-title {
+.waitlist-title {
     font-size: 32px;
   }
   
-  .orb-1, .orb-2, .orb-3 {
+.orb-1, .orb-2, .orb-3 {
     filter: blur(60px);
   }
 }

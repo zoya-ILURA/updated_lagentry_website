@@ -235,147 +235,144 @@
 }
 
 /* Mobile Responsive */
-@media (max-width: 968px) {
-  .agent-hero {
+.agent-hero {
     padding: 6rem 4vw 4rem;
   }
 
-  .agent-hero-title {
+.agent-hero-title {
     font-size: clamp(2.25rem, 8vw, 3rem);
   }
 
-  .agent-hero-overview {
+.agent-hero-overview {
     font-size: 1.05rem;
   }
 
-  .agent-video-section {
+.agent-video-section {
     padding: 0 4vw 4rem;
   }
 
-  .agent-features-section {
+.agent-features-section {
     padding: 4rem 4vw 6rem;
   }
 
-  .agent-features-grid {
+.agent-features-grid {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
   }
 }
 
-@media (max-width: 768px) {
-  .agent-page {
+.agent-page {
     padding-top: 70px;
   }
 
-  .agent-hero {
+.agent-hero {
     padding: 5rem 1.5rem 3rem;
   }
 
-  .agent-hero-eyebrow {
+.agent-hero-eyebrow {
     font-size: 0.7rem;
     padding: 0.4rem 0.8rem;
   }
 
-  .agent-hero-title {
+.agent-hero-title {
     font-size: 2rem;
     line-height: 1.2;
     margin-bottom: 1.5rem;
   }
 
-  .agent-hero-overview {
+.agent-hero-overview {
     font-size: 1rem;
     line-height: 1.6;
   }
 
-  .agent-video-section {
+.agent-video-section {
     padding: 0 1.5rem 3rem;
   }
 
-  .agent-video-frame {
+.agent-video-frame {
     border-radius: 20px;
   }
 
-  .agent-features-section {
+.agent-features-section {
     padding: 3rem 1.5rem 5rem;
   }
 
-  .agent-features-header {
+.agent-features-header {
     margin-bottom: 3rem;
   }
 
-  .agent-features-header h2 {
+.agent-features-header h2 {
     font-size: 1.75rem;
   }
 
-  .agent-features-grid {
+.agent-features-grid {
     grid-template-columns: 1fr;
     gap: 1.25rem;
   }
 
-  .agent-feature-card {
+.agent-feature-card {
     padding: 1.75rem;
   }
 
-  .agent-feature-icon {
+.agent-feature-icon {
     width: 44px;
     height: 44px;
     font-size: 1.35rem;
   }
 
-  .agent-feature-title {
+.agent-feature-title {
     font-size: 1.15rem;
   }
 
-  .agent-feature-description {
+.agent-feature-description {
     font-size: 0.9rem;
   }
 }
 
-@media (max-width: 480px) {
-  .agent-hero {
+.agent-hero {
     padding: 4rem 1rem 2.5rem;
   }
 
-  .agent-hero-title {
+.agent-hero-title {
     font-size: 1.75rem;
     margin-bottom: 1.25rem;
   }
 
-  .agent-hero-overview {
+.agent-hero-overview {
     font-size: 0.95rem;
   }
 
-  .agent-video-section {
+.agent-video-section {
     padding: 0 1rem 2.5rem;
   }
 
-  .agent-video-frame {
+.agent-video-frame {
     border-radius: 16px;
   }
 
-  .agent-features-section {
+.agent-features-section {
     padding: 2.5rem 1rem 4rem;
   }
 
-  .agent-features-header h2 {
+.agent-features-header h2 {
     font-size: 1.5rem;
   }
 
-  .agent-feature-card {
+.agent-feature-card {
     padding: 1.5rem;
   }
 
-  .agent-feature-icon {
+.agent-feature-icon {
     width: 40px;
     height: 40px;
     font-size: 1.25rem;
   }
 
-  .agent-feature-title {
+.agent-feature-title {
     font-size: 1.1rem;
   }
 
-  .agent-feature-description {
+.agent-feature-description {
     font-size: 0.85rem;
   }
 }

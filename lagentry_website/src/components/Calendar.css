@@ -277,12 +277,11 @@
   color: #ffffff;
 }
 
-@media (max-width: 768px) {
-  .time-slots-grid {
+.time-slots-grid {
     grid-template-columns: repeat(2, 1fr);
   }
   
-  .calendar-container {
+.calendar-container {
     padding: 16px;
   }
 }
