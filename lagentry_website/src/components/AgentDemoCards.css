@@ -2073,7 +2073,6 @@ to {
     opacity: 1;
     transform: translateY(0);
   }
-}
 
 .agent-card-inner {
     grid-template-columns: 1fr !important;
