@@ -90,6 +90,7 @@ const AgentDemoCards: React.FC = () => {
   const videoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({});
   const audioRefs = useRef<{ [key: string]: HTMLAudioElement | null }>({});
   const aiCFOVideoRef = useRef<HTMLVideoElement | null>(null);
+  const aiCFORetryCountRef = useRef<number>(0);
 
   const handleMoreAbout = (cardType: 'cfo' | 'agent', id: string) => {
     if (cardType === 'cfo') {
@@ -318,12 +319,27 @@ const AgentDemoCards: React.FC = () => {
                                         console.error('CRITICAL: Video file is too small (' + fileSize + ' bytes). File is corrupted or not uploaded correctly.');
                                         console.error('Please verify AICFO.mp4 exists in public folder and is a valid video file.');
                                         
-                                        // Try to reload the video with cache busting
-                                        const cacheBuster = '?t=' + Date.now();
-                                        const newSrc = video.src.split('?')[0] + cacheBuster;
-                                        console.log('Attempting to reload with cache busting:', newSrc);
-                                        video.src = newSrc;
-                                        video.load();
+                                        // Prevent infinite retry loop - only retry once
+                                        if (aiCFORetryCountRef.current < 1) {
+                                          aiCFORetryCountRef.current++;
+                                          // Try to reload the video with cache busting
+                                          const cacheBuster = '?t=' + Date.now();
+                                          const newSrc = video.src.split('?')[0] + cacheBuster;
+                                          console.log('Attempting to reload with cache busting:', newSrc);
+                                          video.src = newSrc;
+                                          video.load();
+                                        } else {
+                                          console.error('Max retries reached. Video file appears to be corrupted or missing.');
+                                          video.style.display = 'none';
+                                          const container = video.parentElement;
+                                          if (container && !container.querySelector('.video-error-placeholder')) {
+                                            const placeholder = document.createElement('div');
+                                            placeholder.className = 'video-error-placeholder';
+                                            placeholder.textContent = 'Video unavailable';
+                                            placeholder.style.cssText = 'display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background: #1a1a1a; color: #888; font-size: 14px;';
+                                            container.appendChild(placeholder);
+                                          }
+                                        }
                                         return;
                                       }
                                       
@@ -536,12 +552,27 @@ const AgentDemoCards: React.FC = () => {
                                         console.error('CRITICAL: Video file is too small (' + fileSize + ' bytes). File is corrupted or not uploaded correctly.');
                                         console.error('Please verify AICFO.mp4 exists in public folder and is a valid video file.');
                                         
-                                        // Try to reload the video with cache busting
-                                        const cacheBuster = '?t=' + Date.now();
-                                        const newSrc = video.src.split('?')[0] + cacheBuster;
-                                        console.log('Attempting to reload with cache busting:', newSrc);
-                                        video.src = newSrc;
-                                        video.load();
+                                        // Prevent infinite retry loop - only retry once
+                                        if (aiCFORetryCountRef.current < 1) {
+                                          aiCFORetryCountRef.current++;
+                                          // Try to reload the video with cache busting
+                                          const cacheBuster = '?t=' + Date.now();
+                                          const newSrc = video.src.split('?')[0] + cacheBuster;
+                                          console.log('Attempting to reload with cache busting:', newSrc);
+                                          video.src = newSrc;
+                                          video.load();
+                                        } else {
+                                          console.error('Max retries reached. Video file appears to be corrupted or missing.');
+                                          video.style.display = 'none';
+                                          const container = video.parentElement;
+                                          if (container && !container.querySelector('.video-error-placeholder')) {
+                                            const placeholder = document.createElement('div');
+                                            placeholder.className = 'video-error-placeholder';
+                                            placeholder.textContent = 'Video unavailable';
+                                            placeholder.style.cssText = 'display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background: #1a1a1a; color: #888; font-size: 14px;';
+                                            container.appendChild(placeholder);
+                                          }
+                                        }
                                         return;
                                       }
                                       

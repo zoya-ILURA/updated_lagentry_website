@@ -96,6 +96,7 @@ html::-webkit-scrollbar-thumb:hover {
   body, html, #root {
     overflow-x: hidden;
     max-width: 100vw;
+    width: 100%;
   }
   
   /* Ensure all containers respect viewport */
@@ -103,6 +104,19 @@ html::-webkit-scrollbar-thumb:hover {
     max-width: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
+    box-sizing: border-box;
+  }
+  
+  /* Prevent text overflow in all text elements */
+  p, span, div, h1, h2, h3, h4, h5, h6 {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Ensure images and videos don't overflow */
+  img, video {
+    max-width: 100%;
+    height: auto;
   }
 }
 

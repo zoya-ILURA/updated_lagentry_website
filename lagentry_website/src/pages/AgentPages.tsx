@@ -1,5 +1,6 @@
 import React from 'react';
 import './AgentPages.css';
+import Footer from '../components/Footer';
 
 type Feature = {
   icon: string;
@@ -51,7 +52,6 @@ const AgentPageTemplate: React.FC<AgentPageProps> = ({ config }) => {
       <section className="agent-features-section">
         <div className="agent-features-header">
           <h2>What this agent can do</h2>
-          <p>Drop these blocks into your flows as soon as content is ready.</p>
         </div>
         <div className="agent-features-grid">
           {config.features.map((feature) => (
@@ -63,54 +63,55 @@ const AgentPageTemplate: React.FC<AgentPageProps> = ({ config }) => {
           ))}
         </div>
       </section>
+      <Footer />
     </div>
   );
 };
 
-// --- Individual agent configs (placeholder copy; structure is final) ---
+// --- Individual agent configs with provided content ---
 
 const gtmSalesConfig: AgentConfig = {
   id: 'gtm-sales',
-  title: 'Autonomous GTM & Sales Agent — Your Always-On Growth Partner',
+  title: 'GTM & Sales Agent',
   eyebrow: 'GTM & Sales Agent',
   overview:
-    'A fully autonomous growth partner that discovers opportunities, initiates outreach, manages campaigns, and elevates every conversation. Precision, speed, and intelligence — engineered for revenue teams that want consistent results at scale.',
-  videoSrc: '/videos/Untitled design-4.mp4',
+    'Drive outreach, qualify intent, and keep deals in motion. A fully autonomous growth partner that discovers opportunities, initiates outreach, manages campaigns, and elevates every conversation.',
+  videoSrc: '/sales.mp4',
   features: [
     {
       icon: '🎯',
       title: 'Lead Generation',
-      description: 'Identifies high-intent prospects using intelligent filtering and real-time signals.',
+      description: 'Find and qualify high-intent leads with precision in seconds.',
     },
     {
-      icon: '🧭',
+      icon: '🔍',
       title: 'Lead Enrichment',
-      description: 'Automatically enriches profiles with company, contact, and industry insights before outreach.',
+      description: 'Surface deep company insights automatically before outreach.',
     },
     {
-      icon: '🎙️',
-      title: 'Multilingual Voice Calling + Voice Cloning',
-      description: 'Conducts outbound sales calls in lifelike voices — including a cloned version of your brand’s tone.',
+      icon: '📞',
+      title: 'Voice Calling',
+      description: 'Call prospects in any language—or with your cloned voice.',
     },
     {
       icon: '⚡',
       title: 'Campaign Automation',
-      description: 'Runs targeted, multi-channel sequences that adapt in real time to prospect behavior.',
+      description: 'Launch multi‑channel sequences that run on autopilot.',
     },
     {
-      icon: '⏱',
-      title: 'Automated Follow-Ups',
-      description: 'Maintains perfect follow-up cadence so no opportunity slips through the cracks.',
+      icon: '🔄',
+      title: 'Follow‑Ups',
+      description: 'Never miss a follow-up; the agent chases prospects relentlessly.',
     },
     {
-      icon: '📝',
+      icon: '🤖',
       title: 'AI Meeting Assistant',
-      description: 'Joins sales calls quietly, capturing key moments, summaries, and action items automatically.',
+      description: 'Joins your calls silently and turns every word into actionable intelligence.',
     },
     {
       icon: '📊',
       title: 'Sales Analytics',
-      description: 'Delivers clear dashboards on conversions, outreach performance, and pipeline movement.',
+      description: 'Crystal‑clear pipeline insights, call logs, and performance reports.',
     },
   ],
 };
@@ -118,28 +119,40 @@ const gtmSalesConfig: AgentConfig = {
 const hrRecruitmentConfig: AgentConfig = {
   id: 'hr-recruitment',
   title: 'HR & Recruitment Agent',
-  eyebrow: 'Talent, orchestrated',
+  eyebrow: 'HR & Recruitment Agent',
   overview:
-    'From sourcing to onboarding, this agent keeps every candidate and employee journey quietly coordinated.',
-  videoSrc: '/videos/Untitled design-4.mp4',
+    'Orchestrate hiring, onboarding, and people ops flows. From sourcing to onboarding, this agent keeps every candidate and employee journey quietly coordinated.',
+  videoSrc: '/HRvc.mp4',
   features: [
     {
-      icon: '✉︎',
-      title: 'Smart Sourcing',
-      description:
-        'Search, screen, and shortlist candidates while keeping hiring teams aligned in one view.',
+      icon: '📄',
+      title: 'Resume Screening',
+      description: 'Filter hundreds of CVs instantly with skill‑accurate matching.',
     },
     {
-      icon: '☑︎',
-      title: 'Interview Coordination',
-      description:
-        'Route availability, send reminders, and surface context so every conversation feels prepared.',
+      icon: '📞',
+      title: 'Candidate Outreach',
+      description: 'Call candidates, collect details, and schedule interviews automatically.',
     },
     {
-      icon: '∞',
-      title: 'Lifecycle Workflows',
-      description:
-        'Automate repetitive HR flows — from offers and onboarding to reviews and offboarding.',
+      icon: '🎤',
+      title: 'AI Interviewing',
+      description: 'Conducts natural interviews based on JD + resume understanding.',
+    },
+    {
+      icon: '❓',
+      title: 'Cross‑Questioning',
+      description: 'Tests real competence with smart follow-up questions.',
+    },
+    {
+      icon: '⭐',
+      title: 'Shortlisting',
+      description: 'Ranks and selects top candidates with clean scorecards.',
+    },
+    {
+      icon: '📋',
+      title: 'Interview Summaries',
+      description: 'Delivers transcripts, insights, and hiring recommendations.',
     },
   ],
 };
@@ -147,28 +160,40 @@ const hrRecruitmentConfig: AgentConfig = {
 const cfoFinanceConfig: AgentConfig = {
   id: 'cfo-finance',
   title: 'CFO & Finance Agent',
-  eyebrow: 'Finance with foresight',
+  eyebrow: 'CFO & Finance Agent',
   overview:
-    'A calm layer over budgets, forecasts, and cash — always ready with the next best move for your team.',
-  videoSrc: '/videos/Untitled design-4.mp4',
+    'See cash, margin, and risk in one focused lane. A calm layer over budgets, forecasts, and cash — always ready with the next best move for your team.',
+  videoSrc: '/AICFO.mp4',
   features: [
     {
-      icon: '₼',
-      title: 'Live Forecasting',
-      description:
-        'Roll up scenarios from every team and see the impact on runway, margin, and cash in seconds.',
+      icon: '⚙️',
+      title: 'Financial Automation',
+      description: 'Automate AP, AR, reconciliation, and monthly closes.',
     },
     {
-      icon: '⌁',
-      title: 'Close Automation',
-      description:
-        'Pull data from your stack, reconcile, and prep close packs without spreadsheets flying around.',
+      icon: '💹',
+      title: 'Cashflow Intelligence',
+      description: 'Predict burn, runway, and financial health instantly.',
     },
     {
-      icon: '◆',
-      title: 'Spend Intelligence',
-      description:
-        'Spot waste, unusual patterns, and contract renewals before they become last‑minute fire drills.',
+      icon: '💰',
+      title: 'Expense Tracking',
+      description: 'Spot anomalies and overspending in real time.',
+    },
+    {
+      icon: '📈',
+      title: 'Revenue Insights',
+      description: 'Get instant P&L, balance sheets, and forecasts.',
+    },
+    {
+      icon: '🛡️',
+      title: 'Compliance‑Ready',
+      description: 'Built for PDPL, NCA, HIPAA‑aligned data governance.',
+    },
+    {
+      icon: '📊',
+      title: 'CFO Reports',
+      description: 'Receive clean, investor‑ready summaries on demand.',
     },
   ],
 };
@@ -176,57 +201,81 @@ const cfoFinanceConfig: AgentConfig = {
 const customerSupportConfig: AgentConfig = {
   id: 'customer-support',
   title: 'Customer Support Agent',
-  eyebrow: 'Always-on, never noisy',
+  eyebrow: 'Customer Support Agent',
   overview:
-    'Frontline support that feels human, learns from every ticket, and feeds product back with clarity.',
-  videoSrc: '/videos/Untitled design-4.mp4',
+    'Always-on help that feeds product with real signals. Frontline support that feels human, learns from every ticket, and feeds product back with clarity.',
+  videoSrc: '/sal.mp4',
   features: [
     {
-      icon: '✺',
-      title: 'Multichannel Inbox',
-      description:
-        'Unify email, chat, and voice into a single triaged queue with AI-suggested responses.',
+      icon: '💬',
+      title: 'Multi‑Channel Support',
+      description: 'Resolve queries across chat, WhatsApp, email, and voice.',
     },
     {
-      icon: '☾',
-      title: 'Self-Serve Experiences',
-      description:
-        'Turn your knowledge base into guided flows that resolve questions before they become tickets.',
+      icon: '🕐',
+      title: '24/7 Availability',
+      description: 'Instant, accurate responses at any hour.',
     },
     {
-      icon: '❖',
-      title: 'Insight Loops',
-      description:
-        'Cluster issues, tag patterns, and send crisp summaries straight to product and ops.',
+      icon: '🎫',
+      title: 'Ticket Automation',
+      description: 'Creates, assigns, and tracks tickets without human input.',
+    },
+    {
+      icon: '🧠',
+      title: 'Knowledge Learning',
+      description: 'Learns from your docs and updates FAQs automatically.',
+    },
+    {
+      icon: '📞',
+      title: 'Voice Support',
+      description: 'Handles verification, callbacks, and status updates.',
+    },
+    {
+      icon: '📊',
+      title: 'Support Analytics',
+      description: 'Monitor response time, CSAT, volume, and trends.',
     },
   ],
 };
 
 const realEstateConfig: AgentConfig = {
   id: 'real-estate',
-  title: 'Real Estate & Property Agent',
-  eyebrow: 'Portfolio in one glance',
+  title: 'Real Estate / Property Management Agent',
+  eyebrow: 'Real Estate / Property Management Agent',
   overview:
-    'From leads to leases and maintenance, this agent keeps your portfolio humming in the background.',
-  videoSrc: '/videos/Untitled design-4.mp4',
+    'From leads to leases and maintenance, handled quietly. From leads to leases and maintenance, this agent keeps your portfolio humming in the background.',
+  videoSrc: '/sal.mp4',
   features: [
     {
-      icon: '▣',
-      title: 'Lead-to-Lease Flows',
-      description:
-        'Capture, qualify, and convert inquiries into signed agreements without manual chasing.',
+      icon: '🏠',
+      title: 'Property Matching',
+      description: 'Suggest perfect units based on client needs instantly.',
     },
     {
-      icon: '☼',
-      title: 'Maintenance Routing',
-      description:
-        'Triage tickets, notify vendors, and keep residents updated with a single, clear thread.',
+      icon: '📞',
+      title: 'Lead Calling',
+      description: 'Qualify buyers and tenants using multilingual AI voice.',
     },
     {
-      icon: '◎',
-      title: 'Occupancy Insights',
-      description:
-        'Watch occupancy, renewals, and risk units in a simple, cinematic dashboard view.',
+      icon: '📅',
+      title: 'Viewings Scheduling',
+      description: 'Book, confirm, and manage property viewings effortlessly.',
+    },
+    {
+      icon: '🔧',
+      title: 'Tenant Issue Handling',
+      description: 'Call tenants, diagnose issues, and create maintenance tickets.',
+    },
+    {
+      icon: '⚙️',
+      title: 'Maintenance Automation',
+      description: 'Assign technicians and track task completion automatically.',
+    },
+    {
+      icon: '🔄',
+      title: 'Renewal & Follow‑Ups',
+      description: 'Automate renewals, offers, and client nurturing.',
     },
   ],
 };
@@ -234,28 +283,40 @@ const realEstateConfig: AgentConfig = {
 const healthcareConfig: AgentConfig = {
   id: 'healthcare',
   title: 'Healthcare Agent',
-  eyebrow: 'Care, coordinated',
+  eyebrow: 'Healthcare Agent',
   overview:
-    'A focused layer for intake, scheduling, and follow-ups — designed for clinics and care teams.',
-  videoSrc: '/videos/Untitled design-4.mp4',
+    'Coordinate intake, scheduling, and follow‑ups with care. A focused layer for intake, scheduling, and follow-ups — designed for clinics and care teams.',
+  videoSrc: '/sal.mp4',
   features: [
     {
-      icon: '✚',
+      icon: '🏥',
       title: 'Patient Intake',
-      description:
-        'Guide patients through forms, eligibility, and consent without adding work to the front desk.',
+      description: 'Collect symptoms and context with medical‑grade questioning.',
     },
     {
-      icon: '⏱',
-      title: 'Scheduling & Reminders',
-      description:
-        'Fill calendars, reduce no‑shows, and sync changes instantly with your practice systems.',
+      icon: '🚨',
+      title: 'Triage Guidance',
+      description: 'Routes cases safely without providing diagnosis.',
     },
     {
-      icon: '✉︎',
-      title: 'Follow‑Up Loops',
-      description:
-        'Automate check‑ins, instructions, and surveys while keeping clinicians in full control.',
+      icon: '📅',
+      title: 'Appointment Scheduling',
+      description: 'Books visits, reminders, and follow‑ups automatically.',
+    },
+    {
+      icon: '🔬',
+      title: 'Lab Explanation',
+      description: 'Explains results in simple, patient‑friendly language.',
+    },
+    {
+      icon: '🥗',
+      title: 'Diet & Wellness Plans',
+      description: 'Generates personalized lifestyle guidance.',
+    },
+    {
+      icon: '🤝',
+      title: 'Care Coordination',
+      description: 'Manages summaries, insurance info, and communication.',
     },
   ],
 };
