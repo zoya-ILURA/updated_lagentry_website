@@ -125,7 +125,7 @@
 
 .lagentry-image {
   width: min(400px, 50vw);
-  /* Reduced from 900px/70vw to 400px/50vw */
+  /* Reduced from 900px per 70vw to 400px per 50vw */
   height: auto;
   object-fit: contain;
   display: block;

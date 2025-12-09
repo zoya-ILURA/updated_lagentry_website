@@ -220,7 +220,7 @@
   border-radius: 0 16px 16px 0;
 }
 
-/* Video container inside AI Sales/GTM section */
+/* Video container inside AI Sales and GTM section */
 .ai-sales-gtm-visual-panel .agent-video-container {
   position: relative;
   width: 100%;
@@ -632,7 +632,7 @@
   height: 100% !important;
 }
 
-/* HR / Real Estate card video: cover for rounded corners */
+/* HR and Real Estate card video: cover for rounded corners */
 .agent-visual-panel-stacked .hr-video {
   object-fit: cover !important;
   /* Cover to ensure rounded corners work */
@@ -1359,7 +1359,7 @@
   text-overflow: clip;
 }
 
-/* Remove purple gradient - use grey/white gradient instead */
+/* Remove purple gradient - use grey and white gradient instead */
 .gradient-purple-text {
   background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 30%, #b0b0b0 60%, #808080 100%) !important;
   -webkit-background-clip: text !important;
@@ -1800,7 +1800,7 @@ video {
 
 .video-overlay:not(.playing):hover {
   background: rgba(0, 0, 0, 0.5);
-  /* Don't pause video on hover - only allow click to play/pause */
+  /* Don't pause video on hover - only allow click to play or pause */
 }
 
 /* Play Button */
@@ -2143,7 +2143,7 @@ video {
     min-height: 400px;
   }
 
-  /* Hide tagline/description on mobile */
+  /* Hide tagline and description on mobile */
   .ai-sales-gtm-tagline {
     display: none;
   }
@@ -2286,7 +2286,7 @@ video {
     min-height: 250px;
   }
 
-  /* Hide tagline/description on mobile */
+  /* Hide tagline and description on mobile */
   .ai-sales-gtm-tagline {
     display: none;
   }

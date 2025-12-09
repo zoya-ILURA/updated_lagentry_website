@@ -36,7 +36,7 @@
   justify-content: center;
   padding: 14px 18px;
   background: #070616;
-  /* solid dark purple/blue to match image */
+  /* solid dark purple and blue to match image */
   border: none;
   border-radius: 16px;
   text-align: center;
@@ -702,7 +702,7 @@
   }
 }
 
-/* Image containers restored/added for new layout */
+/* Image containers restored and added for new layout */
 .demo-top-image-container {
   position: relative;
   width: 100%;

@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "prestart": "npm run sync:videos && npm run sync:slides",
-    "prebuild": "npm run sync:videos && npm run sync:slides",
+    "prebuild": "npm run sync:videos && npm run sync:slides && npm run fix:css",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "sync:videos": "cpx \"videos/**/*\" public/videos || true",
     "sync:slides": "cpx \"../stacked-slides-app/dist/**/*\" public/videos/stacked-slides-app || true",
+    "fix:css": "node fix-css.js",
     "server": "cd server && npm install && npm start",
     "server:dev": "cd server && npm install && npm run dev",
     "dev": "concurrently \"npm start\" \"npm run server:dev\""

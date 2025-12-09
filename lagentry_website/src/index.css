@@ -52,7 +52,7 @@ code {
   background-clip: text;
 }
 
-/* Show default scrollbar only for body/html, hide for carousel */
+/* Show default scrollbar only for body and html, hide for carousel */
 body::-webkit-scrollbar,
 html::-webkit-scrollbar {
   width: 8px;

@@ -344,7 +344,7 @@
 /* Responsive Design */
 @media (max-width: 1200px) {
   .pricing-grid {
-    max-width: 900px; /* Reduced for tablet/laptop */
+    max-width: 900px; /* Reduced for tablet and laptop */
   }
   
   .pricing-grid-4 {

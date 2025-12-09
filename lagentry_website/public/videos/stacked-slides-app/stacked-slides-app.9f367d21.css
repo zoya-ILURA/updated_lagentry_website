@@ -87,7 +87,8 @@ body {
 .slide {
   z-index: 0;
   scroll-snap-align: start;
-  background: radial-gradient(#ffffff12 1px, #0000 1px) 0 0 / 24px 24px, url("Slide.bg.e9aa582d.png") center / cover no-repeat, #000;
+  background: radial-gradient(#ffffff12 1px, #0000 1px) 0 0, url("Slide.bg.e9aa582d.png") center no-repeat, #000;
+  
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 24px;
   grid-template-columns: 1fr 1fr;
@@ -166,7 +167,7 @@ body {
 }
 
 .card {
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16;
   transform-origin: center;
   cursor: none;
   background: #000;
@@ -242,7 +243,8 @@ body {
 .card .cursor-tag:before {
   content: "";
   z-index: 2;
-  background: url("data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='28' height='24' viewBox='0 0 28 24'>n  <path d='M3 2.5 L22 10.5 L12.2 12.8 L8.2 21 L7 12.4 Z' fill='%236c63ff' stroke='%23ffffff' stroke-width='3' stroke-linejoin='round' stroke-linecap='round'/></svg>") center / 100% 100% no-repeat;
+  background: url("data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='28' height='24' viewBox='0 0 28 24'>n  <path d='M3 2.5 L22 10.5 L12.2 12.8 L8.2 21 L7 12.4 Z' fill='%236c63ff' stroke='%23ffffff' stroke-width='3' stroke-linejoin='round' stroke-linecap='round'/></svg>") center no-repeat;
+  
   width: 28px;
   height: 24px;
   position: absolute;

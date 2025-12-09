@@ -648,7 +648,7 @@
 
 .video-placeholder {
   width: 100%;
-  aspect-ratio: 16/9;
+  aspect-ratio: 16 / 9;
   background: #1a1a1a;
   border-radius: 12px;
   display: flex;
