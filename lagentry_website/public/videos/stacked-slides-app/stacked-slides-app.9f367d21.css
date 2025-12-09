@@ -88,6 +88,7 @@ body {
   z-index: 0;
   scroll-snap-align: start;
   background: radial-gradient(#ffffff12 1px, #0000 1px) 0 0, url("Slide.bg.e9aa582d.png") center no-repeat, #000;
+  background-position: 0 0, center, center;
   
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 24px;

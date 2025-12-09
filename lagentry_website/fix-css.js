@@ -24,68 +24,83 @@ function findCssFiles(dir, fileList = []) {
   return fileList;
 }
 
-// Fix all CSS files that might have forward slash issues
 const cssFiles = [];
-
-// Add the problematic file in public
 const publicCssFile = path.join('public', 'videos', 'stacked-slides-app', 'stacked-slides-app.9f367d21.css');
 if (fs.existsSync(publicCssFile)) {
   cssFiles.push(publicCssFile);
 }
-
-// Add all CSS files from src directory
 if (fs.existsSync('src')) {
   cssFiles.push(...findCssFiles('src'));
 }
 
 console.log(`Found ${cssFiles.length} CSS files to check`);
 
+let fixedCount = 0;
+let checkedCount = 0;
+
 cssFiles.forEach(filePath => {
   try {
     if (fs.existsSync(filePath)) {
+      checkedCount++;
       let content = fs.readFileSync(filePath, 'utf8');
       const originalContent = content;
       
-      // Fix background shorthand with forward slashes
-      // Pattern: "center / cover" or "center / 100% 100%" etc.
-      // But ONLY in background properties, NOT in URLs, @import, or comments
-      // Use a more specific pattern that only matches background properties
-      content = content.replace(/background(?:-image|-position|-size)?:\s*([^;]*?)(\b(?:center|top|bottom|left|right|\d+%?)\s+)\/\s+([^,;)]+)([^;]*);/g, (match, before, pos, size, after) => {
-        // Only remove the forward slash if it's NOT in a url() function
-        if (!match.includes('url(')) {
-          return `background${match.includes('-image') ? '-image' : match.includes('-position') ? '-position' : match.includes('-size') ? '-size' : ''}: ${before}${pos}${after};`;
+      // Fix broken @import URLs
+      content = content.replace(/@import\s+url\(['"]https:\/;([^'"]+)['"]\);/g, (match, params) => {
+        if (params.includes('400;500;600;700') && params.includes('&display=swap')) {
+          return `@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');`;
+        }
+        if (params.includes('400;500;600;700;800;900') && params.includes('&display=swap')) {
+          return `@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap');`;
         }
         return match;
       });
       
-      // Convert ALL aspect-ratio fractions to decimal format to avoid forward slash issues
-      // This is a workaround for CSS minifiers that have issues with forward slashes
+      // Convert aspect-ratio fractions to decimals
       content = content.replace(/aspect-ratio:\s*(\d+)\s*\/\s*(\d+)\s*;/g, (match, num1, num2) => {
         const decimal = (parseInt(num1) / parseInt(num2)).toFixed(6).replace(/\.?0+$/, '');
         return `aspect-ratio: ${decimal};`;
       });
       
-      // Fix single number aspect-ratio values (convert to decimal if needed)
-      content = content.replace(/aspect-ratio:\s*(\d+)\s*;/g, (match, num) => {
-        // Common aspect ratios: 16 -> 1.777778 (16/9), 4 -> 1.333333 (4/3), 1 -> 1 (1/1)
-        if (num === '16') return 'aspect-ratio: 1.777778;'; // 16/9
-        if (num === '4') return 'aspect-ratio: 1.333333;'; // 4/3
-        if (num === '1') return 'aspect-ratio: 1;'; // 1/1 (square)
-        return match;
+      // AGGRESSIVE FIX: Remove ALL forward slashes from background shorthand
+      // This handles patterns like "center / cover", "0 0 / 100%", etc.
+      // Process line by line to better handle context
+      const lines = content.split('\n');
+      const fixedLines = lines.map((line, lineIndex) => {
+        // Skip comments
+        if (line.trim().startsWith('/*') || line.trim().startsWith('*')) {
+          return line;
+        }
+        
+        // Skip @import lines
+        if (line.includes('@import')) {
+          return line;
+        }
+        
+        // Fix background properties with forward slashes
+        // Pattern: background: ... position / size ...
+        if (line.includes('background') && line.includes(' / ')) {
+          // Check if it's inside a url()
+          if (!line.includes('url(') || (line.indexOf('url(') > line.lastIndexOf(' / '))) {
+            // Remove the forward slash and size part
+            line = line.replace(/(\b(?:center|top|bottom|left|right|\d+(?:px|%|em|rem)?)\s+)\/\s+([a-zA-Z-]+|\d+(?:px|%|em|rem)?)/g, '$1');
+          }
+        }
+        
+        return line;
       });
       
-      // Don't remove forward slashes from URLs - they're needed there
-      // The previous fixes should have handled all the problematic cases
+      content = fixedLines.join('\n');
       
       if (content !== originalContent) {
         fs.writeFileSync(filePath, content, 'utf8');
-        console.log('Fixed CSS file:', filePath);
+        console.log(`✓ Fixed: ${filePath}`);
+        fixedCount++;
       }
     }
   } catch (error) {
-    console.error(`Error processing ${filePath}:`, error.message);
+    console.error(`✗ Error processing ${filePath}:`, error.message);
   }
 });
 
-console.log('CSS fix script completed');
-
+console.log(`\nCSS fix script completed: Checked ${checkedCount} files, Fixed ${fixedCount} files`);
