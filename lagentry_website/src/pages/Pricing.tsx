@@ -117,11 +117,49 @@ const tiers: Tier[] = [
 ];
 
 const Pricing: React.FC = () => {
+  const [isYearly, setIsYearly] = React.useState(false);
+
+  const getPrice = (tier: Tier) => {
+    if (tier.price === '$0') return '$0';
+    const monthlyPrice = parseInt(tier.price.replace('$', ''));
+    if (isYearly) {
+      const yearlyPrice = monthlyPrice * 10;
+      return `$${yearlyPrice}`;
+    }
+    return tier.price;
+  };
+
+  const getPerText = (tier: Tier) => {
+    if (tier.price === '$0') return '/ month';
+    return isYearly ? '/ year' : '/ month';
+  };
+
   return (
     <div className="pricing-container">
       <div className="pricing-header">
         <h1 className="pricing-title">Unlimited Users. Only Pay For Actions.</h1>
         <p className="pricing-subtitle">Scale your business with AI Employees designed for every stage of growth</p>
+        
+        {/* Billing Toggle */}
+        <div className="billing-toggle-container">
+          <div className="billing-toggle">
+            <button
+              className={`toggle-option ${!isYearly ? 'active' : ''}`}
+              onClick={() => setIsYearly(false)}
+            >
+              Monthly
+            </button>
+            <button
+              className={`toggle-option ${isYearly ? 'active' : ''}`}
+              onClick={() => setIsYearly(true)}
+            >
+              Yearly
+            </button>
+          </div>
+          {isYearly && (
+            <p className="yearly-savings-text">Get 2 months free for buying yearly plan</p>
+          )}
+        </div>
       </div>
       
       <div className="pricing-grid pricing-grid-4">
@@ -145,8 +183,8 @@ const Pricing: React.FC = () => {
                 <p className="plan-subtitle">{tier.subtitle}</p>
                 
                 <div className="plan-price">
-                  <span className="price-main">{tier.price}</span>
-                  {tier.per && <span className="price-per">{tier.per}</span>}
+                  <span className="price-main">{getPrice(tier)}</span>
+                  <span className="price-per">{getPerText(tier)}</span>
                 </div>
                 
                 <a className="cta-button" href={tier.href}>

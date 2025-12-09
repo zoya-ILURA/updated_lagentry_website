@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SphereCanvas from './SphereCanvas';
 import { agentColors } from './hooks/useSphereAnimation';
 
@@ -41,6 +42,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
     onFormSubmit,
     onCloseForm
 }) => {
+    const navigate = useNavigate();
     const agentColor = agentColors[selectedAgent.color as keyof typeof agentColors] || agentColors.pink;
     const loadingArcColor = `rgb(${agentColor.r}, ${agentColor.g}, ${agentColor.b})`;
     const isAnimated = callState === 'connecting' || callState === 'connected';
@@ -113,9 +115,9 @@ const RightPanel: React.FC<RightPanelProps> = ({
                     </form>
                 </div>
             ) : callState === 'idle' ? (
-                <>
+                <div className="idle-state-container">
                     <div className="sphere-wrapper">
-                        <SphereCanvas sphereColor={agentColor} isAnimated={false} />
+                        <SphereCanvas sphereColor={agentColor} isAnimated={true} />
                     </div>
                     
                     <div className="agent-info-section">
@@ -140,7 +142,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
                     >
                         Start a call
                     </button>
-                </>
+                </div>
             ) : callState === 'connecting' || callState === 'connected' ? (
                 <div className="connecting-state">
                     <div className="sphere-wrapper">
@@ -190,7 +192,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
                         <p className="call-limit-text">For more explore the platform</p>
                         <button 
                             className="get-started-button"
-                            onClick={onEndCall}
+                            onClick={() => navigate('/waitlist')}
                         >
                             Get Started
                         </button>

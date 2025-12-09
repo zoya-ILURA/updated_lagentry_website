@@ -8,25 +8,55 @@
     background: #000000;
     position: relative;
     z-index: 1;
-    padding-top: 90px; /* Account for navbar height */
+    padding-top: 90px;
+    /* Account for navbar height */
     box-sizing: border-box;
+    align-items: center;
+    /* Center the content */
+    justify-content: space-between;
+    /* Push footer to bottom */
+}
+
+.why-choose-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    width: 100%;
+    padding: 0 16px;
+}
+
+.why-choose-title {
+    font-family: 'Geist', sans-serif;
+    font-size: 5rem;
+    /* Same size as "Meet our AI Employees" */
+    font-weight: 700;
+    margin-bottom: 1rem;
+    /* Gradient white and grey - same as "Meet our AI Employees" */
+    background: linear-gradient(135deg, #ffffff 0%, #b0b0b0 50%, #808080 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: #ffffff;
+    /* Fallback */
 }
 
 .lead-qualification-container {
     display: grid;
     grid-template-columns: 500px 1fr;
     width: 100%;
-    max-width: 1400px;
+    max-width: 1200px;
+    /* Limit max width and center */
     margin: 0 auto;
     gap: 40px;
     background: #000000;
-    padding: 20px 40px;
+    padding: 20px 16px;
+    /* 16px padding on either side */
     flex: 1;
+    flex-grow: 1;
+    /* Take available space */
     overflow: hidden;
     align-items: flex-start;
     box-sizing: border-box;
     min-height: 0;
-    height: calc(100vh - 170px); /* Account for navbar + footer */
 }
 
 /* Left Panel */
@@ -41,6 +71,8 @@
     background: transparent;
     box-sizing: border-box;
     justify-content: flex-start;
+    padding: 0 16px;
+    /* 16px padding on either side */
 }
 
 /* Custom scrollbar for left panel */
@@ -76,7 +108,7 @@
 .left-panel-card {
     background: #050505;
     border-radius: 20px;
-    padding: 20px 18px 18px;
+    padding: 20px 16px 18px;
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
     border: 1px solid #262626;
 }
@@ -139,17 +171,29 @@
     display: flex;
     flex-direction: column;
     gap: 2px;
+    flex: 1;
+    min-width: 0;
+    /* Allow text to shrink and wrap */
+    overflow: visible;
 }
 
 .left-panel-card .preview-title {
     font-size: 0.9rem;
     font-weight: 600;
     color: #ffffff;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: visible;
+    text-overflow: clip;
 }
 
 .left-panel-card .preview-tags {
     font-size: 0.75rem;
     color: #9ca3af;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: visible;
+    text-overflow: clip;
 }
 
 .left-panel-card .phone-section {
@@ -157,7 +201,8 @@
 }
 
 .main-title {
-    font-size: 22px;
+    font-size: 18px;
+    /* Reduced from 22px */
     font-weight: 700;
     color: #ffffff;
     line-height: 1.2;
@@ -191,12 +236,44 @@
     z-index: 1;
 }
 
+.idle-state-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    /* Increased gap for better spacing */
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 10;
+    padding: 20px 0;
+    /* Add padding for spacing */
+}
+
+.idle-state-container .agent-info-section {
+    order: 2;
+    /* Agent name and status come after sphere */
+    margin-bottom: 0;
+}
+
+.idle-state-container .call-button {
+    order: 3;
+    /* Button comes last */
+    margin-top: 0;
+    z-index: 20;
+    /* Ensure button is above everything */
+    position: relative;
+}
+
 .sphere-wrapper {
-    flex: 1;
+    flex: 0 0 auto;
+    /* Don't let sphere take all space - leave room for agent info and button */
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 0;
+    min-height: 200px;
+    max-height: 350px;
     width: 100%;
     pointer-events: none;
 }
@@ -220,17 +297,23 @@
 }
 
 .agent-name {
-    font-size: 22px;
-    font-weight: 600;
+    font-size: 28px;
+    /* Increased size for better visibility */
+    font-weight: 700;
+    /* Bolder */
     color: #ffffff !important;
     text-align: center;
     margin: 0;
     padding: 0;
+    margin-bottom: 8px;
+    /* Space before status */
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
     line-height: 1.2;
     white-space: nowrap;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    /* Add shadow for better visibility */
 }
 
 .status {
@@ -258,19 +341,34 @@
 }
 
 .call-button {
-    padding: 14px 32px;
-    color: white;
+    padding: 16px 40px;
+    /* Increased padding for better visibility */
+    color: white !important;
     border: none;
     border-radius: 8px;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 18px;
+    /* Increased font size */
+    font-weight: 600;
+    /* Bolder */
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    min-width: 160px;
+    transition: all 0.2s ease;
+    min-width: 180px;
+    /* Increased min width */
     position: relative;
-    z-index: 10;
-    display: block;
+    display: block !important;
+    /* Ensure button is visible */
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 100;
+    /* High z-index to ensure visibility */
+    z-index: 20 !important;
+    /* Higher z-index to ensure visibility */
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
     flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    /* Add shadow for depth */
 }
 
 .call-button:hover {
@@ -333,6 +431,7 @@
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }
@@ -462,9 +561,9 @@
 .form-field input {
     padding: 14px 16px;
     border-radius: 8px;
-    background: #e5e5e5 !important;
+    background: #1a1a1a !important;
     border: 1px solid #333333;
-    color: #000000 !important;
+    color: #ffffff !important;
     font-size: 1rem;
     transition: border-color 0.3s;
     width: 100%;
@@ -484,21 +583,21 @@
 }
 
 .form-field input::placeholder {
-    color: #777777;
+    color: #888888;
 }
 
 .form-field input:focus {
     border-color: #7c3aed;
     outline: none;
-    color: #000000 !important;
-    background: #e5e5e5 !important;
+    color: #ffffff !important;
+    background: #1a1a1a !important;
 }
 
 .form-field input:-webkit-autofill,
 .form-field input:-webkit-autofill:focus {
-    -webkit-text-fill-color: #000000 !important;
-    -webkit-box-shadow: 0 0 0px 1000px #e5e5e5 inset !important;
-    box-shadow: 0 0 0px 1000px #e5e5e5 inset !important;
+    -webkit-text-fill-color: #ffffff !important;
+    -webkit-box-shadow: 0 0 0px 1000px #1a1a1a inset !important;
+    box-shadow: 0 0 0px 1000px #1a1a1a inset !important;
 }
 
 /* Call Limit Popup */
@@ -556,15 +655,20 @@
 /* Footer */
 .lead-qualification-footer {
     background: transparent;
-    padding: 15px 40px;
+    padding: 20px 40px;
     border-top: 1px solid #333333;
     flex-shrink: 0;
-    min-height: 80px;
-    max-height: 80px;
+    min-height: 100px;
+    /* Increased height */
+    max-height: 100px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     width: 100%;
+    margin-top: auto;
+    /* Push footer to bottom */
+    position: relative;
+    z-index: 5;
 }
 
 .footer-content {
@@ -586,6 +690,8 @@
     display: flex;
     align-items: center;
     gap: 16px;
+    white-space: nowrap;
+    /* Keep "Ready to build AI Agents" in one line */
 }
 
 .footer-question {
@@ -596,32 +702,40 @@
 
 .footer-button {
     padding: 10px 20px;
-    background-color: #9333ea;
+    background: linear-gradient(135deg, #3A025b 0%, #4A036F 50%, #5A0483 100%);
     color: white;
     border: none;
     border-radius: 8px;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .footer-button:hover {
-    background-color: #7c3aed;
+    background: linear-gradient(135deg, #4A036F 0%, #5A0483 50%, #6A0597 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(58, 2, 91, 0.4);
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
+    .why-choose-title {
+        font-size: 4.5rem;
+        /* Increased size for tablet */
+    }
+
     .lead-qualification-container {
         grid-template-columns: 1fr;
+        max-width: 100%;
     }
-    
+
     .left-panel {
         max-width: 100%;
         min-width: 100%;
         width: 100%;
     }
-    
+
     .sphere-container {
         width: 300px;
         height: 300px;
@@ -639,3 +753,196 @@
     }
 }
 
+@media (max-width: 768px) {
+    .why-choose-title {
+        font-size: 5rem;
+        /* Increased size for mobile */
+    }
+
+    .why-choose-header {
+        margin-bottom: 2rem;
+    }
+
+    /* Make "Test the Lead Qualification Live" centered and smaller */
+    .header-section {
+        text-align: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .main-title {
+        font-size: 1rem;
+        /* Readable size on mobile */
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        line-height: 1.3;
+        text-align: center;
+    }
+
+    .description {
+        display: none;
+        /* Hide description on mobile */
+    }
+
+    /* Change cards from vertical to horizontal - ONLY SHOW ICONS */
+    .left-panel-card {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        padding: 16px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        justify-content: center;
+    }
+
+    .left-panel-card .preview-option {
+        flex: 0 0 auto;
+        min-width: 60px;
+        /* Only icon width */
+        width: 60px;
+        height: 60px;
+        margin-bottom: 0;
+        margin-right: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+    }
+
+    .left-panel-card .preview-option:last-child {
+        margin-right: 0;
+    }
+
+    /* Hide text - only show icons */
+    .left-panel-card .preview-text {
+        display: none;
+        /* Hide all text */
+    }
+
+    /* Make icons larger and centered */
+    .left-panel-card .preview-icon {
+        width: 60px;
+        height: 60px;
+        min-width: 60px;
+        flex-shrink: 0;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .left-panel-card .preview-option:last-child {
+        margin-right: 0;
+    }
+
+    /* Reorganize layout: Cards -> Sphere -> Button */
+    .lead-qualification-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .left-panel {
+        order: 1;
+        /* Cards come first */
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+    }
+
+    .right-panel {
+        order: 2;
+        /* Sphere and button come after cards */
+    }
+
+    .idle-state-container {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding-bottom: 2rem;
+        /* Add padding to prevent button cutoff */
+    }
+
+    .sphere-wrapper {
+        order: 1;
+        /* Sphere comes first in right panel */
+        min-height: 350px;
+        /* Larger sphere area on mobile */
+    }
+
+    .sphere-container {
+        width: 320px;
+        height: 320px;
+        /* Increased sphere size on mobile */
+    }
+
+    .agent-info-section {
+        order: 2;
+        /* Agent name comes after sphere */
+    }
+
+    .call-button {
+        order: 3;
+        /* Button comes last */
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        width: auto;
+        max-width: 90%;
+        position: relative;
+        z-index: 20;
+    }
+
+    /* Ensure right panel has enough space and doesn't cut off button */
+    .right-panel {
+        padding-bottom: 2rem;
+        min-height: auto;
+        overflow-y: auto;
+    }
+
+    .lead-qualification-wrapper {
+        min-height: auto;
+        height: auto;
+        overflow-y: auto;
+        padding-bottom: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .why-choose-title {
+        font-size: 4rem;
+        /* Increased size for small mobile */
+    }
+
+    .main-title {
+        font-size: 0.75rem;
+        /* Further reduced for small mobile */
+        line-height: 1.3;
+    }
+
+    .left-panel-card .preview-option {
+        min-width: 55px;
+        width: 55px;
+        height: 55px;
+        padding: 0;
+    }
+
+    .left-panel-card .preview-icon {
+        width: 55px;
+        height: 55px;
+        min-width: 55px;
+    }
+
+    .call-button {
+        padding: 14px 32px;
+        font-size: 16px;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .sphere-container {
+        width: 300px;
+        height: 300px;
+        /* Larger sphere on small mobile */
+    }
+}

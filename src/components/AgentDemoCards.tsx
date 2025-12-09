@@ -4,7 +4,7 @@ import realVoiceDemo from '../realvoicedemo.mp3';
 import salesVoice from '../Salesvoice.mp3';
 import agentBg from './agentbg2.png';
 import aiCFOVideo from '../AICFO.MP4';
-import hrVideo from '../HRvc.mp4';
+
 
 interface AgentCard {
   id: string;
@@ -46,7 +46,7 @@ const agents: AgentCard[] = [
     id: 'agent-3',
     name: 'HR Agent',
     description: 'Streamline your human resources operations with intelligent automation that handles recruitment, employee management, and HR workflows efficiently.',
-    video: hrVideo,
+    video: '/images/Healthcare Agent.mp4',
     color: '#C084FC',
     features: [
       'Automated recruitment processes',
@@ -196,17 +196,17 @@ const AgentDemoCards: React.FC = () => {
       }
     } else {
       // For other agents, play video as before
-    const video = videoRefs.current[cardId];
-    if (video) {
-      if (video.paused) {
-        video.play().then(() => {
-          setPlayingCards(prev => ({ ...prev, [cardId]: true }));
-        }).catch((error) => {
-          console.error('Error playing video:', error);
-        });
-      } else {
-        video.pause();
-        setPlayingCards(prev => ({ ...prev, [cardId]: false }));
+      const video = videoRefs.current[cardId];
+      if (video) {
+        if (video.paused) {
+          video.play().then(() => {
+            setPlayingCards(prev => ({ ...prev, [cardId]: true }));
+          }).catch((error) => {
+            console.error('Error playing video:', error);
+          });
+        } else {
+          video.pause();
+          setPlayingCards(prev => ({ ...prev, [cardId]: false }));
         }
       }
     }
@@ -349,8 +349,8 @@ const AgentDemoCards: React.FC = () => {
                 ...prev,
                 'ai-cfo-agent': {
                   ...prev['ai-cfo-agent'],
-                  features: prev['ai-cfo-agent'].features.map((f, i) => 
-                    i === currentFeatureIndex 
+                  features: prev['ai-cfo-agent'].features.map((f, i) =>
+                    i === currentFeatureIndex
                       ? aiCFOContent.features[currentFeatureIndex].substring(0, featureTextIndex + 1)
                       : f
                   )
@@ -535,8 +535,8 @@ const AgentDemoCards: React.FC = () => {
                   ...prev,
                   [agent.id]: {
                     ...prev[agent.id],
-                    features: prev[agent.id].features.map((f, i) => 
-                      i === currentFeatureIndex 
+                    features: prev[agent.id].features.map((f, i) =>
+                      i === currentFeatureIndex
                         ? agent.features[currentFeatureIndex].substring(0, featureTextIndex + 1)
                         : f
                     )
@@ -633,7 +633,7 @@ const AgentDemoCards: React.FC = () => {
         const cardWidth = 1000; // Each card is 1000px wide
         const gap = 32; // 2rem gap = 32px
         const totalCardWidth = cardWidth + gap;
-        
+
         // Calculate scroll position
         // Structure: [duplicate last] [AI CFO (0)] [Real Estate (1)] [Sales Agent (2)] [HR Agent (3)] [duplicate first]
         // The CSS padding centers cards, so we need to scroll to position each card correctly
@@ -642,14 +642,14 @@ const AgentDemoCards: React.FC = () => {
         // Index 2: scroll to position of Sales Agent
         // Index 3: scroll to position of HR Agent
         const scrollPosition = (currentIndex + 1) * totalCardWidth;
-        
+
         carouselRef.current.scrollTo({
           left: scrollPosition,
           behavior: 'smooth'
         });
       }
     };
-    
+
     // Small delay to ensure DOM is ready
     const timeout = setTimeout(scrollToCard, 50);
     return () => clearTimeout(timeout);
@@ -689,7 +689,7 @@ const AgentDemoCards: React.FC = () => {
                 <div
                   key={`${lastAgent.id}-duplicate-start`}
                   className={`agent-card ${currentIndex === 0 ? 'blurred' : 'hidden'}`}
-                  style={{ 
+                  style={{
                     '--card-color': lastAgent.color,
                     '--card-index': -1
                   } as React.CSSProperties}
@@ -702,14 +702,14 @@ const AgentDemoCards: React.FC = () => {
                           {lastAgent.name}
                         </h3>
                         <p className="agent-card-description">{lastAgent.description}</p>
-                        
+
                         {/* Features List */}
                         <div className="agent-features">
                           {lastAgent.features.map((feature, featureIndex) => (
                             <div key={featureIndex} className="agent-feature-item">
                               <div className="agent-feature-icon">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                  <path d="M13.5 4L6 11.5L2.5 8" stroke="rgba(255, 255, 255, 0.7)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                  <path d="M13.5 4L6 11.5L2.5 8" stroke="rgba(255, 255, 255, 0.7)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                               </div>
                               <span className="agent-feature-text">{feature}</span>
@@ -792,9 +792,9 @@ const AgentDemoCards: React.FC = () => {
                               console.error('Video loading error:', e);
                             }}
                           />
-                          
+
                           {/* Video Overlay with Play Button */}
-                          <div 
+                          <div
                             className={`video-overlay ${isPlaying ? 'playing' : ''}`}
                             onClick={() => handlePlay(lastAgent.id)}
                           >
@@ -817,503 +817,503 @@ const AgentDemoCards: React.FC = () => {
                 </div>
               );
             })()}
-            
+
             {/* AI CFO Agent Section */}
             <div className={`ai-sales-gtm-section carousel-card ${currentIndex === 0 ? 'active' : (currentIndex === 1 || currentIndex === 2 || currentIndex === 3) ? 'blurred' : 'hidden'}`} style={{ backgroundImage: `url(${agentBg})` }}>
               <div className="ai-sales-gtm-content">
-            <div className="ai-sales-gtm-left">
-              <h2 className="ai-sales-gtm-title">
-                {typingStates['ai-cfo-agent']?.title ?? aiCFOContent.title}
-                {typingStates['ai-cfo-agent']?.isTyping && typingStates['ai-cfo-agent'].currentStep === 'title' && (
-                  <span className="typing-cursor">|</span>
-                )}
-              </h2>
-              <p className="ai-sales-gtm-tagline">
-                {typingStates['ai-cfo-agent']?.tagline ?? aiCFOContent.tagline}
-                {typingStates['ai-cfo-agent']?.isTyping && typingStates['ai-cfo-agent'].currentStep === 'description' && (
-                  <span className="typing-cursor">|</span>
-                )}
-              </p>
-              
-              <div className="ai-sales-gtm-features">
-                {aiCFOContent.features.map((feature: string, featureIndex: number) => {
-                  const typedFeature = typingStates['ai-cfo-agent']?.features[featureIndex] ?? feature;
-                  const isCurrentFeature = typingStates['ai-cfo-agent']?.isTyping && 
-                    typingStates['ai-cfo-agent'].currentStep === 'features' && 
-                    typingStates['ai-cfo-agent'].featureIndex === featureIndex;
-                  
-                  return (
-                    <div key={featureIndex} className="ai-sales-gtm-feature-item">
-                      <div className="ai-sales-gtm-checkmark">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                          <path d="M13.5 4L6 11.5L2.5 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      </div>
-                      <span>
-                        {typedFeature}
-                        {isCurrentFeature && typedFeature.length < feature.length && (
-                          <span className="typing-cursor">|</span>
-                        )}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
+                <div className="ai-sales-gtm-left">
+                  <h2 className="ai-sales-gtm-title">
+                    {typingStates['ai-cfo-agent']?.title ?? aiCFOContent.title}
+                    {typingStates['ai-cfo-agent']?.isTyping && typingStates['ai-cfo-agent'].currentStep === 'title' && (
+                      <span className="typing-cursor">|</span>
+                    )}
+                  </h2>
+                  <p className="ai-sales-gtm-tagline">
+                    {typingStates['ai-cfo-agent']?.tagline ?? aiCFOContent.tagline}
+                    {typingStates['ai-cfo-agent']?.isTyping && typingStates['ai-cfo-agent'].currentStep === 'description' && (
+                      <span className="typing-cursor">|</span>
+                    )}
+                  </p>
 
-              <button className="ai-sales-gtm-button">More About AI CFO Agent</button>
-            </div>
+                  <div className="ai-sales-gtm-features">
+                    {aiCFOContent.features.map((feature: string, featureIndex: number) => {
+                      const typedFeature = typingStates['ai-cfo-agent']?.features[featureIndex] ?? feature;
+                      const isCurrentFeature = typingStates['ai-cfo-agent']?.isTyping &&
+                        typingStates['ai-cfo-agent'].currentStep === 'features' &&
+                        typingStates['ai-cfo-agent'].featureIndex === featureIndex;
 
-            <div className="ai-sales-gtm-right">
-              <div className="ai-sales-gtm-visual-panel">
-                <div className="agent-video-container">
-                  <video
-                    ref={aiCFOVideoRef}
-                    className="agent-video"
-                    src={aiCFOVideo}
-                    muted={true}
-                    loop={true}
-                    autoPlay
-                    playsInline
-                    preload="auto"
-                    onLoadedMetadata={(e) => {
-                      const video = e.currentTarget;
-                      if (video) {
-                        video.style.display = 'block';
-                        // Play video if AI CFO card is currently active
-                        if (currentIndex === 0) {
-                          video.play().catch((error) => {
-                            console.error('Error autoplaying video:', error);
-                          });
-                        }
-                      }
-                    }}
-                    onError={(e) => {
-                      console.error('Video loading error:', e);
-                    }}
-                  />
+                      return (
+                        <div key={featureIndex} className="ai-sales-gtm-feature-item">
+                          <div className="ai-sales-gtm-checkmark">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                              <path d="M13.5 4L6 11.5L2.5 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          </div>
+                          <span>
+                            {typedFeature}
+                            {isCurrentFeature && typedFeature.length < feature.length && (
+                              <span className="typing-cursor">|</span>
+                            )}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <button className="ai-sales-gtm-button">More About AI CFO Agent</button>
                 </div>
-              </div>
-              </div>
-            </div>
-            </div>
 
-            {/* Agent Cards */}
-          {agents.map((agent, index) => {
-            const isPlaying = playingCards[agent.id] || false;
-            const cardIndex = index + 1; // AI CFO is 0, so agents start at 1
-            const totalCards = 4; // Total number of cards
-            const isActive = currentIndex === cardIndex;
-            // Blurred if adjacent (previous or next), or if looping
-            // When on first card (0), show last agent card (3) blurred on right
-            // When on last card (3), show first card (0) is handled separately, and first agent (1) is blurred on left
-            const isBlurred = 
-              currentIndex === cardIndex - 1 || 
-              currentIndex === cardIndex + 1 ||
-              (currentIndex === 0 && cardIndex === totalCards - 1); // First card shows last agent card blurred on right
-            const isHidden = !isActive && !isBlurred;
-
-            return (
-              <div
-                key={agent.id}
-                className={`agent-card ${isActive ? 'active' : isBlurred ? 'blurred' : 'hidden'}`}
-                style={{ 
-                  '--card-color': agent.color,
-                  '--card-index': index
-                } as React.CSSProperties}
-              >
-                <div className={`agent-card-inner ${agent.id === 'agent-1' || agent.id === 'agent-3' ? 'reversed-layout' : ''}`} style={{ backgroundImage: `url(${agentBg})` }}>
-                  {/* For Real Estate (agent-1) and HR Agent (agent-3): Video on left, Content on right */}
-                  {agent.id === 'agent-1' || agent.id === 'agent-3' ? (
-                    <>
-                      {/* Visual Panel - Left Side */}
-                      <div className="agent-visual-panel-wrapper">
-                        <div className="agent-visual-panel">
+                <div className="ai-sales-gtm-right">
+                  <div className="ai-sales-gtm-visual-panel">
                     <div className="agent-video-container">
-                      {agent.id === 'agent-3' ? (
-                        <img
-                          className="agent-video"
-                          src={agent.video}
-                          alt={`${agent.name} demo`}
-                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        />
-                      ) : (
-                        <>
                       <video
-                        ref={(el) => {
-                          videoRefs.current[agent.id] = el;
-                          if (el) {
-                            el.dataset.cardId = agent.id;
-                          }
-                        }}
+                        ref={aiCFOVideoRef}
                         className="agent-video"
-                        src={agent.video}
-                              muted={mutedCards[agent.id] !== undefined ? mutedCards[agent.id] : true}
+                        src={aiCFOVideo}
+                        muted={true}
                         loop={true}
                         autoPlay
                         playsInline
                         preload="auto"
-                        onEnded={() => handleVideoEnd(agent.id)}
-                        onPlay={() => setPlayingCards(prev => ({ ...prev, [agent.id]: true }))}
-                        onPause={() => setPlayingCards(prev => ({ ...prev, [agent.id]: false }))}
                         onLoadedMetadata={(e) => {
                           const video = e.currentTarget;
                           if (video) {
                             video.style.display = 'block';
-                            video.play().catch((error: any) => {
-                              if (error?.name === 'AbortError') return;
-                              console.error('Error autoplaying video:', error);
-                            });
+                            // Play video if AI CFO card is currently active
+                            if (currentIndex === 0) {
+                              video.play().catch((error) => {
+                                console.error('Error autoplaying video:', error);
+                              });
+                            }
                           }
                         }}
-                        onError={() => {
-                          // Swallow transient load errors to avoid noisy console
+                        onError={(e) => {
+                          console.error('Video loading error:', e);
                         }}
                       />
-                      
-                      {/* Video Overlay with Play Button */}
-                      <div 
-                        className={`video-overlay ${isPlaying ? 'playing' : ''}`}
-                        onClick={() => handlePlay(agent.id)}
-                      >
-                        {!isPlaying && (
-                          <button className="play-button" aria-label="Play video">
-                            <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-                              <circle cx="40" cy="40" r="40" fill="rgba(255, 255, 255, 0.9)" />
-                              <path
-                                d="M32 24L32 56L56 40L32 24Z"
-                                fill="#8B5CF6"
-                              />
-                            </svg>
-                          </button>
-                        )}
-                      </div>
-                        </>
-                      )}
                     </div>
                   </div>
-                      </div>
-
-                      {/* Text Content Section - Right Side */}
-                      <div className="agent-content-wrapper">
-                        <div className="agent-content">
-                          <h3 className="agent-card-name">
-                            {typingStates[agent.id]?.title || agent.name}
-                            {typingStates[agent.id]?.isTyping && typingStates[agent.id].currentStep === 'title' && (
-                              <span className="typing-cursor">|</span>
-                            )}
-                          </h3>
-                          <p className="agent-card-description">
-                            {typingStates[agent.id]?.description || agent.description}
-                            {typingStates[agent.id]?.isTyping && typingStates[agent.id].currentStep === 'description' && (
-                              <span className="typing-cursor">|</span>
-                            )}
-                          </p>
-                          
-                          {/* Features List */}
-                          <div className="agent-features">
-                            {agent.features.map((feature, featureIndex) => {
-                              const typedFeature = typingStates[agent.id]?.features[featureIndex] ?? feature;
-                              const isCurrentFeature = typingStates[agent.id]?.isTyping && 
-                                typingStates[agent.id].currentStep === 'features' && 
-                                typingStates[agent.id].featureIndex === featureIndex;
-                              
-                              return (
-                                <div key={featureIndex} className="agent-feature-item">
-                                  <div className="agent-feature-icon">
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                      <path d="M13.5 4L6 11.5L2.5 8" stroke="rgba(255, 255, 255, 0.7)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                    </svg>
-                                  </div>
-                                  <span className="agent-feature-text">
-                                    {typedFeature}
-                                    {isCurrentFeature && typedFeature.length < feature.length && (
-                                      <span className="typing-cursor">|</span>
-                                    )}
-                                  </span>
-                                </div>
-                              );
-                            })}
-                          </div>
-
-                          {/* Play Button Icon */}
-                          <div className="agent-play-button-container" onClick={() => handlePlay(agent.id)}>
-                            <button className="agent-play-button" aria-label="Play audio">
-                              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                                <circle cx="24" cy="24" r="24" fill={agent.color} />
-                                {audioPlaying[agent.id] ? (
-                                  <path
-                                    d="M16 14H20V34H16V14ZM28 14H32V34H28V14Z"
-                                    fill="white"
-                                  />
-                                ) : (
-                                  <path
-                                    d="M18 14L18 34L30 24L18 14Z"
-                                    fill="white"
-                                  />
-                                )}
-                              </svg>
-                            </button>
-                            <div className="agent-play-text">
-                              <span className="agent-play-title" style={{ color: agent.color }}>Listen to Lagentry</span>
-                              <span className="agent-play-subtitle">General Questions</span>
-                            </div>
-                          </div>
-
-                          {/* More About Button */}
-                          <button className="agent-more-about-button">
-                            More About {agent.name} Agent
-                          </button>
-                          {/* Audio element for agents */}
-                            <audio
-                              ref={(el) => {
-                                audioRefs.current[agent.id] = el;
-                              }}
-                              src={agent.id === 'agent-1' ? realVoiceDemo : salesVoice}
-                              onEnded={() => setAudioPlaying(prev => ({ ...prev, [agent.id]: false }))}
-                              onPlay={() => setAudioPlaying(prev => ({ ...prev, [agent.id]: true }))}
-                              onPause={() => setAudioPlaying(prev => ({ ...prev, [agent.id]: false }))}
-                            />
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      {/* Text Content Section - Left Side */}
-                  <div className="agent-content-wrapper">
-                    <div className="agent-content">
-                          <h3 className="agent-card-name">
-                        {typingStates[agent.id]?.title ?? agent.name}
-                        {typingStates[agent.id]?.isTyping && typingStates[agent.id].currentStep === 'title' && (
-                          <span className="typing-cursor">|</span>
-                        )}
-                      </h3>
-                      <p className="agent-card-description">
-                        {typingStates[agent.id]?.description ?? agent.description}
-                        {typingStates[agent.id]?.isTyping && typingStates[agent.id].currentStep === 'description' && (
-                          <span className="typing-cursor">|</span>
-                        )}
-                      </p>
-                      
-                      {/* Features List */}
-                      <div className="agent-features">
-                            {agent.features.map((feature, featureIndex) => {
-                              const typedFeature = typingStates[agent.id]?.features[featureIndex] ?? feature;
-                              const isCurrentFeature = typingStates[agent.id]?.isTyping && 
-                                typingStates[agent.id].currentStep === 'features' && 
-                                typingStates[agent.id].featureIndex === featureIndex;
-                              
-                              return (
-                          <div key={featureIndex} className="agent-feature-item">
-                                <div className="agent-feature-icon">
-                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                    <path d="M13.5 4L6 11.5L2.5 8" stroke="rgba(255, 255, 255, 0.7)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                              </svg>
-                            </div>
-                                  <span className="agent-feature-text">
-                                    {typedFeature}
-                                    {isCurrentFeature && typedFeature.length < feature.length && (
-                                      <span className="typing-cursor">|</span>
-                                    )}
-                                  </span>
-                          </div>
-                              );
-                            })}
-                      </div>
-
-                          {/* Play Button Icon */}
-                          <div className="agent-play-button-container" onClick={() => handlePlay(agent.id)}>
-                            <button className="agent-play-button" aria-label={(agent.id === 'agent-1' || agent.id === 'agent-2' || agent.id === 'agent-3') ? 'Play audio' : 'Play video'}>
-                              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                                <circle cx="24" cy="24" r="24" fill={agent.color} />
-                                {(agent.id === 'agent-1' || agent.id === 'agent-2' || agent.id === 'agent-3') && audioPlaying[agent.id] ? (
-                                  <path
-                                    d="M16 14H20V34H16V14ZM28 14H32V34H28V14Z"
-                                    fill="white"
-                                  />
-                                ) : (
-                                  <path
-                                    d="M18 14L18 34L30 24L18 14Z"
-                                    fill="white"
-                                  />
-                                )}
-                              </svg>
-                            </button>
-                            <div className="agent-play-text">
-                              <span className="agent-play-title" style={{ color: agent.color }}>Listen to Lagentry</span>
-                              <span className="agent-play-subtitle">General Questions</span>
-                            </div>
-                          </div>
-
-                          {/* More About Button */}
-                          <button className="agent-more-about-button">
-                            More About {agent.name} Agent
-                          </button>
-                          {/* Audio element for agents */}
-                          {(agent.id === 'agent-1' || agent.id === 'agent-2' || agent.id === 'agent-3') && (
-                            <audio
-                              ref={(el) => {
-                                audioRefs.current[agent.id] = el;
-                              }}
-                              src={agent.id === 'agent-1' ? realVoiceDemo : salesVoice}
-                              onEnded={() => setAudioPlaying(prev => ({ ...prev, [agent.id]: false }))}
-                              onPlay={() => setAudioPlaying(prev => ({ ...prev, [agent.id]: true }))}
-                              onPause={() => setAudioPlaying(prev => ({ ...prev, [agent.id]: false }))}
-                            />
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Visual Panel - Right Side */}
-                      <div className="agent-visual-panel-wrapper">
-                        <div className="agent-visual-panel">
-                          <div className="agent-video-container">
-                            {agent.id === 'agent-3' ? (
-                              <img
-                                className="agent-video"
-                                src={agent.video}
-                                alt={`${agent.name} demo`}
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                              />
-                            ) : (
-                              <>
-                            <video
-                              ref={(el) => {
-                                videoRefs.current[agent.id] = el;
-                                if (el) {
-                                  el.dataset.cardId = agent.id;
-                                }
-                              }}
-                              className="agent-video"
-                              src={agent.video}
-                              muted={mutedCards[agent.id] !== undefined ? mutedCards[agent.id] : true}
-                              loop={true}
-                              autoPlay
-                              playsInline
-                              preload="auto"
-                              onEnded={() => handleVideoEnd(agent.id)}
-                              onPlay={() => setPlayingCards(prev => ({ ...prev, [agent.id]: true }))}
-                              onPause={() => setPlayingCards(prev => ({ ...prev, [agent.id]: false }))}
-                              onLoadedMetadata={(e) => {
-                                const video = e.currentTarget;
-                                if (video) {
-                                  video.style.display = 'block';
-                            video.play().catch((error: any) => {
-                              if (error?.name === 'AbortError') return;
-                              console.error('Error autoplaying video:', error);
-                            });
-                                }
-                              }}
-                        onError={() => {
-                          // Suppress non-critical load errors
-                        }}
-                            />
-                            
-                            {/* Video Overlay with Play Button */}
-                            <div 
-                              className={`video-overlay ${isPlaying ? 'playing' : ''}`}
-                              onClick={() => handlePlay(agent.id)}
-                            >
-                              {!isPlaying && (
-                                <button className="play-button" aria-label="Play video">
-                                  <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-                                    <circle cx="40" cy="40" r="40" fill="rgba(255, 255, 255, 0.9)" />
-                                    <path
-                                      d="M32 24L32 56L56 40L32 24Z"
-                                      fill="#8B5CF6"
-                                    />
-                                  </svg>
-                                </button>
-                              )}
-                            </div>
-                              </>
-                            )}
-                      </div>
-                    </div>
-                  </div>
-                    </>
-                  )}
                 </div>
               </div>
-            );
-          })}
-          
+            </div>
+
+            {/* Agent Cards */}
+            {agents.map((agent, index) => {
+              const isPlaying = playingCards[agent.id] || false;
+              const cardIndex = index + 1; // AI CFO is 0, so agents start at 1
+              const totalCards = 4; // Total number of cards
+              const isActive = currentIndex === cardIndex;
+              // Blurred if adjacent (previous or next), or if looping
+              // When on first card (0), show last agent card (3) blurred on right
+              // When on last card (3), show first card (0) is handled separately, and first agent (1) is blurred on left
+              const isBlurred =
+                currentIndex === cardIndex - 1 ||
+                currentIndex === cardIndex + 1 ||
+                (currentIndex === 0 && cardIndex === totalCards - 1); // First card shows last agent card blurred on right
+              const isHidden = !isActive && !isBlurred;
+
+              return (
+                <div
+                  key={agent.id}
+                  className={`agent-card ${isActive ? 'active' : isBlurred ? 'blurred' : 'hidden'}`}
+                  style={{
+                    '--card-color': agent.color,
+                    '--card-index': index
+                  } as React.CSSProperties}
+                >
+                  <div className={`agent-card-inner ${agent.id === 'agent-1' || agent.id === 'agent-3' ? 'reversed-layout' : ''}`} style={{ backgroundImage: `url(${agentBg})` }}>
+                    {/* For Real Estate (agent-1) and HR Agent (agent-3): Video on left, Content on right */}
+                    {agent.id === 'agent-1' || agent.id === 'agent-3' ? (
+                      <>
+                        {/* Visual Panel - Left Side */}
+                        <div className="agent-visual-panel-wrapper">
+                          <div className="agent-visual-panel">
+                            <div className="agent-video-container">
+                              {agent.id === 'agent-3' ? (
+                                <img
+                                  className="agent-video"
+                                  src={agent.video}
+                                  alt={`${agent.name} demo`}
+                                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                />
+                              ) : (
+                                <>
+                                  <video
+                                    ref={(el) => {
+                                      videoRefs.current[agent.id] = el;
+                                      if (el) {
+                                        el.dataset.cardId = agent.id;
+                                      }
+                                    }}
+                                    className="agent-video"
+                                    src={agent.video}
+                                    muted={mutedCards[agent.id] !== undefined ? mutedCards[agent.id] : true}
+                                    loop={true}
+                                    autoPlay
+                                    playsInline
+                                    preload="auto"
+                                    onEnded={() => handleVideoEnd(agent.id)}
+                                    onPlay={() => setPlayingCards(prev => ({ ...prev, [agent.id]: true }))}
+                                    onPause={() => setPlayingCards(prev => ({ ...prev, [agent.id]: false }))}
+                                    onLoadedMetadata={(e) => {
+                                      const video = e.currentTarget;
+                                      if (video) {
+                                        video.style.display = 'block';
+                                        video.play().catch((error: any) => {
+                                          if (error?.name === 'AbortError') return;
+                                          console.error('Error autoplaying video:', error);
+                                        });
+                                      }
+                                    }}
+                                    onError={() => {
+                                      // Swallow transient load errors to avoid noisy console
+                                    }}
+                                  />
+
+                                  {/* Video Overlay with Play Button */}
+                                  <div
+                                    className={`video-overlay ${isPlaying ? 'playing' : ''}`}
+                                    onClick={() => handlePlay(agent.id)}
+                                  >
+                                    {!isPlaying && (
+                                      <button className="play-button" aria-label="Play video">
+                                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                                          <circle cx="40" cy="40" r="40" fill="rgba(255, 255, 255, 0.9)" />
+                                          <path
+                                            d="M32 24L32 56L56 40L32 24Z"
+                                            fill="#8B5CF6"
+                                          />
+                                        </svg>
+                                      </button>
+                                    )}
+                                  </div>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Text Content Section - Right Side */}
+                        <div className="agent-content-wrapper">
+                          <div className="agent-content">
+                            <h3 className="agent-card-name">
+                              {typingStates[agent.id]?.title || agent.name}
+                              {typingStates[agent.id]?.isTyping && typingStates[agent.id].currentStep === 'title' && (
+                                <span className="typing-cursor">|</span>
+                              )}
+                            </h3>
+                            <p className="agent-card-description">
+                              {typingStates[agent.id]?.description || agent.description}
+                              {typingStates[agent.id]?.isTyping && typingStates[agent.id].currentStep === 'description' && (
+                                <span className="typing-cursor">|</span>
+                              )}
+                            </p>
+
+                            {/* Features List */}
+                            <div className="agent-features">
+                              {agent.features.map((feature, featureIndex) => {
+                                const typedFeature = typingStates[agent.id]?.features[featureIndex] ?? feature;
+                                const isCurrentFeature = typingStates[agent.id]?.isTyping &&
+                                  typingStates[agent.id].currentStep === 'features' &&
+                                  typingStates[agent.id].featureIndex === featureIndex;
+
+                                return (
+                                  <div key={featureIndex} className="agent-feature-item">
+                                    <div className="agent-feature-icon">
+                                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M13.5 4L6 11.5L2.5 8" stroke="rgba(255, 255, 255, 0.7)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                      </svg>
+                                    </div>
+                                    <span className="agent-feature-text">
+                                      {typedFeature}
+                                      {isCurrentFeature && typedFeature.length < feature.length && (
+                                        <span className="typing-cursor">|</span>
+                                      )}
+                                    </span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+
+                            {/* Play Button Icon */}
+                            <div className="agent-play-button-container" onClick={() => handlePlay(agent.id)}>
+                              <button className="agent-play-button" aria-label="Play audio">
+                                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                  <circle cx="24" cy="24" r="24" fill={agent.color} />
+                                  {audioPlaying[agent.id] ? (
+                                    <path
+                                      d="M16 14H20V34H16V14ZM28 14H32V34H28V14Z"
+                                      fill="white"
+                                    />
+                                  ) : (
+                                    <path
+                                      d="M18 14L18 34L30 24L18 14Z"
+                                      fill="white"
+                                    />
+                                  )}
+                                </svg>
+                              </button>
+                              <div className="agent-play-text">
+                                <span className="agent-play-title" style={{ color: agent.color }}>Listen to Lagentry</span>
+                                <span className="agent-play-subtitle">General Questions</span>
+                              </div>
+                            </div>
+
+                            {/* More About Button */}
+                            <button className="agent-more-about-button">
+                              More About {agent.name} Agent
+                            </button>
+                            {/* Audio element for agents */}
+                            <audio
+                              ref={(el) => {
+                                audioRefs.current[agent.id] = el;
+                              }}
+                              src={agent.id === 'agent-1' ? realVoiceDemo : salesVoice}
+                              onEnded={() => setAudioPlaying(prev => ({ ...prev, [agent.id]: false }))}
+                              onPlay={() => setAudioPlaying(prev => ({ ...prev, [agent.id]: true }))}
+                              onPause={() => setAudioPlaying(prev => ({ ...prev, [agent.id]: false }))}
+                            />
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        {/* Text Content Section - Left Side */}
+                        <div className="agent-content-wrapper">
+                          <div className="agent-content">
+                            <h3 className="agent-card-name">
+                              {typingStates[agent.id]?.title ?? agent.name}
+                              {typingStates[agent.id]?.isTyping && typingStates[agent.id].currentStep === 'title' && (
+                                <span className="typing-cursor">|</span>
+                              )}
+                            </h3>
+                            <p className="agent-card-description">
+                              {typingStates[agent.id]?.description ?? agent.description}
+                              {typingStates[agent.id]?.isTyping && typingStates[agent.id].currentStep === 'description' && (
+                                <span className="typing-cursor">|</span>
+                              )}
+                            </p>
+
+                            {/* Features List */}
+                            <div className="agent-features">
+                              {agent.features.map((feature, featureIndex) => {
+                                const typedFeature = typingStates[agent.id]?.features[featureIndex] ?? feature;
+                                const isCurrentFeature = typingStates[agent.id]?.isTyping &&
+                                  typingStates[agent.id].currentStep === 'features' &&
+                                  typingStates[agent.id].featureIndex === featureIndex;
+
+                                return (
+                                  <div key={featureIndex} className="agent-feature-item">
+                                    <div className="agent-feature-icon">
+                                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M13.5 4L6 11.5L2.5 8" stroke="rgba(255, 255, 255, 0.7)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                      </svg>
+                                    </div>
+                                    <span className="agent-feature-text">
+                                      {typedFeature}
+                                      {isCurrentFeature && typedFeature.length < feature.length && (
+                                        <span className="typing-cursor">|</span>
+                                      )}
+                                    </span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+
+                            {/* Play Button Icon */}
+                            <div className="agent-play-button-container" onClick={() => handlePlay(agent.id)}>
+                              <button className="agent-play-button" aria-label={(agent.id === 'agent-1' || agent.id === 'agent-2' || agent.id === 'agent-3') ? 'Play audio' : 'Play video'}>
+                                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                  <circle cx="24" cy="24" r="24" fill={agent.color} />
+                                  {(agent.id === 'agent-1' || agent.id === 'agent-2' || agent.id === 'agent-3') && audioPlaying[agent.id] ? (
+                                    <path
+                                      d="M16 14H20V34H16V14ZM28 14H32V34H28V14Z"
+                                      fill="white"
+                                    />
+                                  ) : (
+                                    <path
+                                      d="M18 14L18 34L30 24L18 14Z"
+                                      fill="white"
+                                    />
+                                  )}
+                                </svg>
+                              </button>
+                              <div className="agent-play-text">
+                                <span className="agent-play-title" style={{ color: agent.color }}>Listen to Lagentry</span>
+                                <span className="agent-play-subtitle">General Questions</span>
+                              </div>
+                            </div>
+
+                            {/* More About Button */}
+                            <button className="agent-more-about-button">
+                              More About {agent.name} Agent
+                            </button>
+                            {/* Audio element for agents */}
+                            {(agent.id === 'agent-1' || agent.id === 'agent-2' || agent.id === 'agent-3') && (
+                              <audio
+                                ref={(el) => {
+                                  audioRefs.current[agent.id] = el;
+                                }}
+                                src={agent.id === 'agent-1' ? realVoiceDemo : salesVoice}
+                                onEnded={() => setAudioPlaying(prev => ({ ...prev, [agent.id]: false }))}
+                                onPlay={() => setAudioPlaying(prev => ({ ...prev, [agent.id]: true }))}
+                                onPause={() => setAudioPlaying(prev => ({ ...prev, [agent.id]: false }))}
+                              />
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Visual Panel - Right Side */}
+                        <div className="agent-visual-panel-wrapper">
+                          <div className="agent-visual-panel">
+                            <div className="agent-video-container">
+                              {agent.id === 'agent-3' ? (
+                                <img
+                                  className="agent-video"
+                                  src={agent.video}
+                                  alt={`${agent.name} demo`}
+                                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                />
+                              ) : (
+                                <>
+                                  <video
+                                    ref={(el) => {
+                                      videoRefs.current[agent.id] = el;
+                                      if (el) {
+                                        el.dataset.cardId = agent.id;
+                                      }
+                                    }}
+                                    className="agent-video"
+                                    src={agent.video}
+                                    muted={mutedCards[agent.id] !== undefined ? mutedCards[agent.id] : true}
+                                    loop={true}
+                                    autoPlay
+                                    playsInline
+                                    preload="auto"
+                                    onEnded={() => handleVideoEnd(agent.id)}
+                                    onPlay={() => setPlayingCards(prev => ({ ...prev, [agent.id]: true }))}
+                                    onPause={() => setPlayingCards(prev => ({ ...prev, [agent.id]: false }))}
+                                    onLoadedMetadata={(e) => {
+                                      const video = e.currentTarget;
+                                      if (video) {
+                                        video.style.display = 'block';
+                                        video.play().catch((error: any) => {
+                                          if (error?.name === 'AbortError') return;
+                                          console.error('Error autoplaying video:', error);
+                                        });
+                                      }
+                                    }}
+                                    onError={() => {
+                                      // Suppress non-critical load errors
+                                    }}
+                                  />
+
+                                  {/* Video Overlay with Play Button */}
+                                  <div
+                                    className={`video-overlay ${isPlaying ? 'playing' : ''}`}
+                                    onClick={() => handlePlay(agent.id)}
+                                  >
+                                    {!isPlaying && (
+                                      <button className="play-button" aria-label="Play video">
+                                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                                          <circle cx="40" cy="40" r="40" fill="rgba(255, 255, 255, 0.9)" />
+                                          <path
+                                            d="M32 24L32 56L56 40L32 24Z"
+                                            fill="#8B5CF6"
+                                          />
+                                        </svg>
+                                      </button>
+                                    )}
+                                  </div>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+
             {/* Duplicate first card at the end for seamless loop */}
             <div className={`ai-sales-gtm-section carousel-card ${currentIndex === 3 ? 'blurred' : 'hidden'}`} style={{ backgroundImage: `url(${agentBg})` }}>
               <div className="ai-sales-gtm-content">
-            <div className="ai-sales-gtm-left">
-              <h2 className="ai-sales-gtm-title">
-                {typingStates['ai-cfo-agent']?.title ?? aiCFOContent.title}
-                {typingStates['ai-cfo-agent']?.isTyping && typingStates['ai-cfo-agent'].currentStep === 'title' && (
-                  <span className="typing-cursor">|</span>
-                )}
-              </h2>
-              <p className="ai-sales-gtm-tagline">
-                {typingStates['ai-cfo-agent']?.tagline ?? aiCFOContent.tagline}
-                {typingStates['ai-cfo-agent']?.isTyping && typingStates['ai-cfo-agent'].currentStep === 'description' && (
-                  <span className="typing-cursor">|</span>
-                )}
-              </p>
-              
-              <div className="ai-sales-gtm-features">
-                {aiCFOContent.features.map((feature: string, featureIndex: number) => {
-                  const typedFeature = typingStates['ai-cfo-agent']?.features[featureIndex] ?? feature;
-                  const isCurrentFeature = typingStates['ai-cfo-agent']?.isTyping && 
-                    typingStates['ai-cfo-agent'].currentStep === 'features' && 
-                    typingStates['ai-cfo-agent'].featureIndex === featureIndex;
-                  
-                  return (
-                    <div key={featureIndex} className="ai-sales-gtm-feature-item">
-                      <div className="ai-sales-gtm-checkmark">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                          <path d="M13.5 4L6 11.5L2.5 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      </div>
-                      <span>
-                        {typedFeature}
-                        {isCurrentFeature && typedFeature.length < feature.length && (
-                          <span className="typing-cursor">|</span>
-                        )}
-                      </span>
+                <div className="ai-sales-gtm-left">
+                  <h2 className="ai-sales-gtm-title">
+                    {typingStates['ai-cfo-agent']?.title ?? aiCFOContent.title}
+                    {typingStates['ai-cfo-agent']?.isTyping && typingStates['ai-cfo-agent'].currentStep === 'title' && (
+                      <span className="typing-cursor">|</span>
+                    )}
+                  </h2>
+                  <p className="ai-sales-gtm-tagline">
+                    {typingStates['ai-cfo-agent']?.tagline ?? aiCFOContent.tagline}
+                    {typingStates['ai-cfo-agent']?.isTyping && typingStates['ai-cfo-agent'].currentStep === 'description' && (
+                      <span className="typing-cursor">|</span>
+                    )}
+                  </p>
+
+                  <div className="ai-sales-gtm-features">
+                    {aiCFOContent.features.map((feature: string, featureIndex: number) => {
+                      const typedFeature = typingStates['ai-cfo-agent']?.features[featureIndex] ?? feature;
+                      const isCurrentFeature = typingStates['ai-cfo-agent']?.isTyping &&
+                        typingStates['ai-cfo-agent'].currentStep === 'features' &&
+                        typingStates['ai-cfo-agent'].featureIndex === featureIndex;
+
+                      return (
+                        <div key={featureIndex} className="ai-sales-gtm-feature-item">
+                          <div className="ai-sales-gtm-checkmark">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                              <path d="M13.5 4L6 11.5L2.5 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          </div>
+                          <span>
+                            {typedFeature}
+                            {isCurrentFeature && typedFeature.length < feature.length && (
+                              <span className="typing-cursor">|</span>
+                            )}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <button className="ai-sales-gtm-button">More About AI CFO Agent</button>
+                </div>
+
+                <div className="ai-sales-gtm-right">
+                  <div className="ai-sales-gtm-visual-panel">
+                    <div className="agent-video-container">
+                      <video
+                        ref={aiCFOVideoRef}
+                        className="agent-video"
+                        src={aiCFOVideo}
+                        muted={true}
+                        loop={true}
+                        autoPlay
+                        playsInline
+                        preload="auto"
+                        onLoadedMetadata={(e) => {
+                          const video = e.currentTarget;
+                          if (video) {
+                            video.style.display = 'block';
+                            // Play video if AI CFO card is currently active
+                            if (currentIndex === 0) {
+                              video.play().catch((error) => {
+                                console.error('Error autoplaying video:', error);
+                              });
+                            }
+                          }
+                        }}
+                        onError={(e) => {
+                          console.error('Video loading error:', e);
+                        }}
+                      />
                     </div>
-                  );
-                })}
-              </div>
-
-              <button className="ai-sales-gtm-button">More About AI CFO Agent</button>
-            </div>
-
-            <div className="ai-sales-gtm-right">
-              <div className="ai-sales-gtm-visual-panel">
-                <div className="agent-video-container">
-                  <video
-                    ref={aiCFOVideoRef}
-                    className="agent-video"
-                    src={aiCFOVideo}
-                    muted={true}
-                    loop={true}
-                    autoPlay
-                    playsInline
-                    preload="auto"
-                    onLoadedMetadata={(e) => {
-                      const video = e.currentTarget;
-                      if (video) {
-                        video.style.display = 'block';
-                        // Play video if AI CFO card is currently active
-                        if (currentIndex === 0) {
-                          video.play().catch((error) => {
-                            console.error('Error autoplaying video:', error);
-                          });
-                        }
-                      }
-                    }}
-                    onError={(e) => {
-                      console.error('Video loading error:', e);
-                    }}
-                  />
+                  </div>
                 </div>
               </div>
-              </div>
-            </div>
             </div>
           </div>
         </div>

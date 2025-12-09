@@ -5,26 +5,26 @@ import './LeadQualification/LeadQualificationPage.css';
 
 // Declare VAPI SDK types
 declare global {
-  interface Window {
-    Vapi: any;
-  }
+    interface Window {
+        Vapi: any;
+    }
 }
 
 type AgentId = 'lead-qualification' | 'customer-support' | 'real-estate';
 
 // Button color definitions
 const buttonColors = {
-    pink: { 
-        normal: '#ec4899', 
-        hover: '#db2777' 
+    pink: {
+        normal: '#ec4899',
+        hover: '#db2777'
     },
-    green: { 
-        normal: '#10b981', 
-        hover: '#059669' 
+    green: {
+        normal: '#10b981',
+        hover: '#059669'
     },
-    purple: { 
-        normal: '#a855f7', 
-        hover: '#9333ea' 
+    purple: {
+        normal: '#a855f7',
+        hover: '#9333ea'
     }
 };
 
@@ -37,7 +37,7 @@ const agents = [
         hashtags: ['#Real-Time Booking', '#Lead Qualification'],
         buttonColor: buttonColors.pink,
         voiceId: 'cgSgspJ2msm6clMCkdW9',
-        prompt: `You are a professional Lead Qualification agent for Lagentry, an AI automation platform. [enthusiastic] Your role is to qualify potential customers and understand their business needs. [warm, friendly] Always speak with confidence and show genuine interest in helping potential clients. [pause] Use natural pauses in your speech to sound more human and engaging. [excited] When discussing solutions, express enthusiasm about how Lagentry can help transform their business. [empathetic] Listen carefully to their pain points and respond with understanding. [confident] Be persuasive but never pushy - let them know you're here to help them succeed.`
+        prompt: `You are a professional Lead Qualification agent for Lagentry, an AI automation platform. Note: Pronounce 'Lagentry' as 'Laejentry' (with a soft 'g' like 'j'). [enthusiastic] Your role is to qualify potential customers and understand their business needs. [warm, friendly] Always speak with confidence and show genuine interest in helping potential clients. [pause] Use natural pauses in your speech to sound more human and engaging. [excited] When discussing solutions, express enthusiasm about how Lagentry can help transform their business. [empathetic] Listen carefully to their pain points and respond with understanding. [confident] Be persuasive but never pushy - let them know you're here to help them succeed.`
     },
     {
         id: 'customer-support' as AgentId,
@@ -47,7 +47,7 @@ const agents = [
         hashtags: ['#Real-Time Booking', '#Receptionist'],
         buttonColor: buttonColors.green,
         voiceId: 'jqcCZkN6Knx8BJ5TBdYR',
-        prompt: `You are a friendly Customer Support agent for a restaurant using Lagentry's AI platform. [warm, welcoming] Your role is to help customers with reservations, menu questions, and general inquiries. [cheerful] Always greet customers with genuine warmth and enthusiasm. [pause] Use natural pauses to make conversations feel more natural and less robotic. [helpful] Show eagerness to assist and make their dining experience special. [empathetic] If there's an issue, acknowledge their concern with understanding. [excited] When discussing menu items or specials, express genuine excitement about the food. [friendly] Maintain a positive, upbeat tone throughout every interaction.`
+        prompt: `You are a friendly Customer Support agent for a restaurant using Lagentry's AI platform. Note: Pronounce 'Lagentry' as 'Laejentry' (with a soft 'g' like 'j'). [warm, welcoming] Your role is to help customers with reservations, menu questions, and general inquiries. [cheerful] Always greet customers with genuine warmth and enthusiasm. [pause] Use natural pauses to make conversations feel more natural and less robotic. [helpful] Show eagerness to assist and make their dining experience special. [empathetic] If there's an issue, acknowledge their concern with understanding. [excited] When discussing menu items or specials, express genuine excitement about the food. [friendly] Maintain a positive, upbeat tone throughout every interaction.`
     },
     {
         id: 'real-estate' as AgentId,
@@ -114,7 +114,7 @@ const VoiceAgentsPreview: React.FC = () => {
 
     const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         if (!formData.name || !formData.email) {
             alert('Please fill in your name and email.');
             return;
@@ -147,7 +147,7 @@ const VoiceAgentsPreview: React.FC = () => {
             // In production, use environment variable - must be set in Netlify
             const isDevelopment = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
             let backendUrl: string;
-            
+
             if (isDevelopment) {
                 // Use proxy in development (package.json has proxy: "http://localhost:5001")
                 backendUrl = '';
@@ -161,7 +161,7 @@ const VoiceAgentsPreview: React.FC = () => {
                 // Remove trailing slash if present
                 backendUrl = backendUrl.replace(/\/$/, '');
             }
-            
+
             const apiUrl = backendUrl ? `${backendUrl}/api/start-voice-call` : '/api/start-voice-call';
             console.log('Calling backend API:', apiUrl, 'isDevelopment:', isDevelopment);
             const response = await fetch(apiUrl, {
@@ -226,10 +226,10 @@ const VoiceAgentsPreview: React.FC = () => {
             }
 
             console.log('Initializing VAPI with agent ID:', data.agentId);
-            
+
             const publicApiKey = data.publicApiKey || 'a40eb25c-29c0-44c6-a381-24d7587f572b';
             console.log('Using public API key for VAPI initialization');
-            
+
             const vapi = new window.Vapi(publicApiKey);
             vapiCallRef.current = vapi;
 
@@ -309,7 +309,7 @@ const VoiceAgentsPreview: React.FC = () => {
                 name: error.name
             });
             setCallState('ended');
-            
+
             let errorMessage = 'Unknown error occurred.';
             if (error.message) {
                 errorMessage = error.message;
@@ -321,7 +321,7 @@ const VoiceAgentsPreview: React.FC = () => {
                     errorMessage = 'Failed to connect to backend server. The service may be temporarily unavailable. Please try again later.';
                 }
             }
-            
+
             // Show user-friendly error messages
             if (error.message && (error.message.includes('Backend URL not configured') || error.message.includes('Backend service is not configured'))) {
                 // This should not happen in production if env var is set correctly
@@ -368,7 +368,7 @@ const VoiceAgentsPreview: React.FC = () => {
         <div className="voice-agents-preview-container">
             <div className="lead-qualification-wrapper">
                 <div className="lead-qualification-container">
-                    <LeftPanel 
+                    <LeftPanel
                         selectedId={selectedId}
                         onSelect={(id) => {
                             setSelectedId(id);
@@ -376,7 +376,7 @@ const VoiceAgentsPreview: React.FC = () => {
                             setShowForm(false);
                         }}
                     />
-                    <RightPanel 
+                    <RightPanel
                         selectedAgent={selectedAgent}
                         callState={callState}
                         onStartCall={handleStartCall}

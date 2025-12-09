@@ -6,7 +6,7 @@
   justify-content: center;
   align-items: center;
   padding: 100px 16px 80px;
-  background: linear-gradient(135deg, #000000 0%, #0A0012 40%, #150021 70%, #3D0A55 100%);
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 40%, #2a2a2a 70%, #1a1a1a 100%);
   min-height: 100vh;
   overflow: hidden;
 }
@@ -15,7 +15,7 @@
   position: fixed;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(135deg, #000000 0%, #0A0012 40%, #150021 70%, #3D0A55 100%);
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 40%, #2a2a2a 70%, #1a1a1a 100%);
 }
 
 /* Center overlay join box */
@@ -43,8 +43,8 @@
 
 /* Top stats pill */
 .join-stats { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 24px; }
-.join-pill { display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px; background: linear-gradient(180deg, rgba(160,63,140,0.35), rgba(60,11,41,0.35)); box-shadow: 0 4px 10px rgba(0,0,0,0.35) inset; }
-.join-pill-text { color: #f3e2ff; font-weight: 700; font-size: 15px; }
+.join-pill { display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px; background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2a2a2a 100%); box-shadow: 0 4px 10px rgba(0,0,0,0.35) inset; }
+.join-pill-text { color: #ffffff; font-weight: 700; font-size: 15px; }
 
 .join-header {
   display: flex;

@@ -10,7 +10,8 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 40px 16px 0; /* remove bottom padding so bottom image can touch page edge */
+  padding: 40px 16px 0;
+  /* remove bottom padding so bottom image can touch page edge */
   background: var(--bg);
   min-height: 100vh;
   box-sizing: border-box;
@@ -21,119 +22,7 @@
   font-family: 'Geist', sans-serif;
 }
 
-/* Top image container with overlay form */
-.demo-top-image-container {
-  position: relative;
-  width: 100%;
-  max-width: 1000px;
-  margin: 100px auto 510px auto;
-  min-height: 500px;
-  height: 500px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  overflow: visible;
-  background: transparent;
-}
-
-.demo-top-background-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Text overlay on demo2.png image */
-.demo-top-image-text-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 24px 20px 0 20px;
-  z-index: 10;
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    rgba(7, 6, 22, 0.75) 0%,
-    rgba(7, 6, 22, 0.6) 50%,
-    rgba(7, 6, 22, 0.3) 80%,
-    transparent 100%
-  );
-  border-radius: 20px 20px 0 0;
-  overflow: visible;
-}
-
-.demo-top-image-title {
-  margin: 0 0 12px 0;
-  color: #ffffff;
-  font-size: 36px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  text-align: center;
-  line-height: 1.2;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
-  white-space: nowrap;
-  overflow: visible;
-  width: 100%;
-}
-
-.demo-top-image-subtitle {
-  margin: 0;
-  color: #e8f4f8;
-  font-size: 18px;
-  font-weight: 400;
-  text-align: center;
-  line-height: 1.6;
-  opacity: 1;
-  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.7), 0 0 8px rgba(0, 0, 0, 0.4);
-  max-width: 600px;
-}
-
-.demo-top-image-break {
-  display: block;
-}
-
-/* Overlay grid for form card on bottom half */
-.book-demo-grid-overlay {
-  position: absolute;
-  bottom: -370px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 1000px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  padding: 0 20px 0 20px;
-  overflow: visible;
-  z-index: 20;
-  pointer-events: none;
-}
-
-.book-demo-grid-overlay * {
-  pointer-events: auto;
-}
-
-/* Top image above header */
-.demo-top-image-wrap {
-  position: relative;
-  width: 100%;
-  max-width: 1100px; /* slightly larger image container */
-  margin: 40px auto 24px auto;
-}
+/* Removed image containers - no longer needed */
 
 /* Caption bar above image (matches provided style) */
 .demo-top-caption {
@@ -146,7 +35,8 @@
   align-items: center;
   justify-content: center;
   padding: 14px 18px;
-  background: #070616; /* solid dark purple/blue to match image */
+  background: #070616;
+  /* solid dark purple/blue to match image */
   border: none;
   border-radius: 16px;
   text-align: center;
@@ -180,7 +70,8 @@
   width: 100%;
   max-width: 1100px;
   height: auto;
-  max-height: 500px; /* increase visible height slightly */
+  max-height: 500px;
+  /* increase visible height slightly */
   display: block;
   object-fit: cover;
   border-radius: 8px 8px 20px 20px;
@@ -193,9 +84,9 @@
   top: 22%;
   left: 50%;
   transform: translateX(-50%);
-  width: 72%;
-  height: 24%;
-  min-height: 56px;
+  width: 85%;
+  height: 32%;
+  min-height: 80px;
   border-radius: 20px;
   border: 2px solid rgba(180, 180, 200, 0.16);
   background: rgba(10, 10, 20, 0.22);
@@ -241,7 +132,7 @@
 }
 
 .overlay-typing-text {
-  font-size: 16px;
+  font-size: 20px;
   color: #e5e7eb;
   font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
   line-height: 1.6;
@@ -310,16 +201,49 @@
   transition: all 0.6s ease;
 }
 
-.book-demo-card {
+/* Title Section */
+.book-demo-title-section {
   width: 100%;
-  max-width: 1000px;
-  background: rgba(3, 0, 20, 0.08); /* more transparent, mirror-like */
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  max-width: 1200px;
+  margin: 120px auto 60px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.book-demo-main-title {
+  font-size: 3rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 20px 0;
+  line-height: 1.2;
+}
+
+.book-demo-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Form Container */
+.book-demo-form-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 60px auto;
+  padding: 0 20px;
+
+
+}
+
+.book-demo-card {
+  background: rgba(0, 0, 0, 0.2);
+  /* Semi-transparent black */
+  backdrop-filter: blur(10px);
+  /* Add blur for legibility */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
   margin: 0 auto;
   position: relative;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -381,7 +305,8 @@
 .booking-selection {
   margin: 20px 0;
   padding: 16px;
-  background: rgba(155, 92, 255, 0.05); /* lighter, more transparent */
+  background: rgba(155, 92, 255, 0.05);
+  /* lighter, more transparent */
   border: 1px solid rgba(155, 92, 255, 0.4);
   border-radius: 12px;
 }
@@ -419,7 +344,8 @@
 .trust-strip {
   margin-top: 18px;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(9, 9, 20, 0.2); /* glassy strip */
+  background: rgba(9, 9, 20, 0.2);
+  /* glassy strip */
   border-radius: 12px;
   padding: 12px 14px;
   color: var(--muted);
@@ -522,10 +448,10 @@
 .form-field input,
 .form-field textarea,
 .form-field select {
-  background: transparent !important;
-  background-color: transparent !important;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: var(--text);
+  background: #1a1a1a !important;
+  background-color: #1a1a1a !important;
+  border: 1px solid #888888;
+  color: #ffffff !important;
   border-radius: 10px;
   padding: 12px 14px;
   outline: none;
@@ -594,10 +520,10 @@
 .form-field input:focus,
 .form-field textarea:focus,
 .form-field select:focus {
-  background: transparent !important;
-  background-color: transparent !important;
-  border-color: var(--accentA);
-  box-shadow: 0 0 0 3px rgba(155, 92, 255, 0.25);
+  background: #1a1a1a !important;
+  background-color: #1a1a1a !important;
+  border-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
   outline: none;
 }
 
@@ -674,6 +600,61 @@
 .calendar-section {
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+/* Semi-circle decorative element - behind calendar on mobile */
+.book-demo-semi-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 800px;
+  height: 400px;
+  background: radial-gradient(ellipse 100% 50% at 50% 100%,
+      rgba(155, 92, 255, 0.15) 0%,
+      rgba(106, 90, 205, 0.1) 30%,
+      rgba(138, 43, 226, 0.08) 50%,
+      transparent 70%);
+  clip-path: ellipse(50% 50% at 50% 100%);
+  z-index: 0;
+  pointer-events: none;
+  display: none;
+  /* Hidden by default, shown on mobile */
+}
+
+.book-demo-semi-circle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  height: 400px;
+  background: radial-gradient(ellipse 80% 45% at 50% 100%,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(155, 92, 255, 0.08) 20%,
+      rgba(106, 90, 205, 0.06) 40%,
+      transparent 65%);
+  clip-path: ellipse(50% 50% at 50% 100%);
+}
+
+.book-demo-semi-circle::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 400px;
+  background: radial-gradient(circle 30% at 50% 100%,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(155, 92, 255, 0.2) 15%,
+      rgba(106, 90, 205, 0.15) 30%,
+      transparent 50%);
+  clip-path: ellipse(50% 50% at 50% 100%);
 }
 
 /* Two Cards Section */
@@ -706,64 +687,129 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
 }
 
-.demo-card-video {
-  width: 100%;
-  height: 300px;
-  overflow: hidden;
-  position: relative;
+
+
+@keyframes blink {
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0.3;
+  }
 }
 
-.demo-card-video video {
+/* Image containers restored/added for new layout */
+.demo-top-image-container {
+  position: relative;
+  width: 100%;
+  max-width: 1300px;
+  /* Increased size as requested */
+  margin: 100px auto 660px;
+  height: 650px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: transparent;
+  overflow: visible;
+}
+
+.demo-top-background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
+  object-position: center;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  z-index: 1;
 }
 
-.demo-card-content {
-  padding: 30px;
+.demo-top-image-text-overlay {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px;
   text-align: center;
+  z-index: 10;
+  padding: 0 20px;
 }
 
-.demo-card-title {
-  color: #ffffff;
-  font-size: 24px;
-  font-weight: 600;
-  margin: 0 0 15px 0;
-  line-height: 1.2;
+.demo-top-image-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.8) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+  white-space: nowrap;
 }
 
-.demo-card-description {
-  color: #b0b0b0;
-  font-size: 16px;
-  line-height: 1.6;
+.demo-top-image-subtitle {
+  font-size: 1.25rem;
+  color: #a1a1aa;
   margin: 0;
 }
 
-/* Bottom image */
+.book-demo-grid-overlay {
+  position: absolute;
+  left: 50%;
+  /* Exact production positioning */
+  bottom: -370px;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 0 20px;
+  pointer-events: none;
+  /* Container is passthrough */
+  z-index: 20;
+  overflow: visible;
+}
+
+.book-demo-grid-overlay * {
+  pointer-events: auto;
+  /* Children are clickable */
+}
+
+/* Wrapper for the second image (typing effect) */
+.demo-top-image-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1300px;
+  /* Increased from 1100px */
+  margin: 80px auto;
+  display: flex;
+  display: flex;
+  justify-content: center;
+}
+
+/* Global rule for bottom image (Desktop) */
 .demo-bottom-image-wrap {
   width: 100%;
-  max-width: 800px;
-  margin: auto auto 0 auto; /* push image to bottom of flex column */
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+  display: block;
 }
 
 .demo-bottom-image {
   width: 100%;
-  max-width: 800px;
   height: auto;
-  display: block;
-  object-fit: cover;
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-}
-
-@keyframes blink {
-  0%, 50% {
-    opacity: 1;
-  }
-  51%, 100% {
-    opacity: 0.3;
-  }
+  display: block;
 }
 
 @media (max-width: 1200px) {
@@ -771,9 +817,11 @@
     grid-template-columns: 1fr;
     gap: 24px;
   }
+
   .demo-bottom-image-wrap {
     margin: 60px auto 60px auto;
   }
+
   .demo-bottom-video {
     width: 84%;
     height: 62%;
@@ -786,49 +834,25 @@
     padding: 60px 16px 40px;
   }
 
-  .demo-top-image-container {
-    min-height: 500px;
-    margin: 80px auto 20px auto;
+  .book-demo-title-section {
+    margin: 80px auto 40px auto;
+    padding: 0 16px;
   }
 
-  .demo-top-background-image {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+  .book-demo-main-title {
+    font-size: 2rem;
   }
 
-  .demo-top-image-text-overlay {
-    padding: 20px 16px 0 16px;
+  .book-demo-subtitle {
+    font-size: 1rem;
   }
 
-  .demo-top-image-title {
-    font-size: 24px;
-    white-space: normal !important;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    width: 100%;
-    line-height: 1.3;
-    padding: 0 0.5rem;
+  .book-demo-form-container {
+    padding: 0 16px;
   }
 
-  .caption-title {
-    white-space: normal !important;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    line-height: 1.3;
-    padding: 0 0.5rem;
-  }
-
-  .demo-top-image-subtitle {
-    font-size: 16px;
-  }
-
-  .book-demo-grid-overlay {
-    padding: 0 16px 20px 16px;
-  }
-
-  .demo-top-image-wrap {
-    margin: 0 auto 20px auto;
+  .book-demo-card {
+    padding: 24px;
   }
 
   .demo-top-caption {
@@ -857,13 +881,13 @@
 
   .demo-top-overlay {
     top: 18%;
-    width: 82%;
-    height: 26%;
+    width: 88%;
+    height: 30%;
     border-radius: 18px;
   }
 
   .overlay-typing-text {
-    font-size: 15px;
+    font-size: 18px;
     max-width: 92%;
   }
 
@@ -911,19 +935,23 @@
   .demo-bottom-image {
     border-radius: 16px;
   }
+
   .demo-bottom-video {
     width: 90%;
     height: 52%;
     bottom: 6%;
     border-radius: 12px;
   }
+
   .demo-bottom-video-caption {
     top: 6px;
     padding: 0;
   }
+
   .demo-bottom-video-title {
     font-size: 20px;
   }
+
   .demo-bottom-video-subtitle {
     font-size: 13px;
   }
@@ -948,132 +976,110 @@
   .demo-card-description {
     font-size: 15px;
   }
-}
-
-@media (max-width: 480px) {
-  .demo-top-image-container {
-    min-height: 400px;
-    margin: 80px auto 16px auto;
-  }
-
-  .demo-top-background-image {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  }
-
-  .demo-top-image-text-overlay {
-    padding: 16px 12px 0 12px;
-    height: 50%;
-  }
-
-  .demo-top-image-title {
-    font-size: 18px;
-    white-space: normal;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    width: 100%;
-    line-height: 1.3;
-    padding: 0 0.25rem;
-  }
-
-  .demo-top-image-subtitle {
-    font-size: 14px;
-  }
-
-  .book-demo-grid-overlay {
-    padding: 0 12px 16px 12px;
-  }
-
-  .demo-top-image-wrap {
-    margin: 0 auto 16px auto;
-  }
-
-  .demo-top-image {
-    max-height: 220px;
-    border-radius: 8px 8px 14px 14px;
-  }
-
-  .demo-top-caption {
-    width: 92%;
-    padding: 10px 14px;
-    border-radius: 12px;
-  }
-
-  .caption-title {
-    font-size: 24px;
-    white-space: normal;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    line-height: 1.3;
-    padding: 0 0.5rem;
-  }
-
-  .caption-subtitle {
-    font-size: 16px;
-  }
-
-  .demo-top-overlay {
-    top: 18%;
-    width: 86%;
-    height: 26%;
-    border-radius: 16px;
-    min-height: 48px;
-  }
-
-  .overlay-typing-text {
-    font-size: 14px;
-    max-width: 94%;
-  }
-
-  .demo-bottom-image-wrap {
-    margin: 40px auto 50px auto;
-  }
-
-  .demo-bottom-image {
-    border-radius: 14px;
-  }
-  .demo-bottom-video {
-    width: 90%;
-    height: 65%;
-    bottom: 0;
-    border-radius: 12px;
-  }
-  .demo-bottom-video-caption {
-    top: 6px;
-    padding: 0;
-  }
-  .demo-bottom-video-title {
-    font-size: 18px;
-  }
-  .demo-bottom-video-subtitle {
-    font-size: 12px;
-  }
-
-  .demo-cards-section {
-    margin: 40px auto;
-    padding: 0 12px;
-  }
-
-  .demo-cards-container {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .demo-card-video {
-    height: 200px;
-  }
-
-  .demo-card-content {
-    padding: 20px;
-  }
-
-  .demo-card-title {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
 
   .demo-card-description {
     font-size: 14px;
+  }
+
+  /* Stack order revisions for mobile: Heading -> Image (Circle) -> Form */
+  /* Stack order revisions for mobile: Heading -> Image (Circle) -> Form */
+  .demo-top-image-container {
+    display: flex;
+    flex-direction: column;
+    margin: 80px auto 20px;
+    /* Reduced top margin for mobile */
+    height: auto;
+    min-height: 400px;
+  }
+
+  /* 1. Heading Top Most */
+  .demo-top-image-text-overlay {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    order: -1;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 0 16px;
+    width: 100%;
+    background: transparent;
+    border-radius: 0;
+  }
+
+  .demo-top-image-title {
+    font-size: 24px !important;
+    /* Fixed size approx 1.5rem */
+    white-space: normal !important;
+    /* Allow wrapping to fix cut-off */
+    word-wrap: break-word;
+    width: 100%;
+    line-height: 1.3;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .demo-top-image-subtitle {
+    font-size: 16px;
+    white-space: normal;
+    padding: 0 1rem;
+    text-align: center;
+  }
+
+  /* 2. Semi-circle (Background Image) - Make visible */
+  .demo-top-background-image {
+    position: relative;
+    order: 0;
+    width: 100%;
+    height: 300px;
+    /* Constrain height */
+    object-fit: cover;
+    margin-top: 0;
+    opacity: 1;
+    display: block;
+    border-radius: 20px;
+    mask-image: none;
+    -webkit-mask-image: none;
+    margin-left: 0;
+    margin-bottom: 0;
+  }
+
+  /* 3. Booking Screen - Attached just below */
+  .book-demo-grid-overlay {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    order: 1;
+    margin-top: -60px;
+    /* Slight overlap */
+    padding: 0 16px 20px;
+    pointer-events: auto;
+  }
+
+  .book-demo-card {
+    padding: 20px 16px;
+    backdrop-filter: blur(15px);
+    background: rgba(0, 0, 0, 0.5);
+    /* Darker background for contrast */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* 4. Laptop Animation - Increased Size */
+  .demo-top-image-wrap {
+    width: 120%;
+    /* Make it wider than screen */
+    margin-left: -10%;
+    display: block;
+    top: 0;
+    height: 300px;
+  }
+
+  */ .triangle-image-container {
+    margin: 40px auto 30px auto;
+  }
+
+  .triangle-image {
+    max-width: 100%;
   }
 }

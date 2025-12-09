@@ -47,10 +47,24 @@
 }
 
 .footer-content {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 3rem;
   margin-bottom: 3rem;
+}
+
+/* Footer sections grid (Resources, Legal, Contact) - FIRST */
+.footer-sections-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 columns */
+  gap: 2rem;
+  width: 100%;
+}
+
+/* Lagentry section - AFTER sections grid */
+.footer-lagentry-section {
+  width: 100%;
+  text-align: center;
 }
 
 .footer-section {
@@ -270,6 +284,7 @@
 .social-icons {
   display: flex;
   gap: 1rem;
+  justify-content: center; /* Center the icons */
 }
 
 .social-icon {
@@ -411,9 +426,20 @@
   }
   
   .footer-content {
-    grid-template-columns: 1fr;
     gap: 2rem;
     margin-bottom: 2rem;
+  }
+
+  /* Resources, Legal, Contact in 2x2 grid on mobile */
+  .footer-sections-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 columns */
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .footer-lagentry-section {
+    text-align: center;
   }
   
   .footer-description {
@@ -426,7 +452,7 @@
   }
   
   .social-icons {
-    justify-content: flex-start;
+    justify-content: center; /* Center icons on mobile too */
   }
   
   .footer-bottom {

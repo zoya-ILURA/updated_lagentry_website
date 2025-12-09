@@ -19,11 +19,16 @@ const Features: React.FC = () => {
   };
 
   const videos = [
-    { id: 1, video: '/v1.mp4', title: 'Customer Support Voice Agent' },
+    { id: 1, video: '/v1.mp4', title: 'Customer Support' },
     { id: 2, video: '/v2.mp4', title: 'Real Estate' },
     { id: 3, video: '/v3.mp4', title: 'Sales' },
     { id: 4, video: '/v4.mp4', title: 'Marketing' }
   ];
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // Initialize videos - don't autoplay, let user control
   useEffect(() => {

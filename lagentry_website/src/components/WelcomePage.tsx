@@ -28,13 +28,13 @@ const WelcomePage: React.FC = () => {
     const updateShaderSize = () => {
       const width = window.innerWidth;
       if (width <= 480) {
-        setShaderSize(250);
+        setShaderSize(350); /* Increased from 280 */
       } else if (width <= 768) {
-        setShaderSize(350);
+        setShaderSize(450); /* Increased from 350 */
       } else if (width <= 968) {
-        setShaderSize(450);
+        setShaderSize(500); /* Increased from 400 */
       } else {
-        setShaderSize(600);
+        setShaderSize(500); /* Reduced from 800 */
       }
     };
 
@@ -50,18 +50,28 @@ const WelcomePage: React.FC = () => {
 
   return (
     <div className="welcome-container intro-complete">
+      {/* Purple shader reminder - Just below navbar */}
+      <div className="top-shader-wrapper">
+        <div className="shader-reminder top-shader">
+          <ShaderCanvas
+            size={shaderSize}
+            shaderId={2}
+          />
+        </div>
+      </div>
+
       <div className="welcome-content">
         <div className="tagline-banner">
-          <img 
-            src="/images/nvidia-logo-png_seeklogo-101614.png" 
-            alt="NVIDIA" 
+          <img
+            src="/images/nvidia-logo-png_seeklogo-101614.png"
+            alt="NVIDIA"
             className="nvidia-logo"
           />
           <span>Backed by NVIDIA.</span>
         </div>
 
         <h1 className="main-heading">
-          <span className="heading-line1">Hire AI Employees</span>
+          <span className="heading-line1">Launch AI Employees</span>
         </h1>
 
         <div className="animated-text-container">
@@ -87,16 +97,6 @@ const WelcomePage: React.FC = () => {
             Join the Waitlist
             <span className="arrow">→</span>
           </button>
-        </div>
-      </div>
-
-      <div className="animation-space">
-        {/* Shader reminder animation - Ether shader */}
-        <div className="shader-reminder">
-          <ShaderCanvas
-            size={shaderSize}
-            shaderId={2}
-          />
         </div>
       </div>
     </div>

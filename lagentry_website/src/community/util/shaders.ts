@@ -26,9 +26,9 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
   } else if (hasUpcomingReminders) {
     fragColor = vec4(vec3(0.1, 0.5, 0.2) / abs(sin(slowTime - uv.y - uv.x)), 1.0);
   } else {
-    // Default to gradient #000000 -> #3D0A55
+    // Very dark black animated waves - keep animation but make it darker
     vec3 base = vec3(0.0, 0.0, 0.0);
-    vec3 blend = vec3(0.2392, 0.0392, 0.3333); // #3D0A55
+    vec3 blend = vec3(0.02, 0.02, 0.02); // Very dark black for subtle movement
     vec3 color = mix(base, blend, 0.6);
     float wave = max(0.6, abs(sin(slowTime - uv.y - uv.x))); // avoid bright whites
     fragColor = vec4(color / wave, 1.0);
@@ -77,8 +77,8 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
         } else if(hasUpcomingReminders) {
             baseColor = vec3(0.05, 0.3, 0.1) + vec3(2.0, 5.0, 1.0)*f;
         } else {
-            // Dark purple with subtle magenta hints - matching image
-            baseColor = vec3(0.12, 0.03, 0.18) + vec3(0.8, 0.15, 1.2)*f;
+            // Very dark black animated ether - keep animation but make it darker
+            baseColor = vec3(0.0, 0.0, 0.0) + vec3(0.02, 0.02, 0.02)*f;
         }
         cl = cl*baseColor + smoothstep(2.5, .0, rz)*.8*baseColor;
         d += min(rz, 1.);
@@ -131,9 +131,9 @@ void mainImage(out vec4 O, in vec2 fragCoord) {
     float len = length(clamped_p - p);
     if (len > 0.0) { vec4 star = 1e-3 / len * (cos(p.y / 0.1 + vec4(0.0, 1.0, 2.0, 3.0)) + 1.0); O += star; }
   }
-  // Default toward gradient #000000 -> #3D0A55
+  // Very dark black animated stars - keep animation but make it darker
   O.rgb = mix(O.rgb, vec3(0.0, 0.0, 0.0), 0.4);
-  O.rgb = mix(O.rgb, vec3(0.2392, 0.0392, 0.3333), 0.35);
+  O.rgb = mix(O.rgb, vec3(0.02, 0.02, 0.02), 0.35);
   if (hasActiveReminders) { O.rgb = mix(O.rgb, vec3(0.10, 0.24, 0.70), 0.40);} 
   else if (hasUpcomingReminders) { O.rgb = mix(O.rgb, vec3(0.18, 0.10, 0.35), 0.40);} 
   if (!disableCenterDimming) { O.rgb = mix(O.rgb * 0.3, O.rgb, centerDim);} 
@@ -173,7 +173,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     line = mix(line, animatedLine, 0.3);
     vec3 backgroundColor = vec3(0.0, 0.0, 0.0); vec3 lineColor;
     if (hasActiveReminders) { lineColor = vec3(0.15, 0.30, 0.85);} 
-    else if (hasUpcomingReminders) { lineColor = vec3(0.38, 0.22, 0.70);} else { lineColor = vec3(0.2392, 0.0392, 0.3333);} 
+    else if (hasUpcomingReminders) { lineColor = vec3(0.38, 0.22, 0.70);} else { lineColor = vec3(0.02, 0.02, 0.02);} 
     vec3 finalColor = mix(backgroundColor, lineColor, line);
     if (hasActiveReminders) { finalColor += vec3(0.08, 0.16, 0.45) * mouseInfluence * line;} 
     else if (hasUpcomingReminders) { finalColor += vec3(0.22, 0.12, 0.42) * mouseInfluence * line;} else { finalColor += vec3(0.0, 0.0, 0.0) * mouseInfluence * line; }

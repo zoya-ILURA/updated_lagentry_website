@@ -16,12 +16,38 @@ interface LeftPanelProps {
 }
 
 const LeftPanel: React.FC<LeftPanelProps> = ({ selectedId, onSelect }) => {
+    // Dynamic titles based on selected agent
+    const getTitle = () => {
+        switch (selectedId) {
+            case 'lead-qualification':
+                return 'Test the Lead Qualification Live';
+            case 'customer-support':
+                return 'Test the Customer Support Live';
+            case 'real-estate':
+                return 'Test the Real Estate Live';
+            default:
+                return 'Test the Lead Qualification Live';
+        }
+    };
+
+    const getDescription = () => {
+        switch (selectedId) {
+            case 'lead-qualification':
+                return 'This agent can answer questions using trusted internal documents or URLs.';
+            case 'customer-support':
+                return 'This agent can handle customer inquiries, bookings, and support requests.';
+            case 'real-estate':
+                return 'This agent can help with property inquiries, bookings, and real estate questions.';
+            default:
+                return 'This agent can answer questions using trusted internal documents or URLs.';
+        }
+    };
 
     return (
         <div className="left-panel">
             <div className="header-section">
-                <h1 className="main-title">Test the Lead Qualification Buyer Live</h1>
-                <p className="description">This agent can answer questions using trusted internal documents or URLs.</p>
+                <h1 className="main-title">{getTitle()}</h1>
+                <p className="description">{getDescription()}</p>
             </div>
 
             <div className="left-panel-preview">
@@ -38,7 +64,7 @@ const LeftPanel: React.FC<LeftPanelProps> = ({ selectedId, onSelect }) => {
                         </div>
                         <div className="preview-text">
                             <span className="preview-title">Lead Qualification · Layla</span>
-                            <span className="preview-tags">#Real-Time Booking  #Lead Qualification</span>
+                            <span className="preview-tags">#Real-Time Booking  #Lead Qualification  #Voice calling agents, with voice cloning capability</span>
                         </div>
                     </div>
 
@@ -54,7 +80,7 @@ const LeftPanel: React.FC<LeftPanelProps> = ({ selectedId, onSelect }) => {
                         </div>
                         <div className="preview-text">
                             <span className="preview-title">Customer Support · Zara</span>
-                            <span className="preview-tags">#Real-Time Booking  #Receptionist</span>
+                            <span className="preview-tags">#Real-Time Booking  #Receptionist  #Voice calling agents, with voice cloning capability</span>
                         </div>
                     </div>
 
@@ -70,7 +96,7 @@ const LeftPanel: React.FC<LeftPanelProps> = ({ selectedId, onSelect }) => {
                         </div>
                         <div className="preview-text">
                             <span className="preview-title">Real Estate · Ahmed</span>
-                            <span className="preview-tags">#Real Estate  #Property</span>
+                            <span className="preview-tags">#Real Estate  #Property  #Voice calling agents, with voice cloning capability</span>
                         </div>
                     </div>
                 </div>

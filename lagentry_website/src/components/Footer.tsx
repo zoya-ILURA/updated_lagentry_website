@@ -6,8 +6,8 @@ const Footer: React.FC = () => {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-content">
-          {/* Lagentry Section */}
-          <div className="footer-section">
+          {/* Lagentry Section - FIRST */}
+          <div className="footer-section footer-lagentry-section">
             <div className="footer-logo">
               <img
                 src="/images/lagentry1.png"
@@ -16,8 +16,7 @@ const Footer: React.FC = () => {
               />
             </div>
             <p className="footer-description">
-              Empowering businesses to create intelligent AI <span className="agents-word-clear">agents</span> with simple prompts. 
-              Build, deploy, and scale your conversational AI in minutes.
+              Empowering businesses to automate all domains, with advanced AI and technology, 100x your company.
             </p>
             <div className="social-icons">
               <div className="social-icon">
@@ -46,33 +45,36 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Resources Section */}
-          <div className="footer-section">
-            <h3 className="footer-heading">Resources</h3>
-            <ul className="footer-links">
-              <li><a href="#" className="footer-link">Documentation</a></li>
-              <li><a href="#" className="footer-link">Tutorials</a></li>
-              <li><a href="#" className="footer-link">Support</a></li>
-            </ul>
-          </div>
+          {/* Resources, Legal, Contact in 2x2 grid - AFTER social icons */}
+          <div className="footer-sections-grid">
+            {/* Resources Section */}
+            <div className="footer-section">
+              <h3 className="footer-heading">Resources</h3>
+              <ul className="footer-links">
+                <li><a href="#" className="footer-link">Documentation</a></li>
+                <li><a href="#" className="footer-link">Tutorials</a></li>
+                <li><a href="#" className="footer-link">Support</a></li>
+              </ul>
+            </div>
 
-          {/* Legal Section */}
-          <div className="footer-section">
-            <h3 className="footer-heading">Legal</h3>
-            <ul className="footer-links">
-              <li><a href="#" className="footer-link">Privacy Policy</a></li>
-              <li><a href="#" className="footer-link">Terms of Service</a></li>
-            </ul>
-          </div>
+            {/* Legal Section */}
+            <div className="footer-section">
+              <h3 className="footer-heading">Legal</h3>
+              <ul className="footer-links">
+                <li><a href="#" className="footer-link">Privacy Policy</a></li>
+                <li><a href="#" className="footer-link">Terms of Service</a></li>
+              </ul>
+            </div>
 
-          {/* Contact Section */}
-          <div className="footer-section">
-            <h3 className="footer-heading">Contact</h3>
-            <ul className="footer-links">
-              <li><a href="mailto:info@ilura-ai.com" className="footer-link">info@ilura-ai.com</a></li>
-              <li><a href="mailto:sales@ilura-ai.com" className="footer-link">sales@ilura-ai.com</a></li>
-              <li><a href="#" className="footer-link">Book a Demo</a></li>
-            </ul>
+            {/* Contact Section */}
+            <div className="footer-section">
+              <h3 className="footer-heading">Contact</h3>
+              <ul className="footer-links">
+                <li><a href="mailto:info@ilura-ai.com" className="footer-link">info@ilura-ai.com</a></li>
+                <li><a href="mailto:sales@ilura-ai.com" className="footer-link">sales@ilura-ai.com</a></li>
+                <li><a href="#" className="footer-link">Book a Demo</a></li>
+              </ul>
+            </div>
           </div>
         </div>
 
