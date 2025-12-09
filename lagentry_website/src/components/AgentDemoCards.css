@@ -1323,7 +1323,6 @@
     align-self: center;
     order: 4;
   }
-}
 
   /* Reduced spacing */
   /* Reduced top spacing */
@@ -1424,7 +1423,6 @@
 .carousel-arrow-right {
     right: 0.5rem;
   }
-}
 
 /* Carousel Wrapper */
   /* Prevent touch scrolling */
