@@ -991,6 +991,7 @@
 }
 
 /* Mobile Responsive Styles */
+@media (max-width: 768px) {
     /* 14px padding on mobile */
 .agent-demo-container {
     max-width: 100%;
@@ -1323,6 +1324,7 @@
     align-self: center;
     order: 4;
   }
+}
 
   /* Reduced spacing */
   /* Reduced top spacing */
@@ -2055,24 +2057,28 @@ video {
   font-weight: 300;
 }
 
-50% {
+@keyframes blink-cursor {
+  50% {
     opacity: 1;
   }
 
   51%,
-100% {
+  100% {
     opacity: 0;
   }
+}
 
-from {
+@keyframes fadeInUp {
+  from {
     opacity: 0;
     transform: translateY(30px);
   }
 
-to {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
+}
 
 .agent-card-inner {
     grid-template-columns: 1fr !important;
@@ -2452,4 +2458,4 @@ to {
 .agent-cards-carousel {
     padding: 0 0.75rem;
     scroll-padding: 0 0.75rem;
-  }
+  }
