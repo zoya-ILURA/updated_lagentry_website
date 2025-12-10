@@ -54,9 +54,9 @@
 }
 
 /* Footer sections grid (Resources, Legal, Contact) - FIRST */
-  grid-template-columns: 1fr 1fr; /* 2 columns */
 .footer-sections-grid {
   display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 columns */
   gap: 2rem;
   width: 100%;
 }
@@ -67,10 +67,10 @@
   text-align: center;
 }
 
-  min-width: 0; /* Allow flex items to shrink below their content size */
 .footer-section {
   display: flex;
   flex-direction: column;
+  min-width: 0; /* Allow flex items to shrink below their content size */
 }
 
 /* First footer section (Lagentry logo section) should have proper width */
@@ -80,16 +80,16 @@
 }
 
 /* Logo Section */
-  margin-top: -0.75rem; /* lift the logo slightly higher in the footer */
 .footer-logo {
   display: flex;
   align-items: center;
+  margin-top: -0.75rem; /* lift the logo slightly higher in the footer */
   margin-bottom: 1.5rem;
 }
 
-  height: 120px; /* larger logo in Contact section */
 .footer-logo-image {
   width: auto;
+  height: 120px; /* larger logo in Contact section */
   object-fit: contain;
 }
 
@@ -231,10 +231,8 @@
   mix-blend-mode: normal !important;
   image-rendering: auto !important;
   -webkit-text-stroke: 0 !important;
-  text-stroke: 0 !important;
   outline: none !important;
   -webkit-text-fill-color: #cccccc !important;
-  text-fill-color: #cccccc !important;
 }
 
 .agents-word-clear::before,
@@ -263,14 +261,15 @@
   -webkit-backdrop-filter: none !important;
 }
 
-0%, 100% {
+@keyframes icon-glow {
+  0%, 100% {
     opacity: 0.8;
     box-shadow: 
       0 0 8px rgba(255, 255, 255, 0.9),
       0 0 16px rgba(255, 255, 255, 0.6),
       0 0 24px rgba(255, 255, 255, 0.3);
   }
-50% {
+  50% {
     opacity: 1;
     box-shadow: 
       0 0 12px rgba(255, 255, 255, 1),
@@ -280,8 +279,8 @@
 }
 
 /* Social Icons */
-  justify-content: center; /* Center the icons */
 .social-icons {
+  justify-content: center; /* Center the icons */
   display: flex;
   gap: 1rem;
 }
@@ -381,9 +380,9 @@
   border-top: none;
 }
 
-  font-size: 18vw; /* huge */
 .giant-brand-text {
   font-family: 'Geist', sans-serif;
+  font-size: 18vw; /* huge */
   font-weight: 900;
   line-height: 1;
   letter-spacing: -0.02em;
@@ -415,50 +414,52 @@
 }
 
 /* Responsive Design */
-.footer {
+@media (max-width: 768px) {
+  .footer {
     padding: 3rem 0 2rem;
   }
   
-.footer-container {
+  .footer-container {
     padding: 0 1rem;
   }
   
-.footer-content {
+  .footer-content {
     gap: 2rem;
     margin-bottom: 2rem;
   }
 
   /* Resources, Legal, Contact in 2x2 grid on mobile */
-    grid-template-columns: 1fr 1fr; /* 2 columns */
-.footer-sections-grid {
+  .footer-sections-grid {
     display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 columns */
     gap: 2rem;
     width: 100%;
   }
 
-.footer-lagentry-section {
+  .footer-lagentry-section {
     text-align: center;
   }
   
-.footer-description {
+  .footer-description {
     max-width: 100%;
   }
   
   .logo-l,
-.logo-text {
+  .logo-text {
     font-size: 2rem;
   }
   
+  .social-icons {
     justify-content: center; /* Center icons on mobile too */
-.social-icons {
   }
   
-.footer-bottom {
+  .footer-bottom {
     text-align: center;
   }
 }
 
-.footer {
+@media (max-width: 480px) {
+  .footer {
     padding: 2rem 0 1.5rem;
   }
   

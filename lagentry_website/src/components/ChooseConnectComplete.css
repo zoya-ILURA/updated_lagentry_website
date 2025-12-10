@@ -34,7 +34,6 @@
 .section-title .agent-word-underlined {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
-  text-fill-color: #ffffff !important;
   background: none !important;
   -webkit-background-clip: unset !important;
   background-clip: unset !important;
@@ -47,7 +46,6 @@
   display: inline-block;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
-  text-fill-color: #ffffff !important;
 }
 
 .agent-word-underlined::after {
@@ -110,12 +108,10 @@
 }
 
   /* No special styling for active state - keep it clean */
-.step-card.active {
-}
+  /* .step-card.active - intentionally empty */
 
   /* No special styling for current state - keep it clean */
-.step-card.current {
-}
+  /* .step-card.current - intentionally empty */
 
 /* Animation for Connect and Complete steps (step 2 and 3) */
 .step-2 .step-number-circle,

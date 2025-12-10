@@ -53,15 +53,16 @@
   transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-0% {
+@keyframes cardReveal {
+  0% {
     opacity: 0;
     transform: translateY(60px) scale(0.95) rotateX(5deg);
     filter: blur(10px);
   }
-50% {
+  50% {
     filter: blur(2px);
   }
-100% {
+  100% {
     opacity: 1;
     transform: translateY(0) scale(1) rotateX(0deg);
     filter: blur(0);
@@ -91,10 +92,11 @@
   z-index: 0;
 }
 
-from {
+@keyframes rotateGlow {
+  from {
     transform: rotate(0deg);
   }
-to {
+  to {
     transform: rotate(360deg);
   }
 }
@@ -128,15 +130,16 @@ to {
   animation: titleSlideIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
 }
 
-0% {
+@keyframes titleSlideIn {
+  0% {
     opacity: 0;
     transform: translateY(40px) scale(0.95);
     filter: blur(8px);
   }
-50% {
+  50% {
     filter: blur(2px);
   }
-100% {
+  100% {
     opacity: 1;
     transform: translateY(0) scale(1);
     filter: blur(0);
@@ -168,12 +171,13 @@ to {
   animation: taglineFadeIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s forwards;
 }
 
-0% {
+@keyframes taglineFadeIn {
+  0% {
     opacity: 0;
     transform: translateY(30px);
     filter: blur(4px);
   }
-100% {
+  100% {
     opacity: 1;
     transform: translateY(0);
     filter: blur(0);
@@ -215,15 +219,16 @@ to {
   transform: translateY(-5px) scale(1.02);
 }
 
-0% {
+@keyframes mapReveal {
+  0% {
     opacity: 0;
     transform: translateY(50px) scale(0.9) rotateY(-5deg);
     filter: blur(15px) brightness(0.5);
   }
-50% {
+  50% {
     filter: blur(5px) brightness(0.8);
   }
-100% {
+  100% {
     opacity: 1;
     transform: translateY(0) scale(1) rotateY(0deg);
     filter: blur(0) brightness(1);
@@ -256,17 +261,18 @@ to {
   transform: translate(-50%, -50%);
 }
 
-0% {
+@keyframes flowEastToWest {
+  0% {
     transform: translate(-50%, -50%) translate(0, 0);
     opacity: 0;
   }
-5% {
+  5% {
     opacity: 1;
   }
-95% {
+  95% {
     opacity: 1;
   }
-100% {
+  100% {
     transform: translate(-50%, -50%) translate(var(--end-x, 0), var(--end-y, 0));
     opacity: 0;
   }
@@ -286,11 +292,12 @@ to {
   animation: outlinePulse 4s ease-in-out infinite;
 }
 
-0%, 100% {
+@keyframes outlinePulse {
+  0%, 100% {
     opacity: 0.6;
     stroke-width: 2;
   }
-50% {
+  50% {
     opacity: 0.9;
     stroke-width: 2.5;
   }
@@ -300,10 +307,11 @@ to {
   animation: borderPulse 5s ease-in-out infinite;
 }
 
-0%, 100% {
+@keyframes borderPulse {
+  0%, 100% {
     opacity: 0.3;
   }
-50% {
+  50% {
     opacity: 0.5;
   }
 }
@@ -312,11 +320,12 @@ to {
   animation: dotPulse 3s ease-in-out infinite;
 }
 
-0%, 100% {
+@keyframes dotPulse {
+  0%, 100% {
     opacity: 0.4;
     r: 1.5;
   }
-50% {
+  50% {
     opacity: 0.8;
     r: 2;
   }
@@ -326,11 +335,12 @@ to {
   animation: flarePulse 2s ease-in-out infinite;
 }
 
-0%, 100% {
+@keyframes flarePulse {
+  0%, 100% {
     opacity: 0.5;
     stroke-width: 2;
   }
-50% {
+  50% {
     opacity: 1;
     stroke-width: 3;
   }
@@ -340,11 +350,12 @@ to {
   animation: haloPulse 3s ease-in-out infinite;
 }
 
-0%, 100% {
+@keyframes haloPulse {
+  0%, 100% {
     opacity: 0.2;
     transform: scale(1);
   }
-50% {
+  50% {
     opacity: 0.4;
     transform: scale(1.1);
   }
@@ -363,11 +374,12 @@ to {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
-from {
+@keyframes labelFadeIn {
+  from {
     opacity: 0;
     transform: translateY(-5px);
   }
-to {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
@@ -401,18 +413,20 @@ to {
   animation: landmarkPulse 2s ease-in-out infinite;
 }
 
-0%, 100% {
+@keyframes landmarkPulse {
+  0%, 100% {
     opacity: 0.5;
     transform: scale(1);
   }
-50% {
+  50% {
     opacity: 0.8;
     transform: scale(1.1);
   }
 }
 
 /* Responsive Design */
-.mena-card {
+@media (max-width: 768px) {
+  .mena-card {
     padding: 40px 24px;
   }
 
@@ -430,7 +444,8 @@ to {
   }
 }
 
-.mena-card-section {
+@media (max-width: 480px) {
+  .mena-card-section {
     padding: 60px 16px;
   }
 

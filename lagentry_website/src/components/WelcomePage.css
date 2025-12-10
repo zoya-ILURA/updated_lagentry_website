@@ -284,6 +284,7 @@
   padding: 2px;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0.5;
@@ -396,6 +397,7 @@
   padding: 2px;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0.5;
@@ -434,14 +436,15 @@
   transform: translateX(6px);
 }
 
-100% {
+@keyframes buttonPulse {
+  100% {
     box-shadow:
       0 4px 15px rgba(139, 92, 246, 0.4),
       0 0 30px rgba(139, 92, 246, 0.2),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 
-50% {
+  50% {
     box-shadow:
       0 6px 25px rgba(139, 92, 246, 0.6),
       0 0 50px rgba(139, 92, 246, 0.4),
@@ -449,36 +452,39 @@
   }
 }
 
-0% {
+@keyframes shimmer1 {
+  0% {
     left: -100%;
     top: -100%;
   }
 
-100% {
+  100% {
     left: 100%;
     top: 100%;
   }
 }
 
-0% {
+@keyframes shimmer2 {
+  0% {
     left: -100%;
     top: -100%;
   }
 
-100% {
+  100% {
     left: 100%;
     top: 100%;
   }
 }
 
-100% {
+@keyframes buttonShadowPulse {
+  100% {
     box-shadow:
       0 4px 20px rgba(0, 0, 0, 0.6),
       inset 0 1px 0 rgba(255, 255, 255, 0.15),
       inset 0 -1px 0 rgba(0, 0, 0, 0.5);
   }
 
-50% {
+  50% {
     box-shadow:
       0 6px 25px rgba(0, 0, 0, 0.7),
       0 0 30px rgba(255, 255, 255, 0.05),
@@ -487,11 +493,12 @@
   }
 }
 
-100% {
+@keyframes opacityPulse {
+  100% {
     opacity: 0.3;
   }
 
-50% {
+  50% {
     opacity: 0.6;
   }
 }
@@ -550,92 +557,98 @@
   backface-visibility: visible;
 }
 
-0% {
+@keyframes smoothFloat {
+  0% {
     transform: translate(0px, 0px) scale(1) rotate(0deg);
   }
 
-20% {
+  20% {
     transform: translate(40px, -30px) scale(1.02) rotate(1deg);
   }
 
-40% {
+  40% {
     transform: translate(-30px, 40px) scale(0.98) rotate(-1deg);
   }
 
-60% {
+  60% {
     transform: translate(50px, 20px) scale(1.01) rotate(0.5deg);
   }
 
-80% {
+  80% {
     transform: translate(-20px, -40px) scale(0.99) rotate(-0.5deg);
   }
 
-100% {
+  100% {
     transform: translate(0px, 0px) scale(1) rotate(0deg);
   }
 }
 
-from {
+@keyframes slideInFromLeft {
+  from {
     opacity: 0;
     transform: translateX(-50px);
   }
 
-to {
+  to {
     opacity: 1;
     transform: translateX(0);
   }
 }
 
-from {
+@keyframes slideInFromBottomLeft {
+  from {
     opacity: 0;
     transform: translate(-50px, 50px);
   }
 
-to {
+  to {
     opacity: 1;
     transform: translate(0, 0);
   }
 }
 
-from {
+@keyframes slideInFromBottom {
+  from {
     opacity: 0;
     transform: translateY(50px);
   }
 
-to {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-0% {
+@keyframes textCycle {
+  0% {
     opacity: 0;
     transform: translate(-50%, -50%) translateY(30px);
   }
 
-10% {
+  10% {
     opacity: 1;
     transform: translate(-50%, -50%) translateY(0);
   }
 
-20% {
+  20% {
     opacity: 1;
     transform: translate(-50%, -50%) translateY(0);
   }
 
-30% {
+  30% {
     opacity: 0;
     transform: translate(-50%, -50%) translateY(-30px);
   }
 
-100% {
+  100% {
     opacity: 0;
     transform: translate(-50%, -50%) translateY(-30px);
   }
 }
 
 /* Mobile Responsive Styles */
-.welcome-container {
+@media (max-width: 1024px) {
+  .welcome-container {
     flex-direction: column;
     padding: 2rem 1rem;
     min-height: auto;
@@ -700,7 +713,8 @@ to {
   }
 }
 
-.welcome-container {
+@media (max-width: 768px) {
+  .welcome-container {
     flex-direction: column;
     padding: 1.5rem 1rem;
     min-height: 100vh;
@@ -794,7 +808,8 @@ to {
   }
 }
 
-.welcome-container {
+@media (max-width: 480px) {
+  .welcome-container {
     padding: 1rem 0.75rem;
     min-height: 100vh;
     justify-content: center;

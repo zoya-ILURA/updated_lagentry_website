@@ -103,19 +103,20 @@
   animation: logoReveal 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
-0% {
+@keyframes logoReveal {
+  0% {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.5) rotateY(90deg);
     filter: blur(30px);
   }
 
-50% {
+  50% {
     opacity: 0.7;
     transform: translate(-50%, -50%) scale(1.1) rotateY(0deg);
     filter: blur(10px);
   }
 
-100% {
+  100% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1) rotateY(0deg);
     filter: blur(0px);
@@ -211,12 +212,13 @@
   animation: logoFadeIn 1s ease-in-out 0.5s forwards;
 }
 
-from {
+@keyframes logoFadeIn {
+  from {
     opacity: 0;
     transform: scale(0.8);
   }
 
-to {
+  to {
     opacity: 1;
     transform: scale(1);
   }
@@ -260,32 +262,32 @@ to {
   text-transform: uppercase;
 }
 
-
-0% {
+@keyframes kineticReveal {
+  0% {
     opacity: 0;
     transform: scale(1.3) translateY(40px);
     filter: blur(15px);
   }
 
-25% {
+  25% {
     opacity: 0.8;
     transform: scale(1.1) translateY(20px);
     filter: blur(8px);
   }
 
-50% {
+  50% {
     opacity: 1;
     transform: scale(1) translateY(0);
     filter: blur(0px);
   }
 
-75% {
+  75% {
     opacity: 1;
     transform: scale(1) translateY(0);
     filter: blur(0px);
   }
 
-100% {
+  100% {
     opacity: 0;
     transform: scale(0.9) translateY(-30px);
     filter: blur(10px);
@@ -299,25 +301,26 @@ to {
   font-size: 8rem;
 }
 
-0% {
+@keyframes slideFadeReveal {
+  0% {
     opacity: 0;
     transform: translateX(-100px) translateY(30px) scale(0.9);
     filter: blur(10px);
   }
 
-20% {
+  20% {
     opacity: 1;
     transform: translateX(0) translateY(0) scale(1);
     filter: blur(0px);
   }
 
-70% {
+  70% {
     opacity: 1;
     transform: translateX(0) translateY(0) scale(1);
     filter: blur(0px);
   }
 
-100% {
+  100% {
     opacity: 0;
     transform: translateX(100px) translateY(-30px) scale(0.9);
     filter: blur(10px);
@@ -356,37 +359,38 @@ to {
 /* Optimized shimmer effect - lighter and smoother */
 /* Shimmer effect removed - no longer needed */
 
-0% {
+@keyframes aiEmployeesAnimation {
+  0% {
     opacity: 0;
     transform: translate3d(0, 0, 0) scale(0.5) rotateY(0deg);
     filter: blur(20px);
   }
 
-20% {
+  20% {
     opacity: 0.7;
     transform: translate3d(0, 0, 0) scale(1.3) rotateY(0deg);
     filter: blur(5px);
   }
 
-35% {
+  35% {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1.2) rotateY(0deg);
     filter: blur(0px);
   }
 
-50% {
+  50% {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1.2) rotateY(0deg);
     filter: blur(0px);
   }
 
-70% {
+  70% {
     opacity: 1;
     transform: translate3d(-30%, 0, 0) scale(1.1) rotateY(10deg);
     filter: blur(2px);
   }
 
-100% {
+  100% {
     opacity: 0;
     transform: translate3d(-250%, 0, 0) scale(0.9) rotateY(25deg);
     filter: blur(15px);
@@ -451,35 +455,36 @@ to {
   -webkit-transform: translateZ(0);
 }
 
-0% {
+@keyframes builtToRunReveal {
+  0% {
     opacity: 0;
     transform: scale(0.8) translateY(20px);
     filter: blur(25px) brightness(0.3);
     clip-path: inset(0 100% 0 0);
   }
 
-25% {
+  25% {
     opacity: 0.5;
     transform: scale(0.95) translateY(10px);
     filter: blur(15px) brightness(0.6);
     clip-path: inset(0 50% 0 0);
   }
 
-50% {
+  50% {
     opacity: 1;
     transform: scale(1) translateY(0);
     filter: blur(0px) brightness(1.2);
     clip-path: inset(0 0% 0 0);
   }
 
-75% {
+  75% {
     opacity: 1;
     transform: scale(1) translateY(0);
     filter: blur(0px) brightness(1.2);
     clip-path: inset(0 0% 0 0);
   }
 
-100% {
+  100% {
     opacity: 0;
     transform: scale(0.95) translateY(-20px);
     filter: blur(10px) brightness(0.8);
@@ -488,7 +493,8 @@ to {
 }
 
 /* Desktop view - keep nowrap for single line */
-.sliding-text h2 {
+@media (min-width: 1025px) {
+  .sliding-text h2 {
     white-space: nowrap;
   }
 }
@@ -526,27 +532,28 @@ to {
   animation: shootingStar 2.5s ease-out forwards;
 }
 
-0% {
+@keyframes shootingStar {
+  0% {
     width: 0;
     opacity: 0;
     transform: rotate(45deg) translateX(0) translateY(0);
     transform-origin: left bottom;
   }
 
-3% {
+  3% {
     opacity: 1;
     width: 80px;
   }
 
-10% {
+  10% {
     width: 200px;
   }
 
-50% {
+  50% {
     width: 400px;
   }
 
-100% {
+  100% {
     width: 500px;
     opacity: 0;
     transform: rotate(45deg) translateX(calc(100vw - 50px)) translateY(calc(-100vh + 50px));
@@ -598,12 +605,13 @@ to {
   opacity: 0.7;
 }
 
-100% {
+@keyframes starHeadPulse {
+  100% {
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
   }
 
-50% {
+  50% {
     transform: translate(-50%, -50%) scale(1.2);
     opacity: 0.9;
   }
@@ -641,20 +649,21 @@ to {
 
 /* Removed gradientShift animation */
 
-.header {
+@media (max-width: 1024px) {
+  .header {
     height: calc(100vh - 70px);
   }
 
-.background-lagentry-text {
+  .background-lagentry-text {
     left: 50%;
   }
 
-.lagentry-image {
+  .lagentry-image {
     height: 60vh;
   }
 
-    /* Increased padding on tablet to prevent cutoff when AI Employees zooms */
-.sliding-text {
+  /* Increased padding on tablet to prevent cutoff when AI Employees zooms */
+  .sliding-text {
     width: 95%;
     max-width: 95vw;
     padding: 0 6rem;
@@ -702,45 +711,44 @@ to {
 .word-animation.gsap-ai-employees {
     font-size: 5.5rem;
   }
-
 }
 
-    /* Increased padding on mobile to prevent cutoff when AI Employees zooms */
-.sliding-text {
+@media (max-width: 480px) {
+  /* Increased padding on mobile to prevent cutoff when AI Employees zooms */
+  .sliding-text {
     width: 95%;
     max-width: 95vw;
     padding: 0 4rem;
   }
 
-    /* Increased from 3rem for small mobile */
-.sliding-text h2 {
+  /* Increased from 3rem for small mobile */
+  .sliding-text h2 {
     font-size: 4rem;
     line-height: 1.3;
     padding: 0 0.25rem;
   }
 
-    /* Increased from 2.5rem for small mobile */
-.word-animation.gsap-built-to-run {
+  /* Increased from 2.5rem for small mobile */
+  .word-animation.gsap-built-to-run {
     font-size: 3.5rem;
   }
 
-    /* Increased for small mobile */
-    /* Maintain letter spacing on mobile */
-    /* Ensure it's in caps */
-.word-animation.typewriter-reveal {
+  /* Increased for small mobile */
+  /* Maintain letter spacing on mobile */
+  /* Ensure it's in caps */
+  .word-animation.typewriter-reveal {
     font-size: 4rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
   }
 
-    /* Increased for small mobile */
-.word-animation.slide-fade-reveal {
+  /* Increased for small mobile */
+  .word-animation.slide-fade-reveal {
     font-size: 4rem;
   }
 
-    /* Increased for small mobile */
-.word-animation.gsap-ai-employees {
+  /* Increased for small mobile */
+  .word-animation.gsap-ai-employees {
     font-size: 4rem;
   }
-
 }

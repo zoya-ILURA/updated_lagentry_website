@@ -37,8 +37,6 @@
   z-index: 10;
 }
 
-  font-size: 1.75rem; /* Smaller text */
-  white-space: nowrap; /* Keep on one line */
 .dashboard-title {
   font-family: 'Geist', sans-serif;
   font-weight: 700;
@@ -49,12 +47,15 @@
   z-index: 10;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 1.75rem; /* Smaller text */
+  white-space: nowrap; /* Keep on one line */
 }
 
-0%, 100% {
+@keyframes gradient-shift {
+  0%, 100% {
     background-position: 0% 50%;
   }
-50% {
+  50% {
     background-position: 100% 50%;
   }
 }
@@ -72,7 +73,6 @@
 }
 
 /* Dashboard GIF Container */
-  margin: 0 auto; /* Center the dashboard */
 .dashboard-gif-container {
   display: flex;
   justify-content: center;
@@ -81,6 +81,7 @@
   max-width: 1400px;
   padding: 40px 20px;
   position: relative;
+  margin: 0 auto; /* Center the dashboard */
 }
 
 .dashboard-bg-gif {
@@ -143,7 +144,6 @@
   z-index: 5;
 }
 
-  overflow: hidden; /* Hide scrollbars */
 .embedded-slides-frame {
   width: 100%;
   min-height: 600px;
@@ -214,9 +214,14 @@
   border: 1px dashed rgba(255,255,255,0.2);
 }
 
-.placeholder-grid { grid-template-columns: 1fr; }
+@media (max-width: 768px) {
+  .placeholder-grid { 
+    grid-template-columns: 1fr; 
+  }
   .placeholder-content,
-.placeholder-video { height: 200px; }
+  .placeholder-video { 
+    height: 200px; 
+  }
 }
 
 /* Removed slide stack styles */
@@ -228,38 +233,40 @@
 /* Removed stacked slides styles as requested */
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+  .dashboard-title {
     font-size: 1.5rem; /* Smaller text */
-.dashboard-title {
     white-space: nowrap;
   }
   
-.dashboard-bg-gif {
+  .dashboard-bg-gif {
     width: 100%;
     max-width: 100%;
   }
   
-.dashboard-gif {
+  .dashboard-gif {
     width: 85%;
     max-width: 800px;
   }
 }
 
-.dashboard-section {
+@media (max-width: 768px) {
+  .dashboard-section {
     padding: 60px 16px;
     min-height: auto;
   }
 
-.dashboard-content {
+  .dashboard-content {
     padding: 0 10px;
   }
   
-.dashboard-header {
+  .dashboard-header {
     margin-bottom: 40px;
     padding: 0 1rem;
   }
   
+  .dashboard-title {
     font-size: 1.25rem; /* Smaller text for mobile */
-.dashboard-title {
     line-height: 1.2;
     white-space: nowrap;
     overflow: hidden;
@@ -267,22 +274,22 @@
     padding: 0 0.5rem;
   }
   
-.dashboard-subtitle {
+  .dashboard-subtitle {
     font-size: 1rem;
     padding: 0 0.5rem;
     line-height: 1.5;
   }
   
-.dashboard-gif-container {
+  .dashboard-gif-container {
     padding: 20px 0;
   }
   
-.dashboard-bg-gif {
+  .dashboard-bg-gif {
     width: 100%;
     max-width: 100%;
   }
   
-.dashboard-gif {
+  .dashboard-gif {
     width: 95%;
     max-width: 600px;
   }

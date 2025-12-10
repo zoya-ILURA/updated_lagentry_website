@@ -41,7 +41,8 @@
   animation: fadeInUp 0.8s ease-out 0.3s forwards;
 }
 
-to {
+@keyframes fadeInUp {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
@@ -138,14 +139,15 @@ to {
   animation: slideUpFadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-0% {
+@keyframes slideUpFadeIn {
+  0% {
     opacity: 0;
     transform: translateY(60px) scale(0.95);
   }
-60% {
+  60% {
     transform: translateY(-5px) scale(1.02);
   }
-100% {
+  100% {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
@@ -214,11 +216,12 @@ to {
   animation: pulseGlow 2s ease-in-out infinite;
 }
 
-0%, 100% {
+@keyframes pulseGlow {
+  0%, 100% {
     opacity: 0.3;
     transform: scale(1);
   }
-50% {
+  50% {
     opacity: 0.6;
     transform: scale(1.1);
   }
@@ -251,13 +254,15 @@ to {
   transform: scaleX(1);
 }
 
-.feature-cards-grid {
+@media (max-width: 1024px) {
+  .feature-cards-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
   }
 }
 
-.feature-cards-section {
+@media (max-width: 768px) {
+  .feature-cards-section {
     padding: 80px 16px;
   }
 
@@ -287,12 +292,13 @@ to {
     margin-bottom: 20px;
   }
 
-.feature-card-title {
+  .feature-card-title {
     font-size: 22px;
   }
 }
 
-.feature-cards-title {
+@media (max-width: 480px) {
+  .feature-cards-title {
     font-size: 28px;
   }
 
