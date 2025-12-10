@@ -29,22 +29,43 @@
   padding: 24px;
 }
 
-  border-radius: 28px; /* softer, like reference */
 .join-card {
+  border-radius: 28px;
+  /* softer, like reference */
   width: 620px;
   max-width: 94vw;
   background: #000000;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.55), 0 2px 0 rgba(255,255,255,0.04) inset;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.55), 0 2px 0 rgba(255, 255, 255, 0.04) inset;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 48px 40px 36px;
 }
 
 /* Top stats pill */
-.join-stats { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 24px; }
-.join-pill { display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px; background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2a2a2a 100%); box-shadow: 0 4px 10px rgba(0,0,0,0.35) inset; }
-.join-pill-text { color: #ffffff; font-weight: 700; font-size: 15px; }
+.join-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.join-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2a2a2a 100%);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35) inset;
+}
+
+.join-pill-text {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 15px;
+}
 
 .join-header {
   display: flex;
@@ -58,7 +79,7 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: rgba(0,0,0,0.95);
+  background: rgba(0, 0, 0, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,7 +87,12 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9);
 }
 
-.join-logo img { width: 96px; height: 96px; object-fit: contain; display: block; }
+.join-logo img {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  display: block;
+}
 
 .join-title {
   font-family: 'Geist', sans-serif;
@@ -80,32 +106,52 @@
 .join-beta {
   font-size: 12px;
   color: #a3adc2;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 2px 8px;
   border-radius: 999px;
   margin-left: 8px;
 }
 
-.join-content { max-width: 560px; margin: 0 auto; text-align: center; }
+.join-content {
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: center;
+}
 
-.join-subtitle { color: #e6f0ff; font-size: 28px; font-weight: 600; margin: 20px 0 12px; line-height: 1.3; }
+.join-subtitle {
+  color: #e6f0ff;
+  font-size: 28px;
+  font-weight: 600;
+  margin: 20px 0 12px;
+  line-height: 1.3;
+}
 
-.join-desc { color: #b8c3d6; font-size: 18px; line-height: 1.7; margin-bottom: 28px; }
+.join-desc {
+  color: #b8c3d6;
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
 
-.join-form { width: 100%; display: flex; flex-direction: column; align-items: center; }
+.join-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .join-input-row {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: rgba(255,255,255,0.035);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 16px;
   padding: 14px 16px;
   width: 440px;
   max-width: 100%;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 18px rgba(0,0,0,0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 8px 18px rgba(0, 0, 0, 0.35);
 }
 
 .join-input-row input {
@@ -117,7 +163,9 @@
   font-size: 17px;
 }
 
-.join-input-row input::placeholder { color: #8fa0b8; }
+.join-input-row input::placeholder {
+  color: #8fa0b8;
+}
 
 .join-button {
   width: 100%;
@@ -150,43 +198,49 @@
   left: 100%;
 }
 
-.join-form .join-button { width: 440px; max-width: 100%; }
+.join-form .join-button {
+  width: 440px;
+  max-width: 100%;
+}
 
-.join-button:hover { filter: brightness(1.05); }
+.join-button:hover {
+  filter: brightness(1.05);
+}
 
-.waitlist-overlay {
+@media (max-width: 900px) {
+  .waitlist-overlay {
     padding: 16px;
   }
 
-.join-card {
+  .join-card {
     padding: 36px 24px 28px;
     max-width: 98vw;
   }
 
-.join-title { 
+  .join-title {
     font-size: 32px;
     line-height: 1.2;
     word-wrap: break-word;
     padding: 0 0.5rem;
   }
-  
-.join-logo {
+
+  .join-logo {
     width: 100px;
     height: 100px;
   }
-  
-.join-logo img {
+
+  .join-logo img {
     width: 80px;
     height: 80px;
   }
-  
-.join-subtitle {
+
+  .join-subtitle {
     font-size: 20px;
     word-wrap: break-word;
     padding: 0 0.5rem;
   }
-  
-.join-desc {
+
+  .join-desc {
     font-size: 14px;
     word-wrap: break-word;
     padding: 0 0.5rem;
@@ -194,24 +248,24 @@
   }
 }
 
-.join-title {
+@media (max-width: 480px) {
+  .join-title {
     font-size: 28px;
     padding: 0 0.25rem;
   }
 
-.join-subtitle {
+  .join-subtitle {
     font-size: 18px;
     padding: 0 0.25rem;
   }
 
-.join-desc {
+  .join-desc {
     font-size: 13px;
     padding: 0 0.25rem;
   }
 }
 
 /* Intro video overlay */
-  z-index: 900; /* keep below navbar (navbar is 1000) */
 .waitlist-intro-video {
   position: fixed;
   inset: 0;
@@ -298,19 +352,25 @@
   background: rgba(10, 0, 18, 0.4);
 }
 
-0%, 100% {
+@keyframes float {
+
+  0%,
+  100% {
     transform: translate(0, 0) scale(1);
     opacity: 0.3;
   }
-25% {
+
+  25% {
     transform: translate(30px, -50px) scale(1.2);
     opacity: 0.6;
   }
-50% {
+
+  50% {
     transform: translate(-20px, -100px) scale(0.8);
     opacity: 0.4;
   }
-75% {
+
+  75% {
     transform: translate(40px, -30px) scale(1.1);
     opacity: 0.5;
   }
@@ -353,11 +413,15 @@
   animation-delay: 4s;
 }
 
-0%, 100% {
+@keyframes pulse {
+
+  0%,
+  100% {
     transform: scale(1);
     opacity: 0.4;
   }
-50% {
+
+  50% {
     transform: scale(1.2);
     opacity: 0.6;
   }
@@ -405,47 +469,59 @@
   animation: diamondPulse 3s ease-in-out forwards;
 }
 
-0% {
+@keyframes diamondSequence {
+  0% {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0) rotate(0deg);
   }
-20% {
+
+  20% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1) rotate(180deg);
   }
-40% {
+
+  40% {
     transform: translate(-50%, -50%) scale(1.2) rotate(360deg);
   }
-60% {
+
+  60% {
     transform: translate(-50%, -50%) scale(1) rotate(540deg);
   }
-80% {
+
+  80% {
     transform: translate(-50%, -50%) scale(1.1) rotate(720deg);
   }
-100% {
+
+  100% {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.5) rotate(900deg);
   }
 }
 
-0% {
+@keyframes diamondPulse {
+  0% {
     opacity: 0;
     transform: translate(-50%, -50%) rotate(45deg) scale(0);
   }
-20% {
+
+  20% {
     opacity: 0.6;
     transform: translate(-50%, -50%) rotate(45deg) scale(1);
   }
-40% {
+
+  40% {
     transform: translate(-50%, -50%) rotate(45deg) scale(1.5);
   }
-60% {
+
+  60% {
     transform: translate(-50%, -50%) rotate(45deg) scale(1);
   }
-80% {
+
+  80% {
     transform: translate(-50%, -50%) rotate(45deg) scale(1.3);
   }
-100% {
+
+  100% {
     opacity: 0;
     transform: translate(-50%, -50%) rotate(45deg) scale(0.8);
   }
@@ -473,7 +549,8 @@
   animation: softInUp 0.6s ease-out forwards;
 }
 
-to {
+@keyframes cardAppear {
+  to {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
@@ -510,7 +587,8 @@ to {
   animation: softInUp 0.75s ease-out 0.16s forwards;
 }
 
-to {
+@keyframes fadeInUp {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
@@ -528,7 +606,8 @@ to {
   animation: fadeIn 0.6s ease-out 0.24s forwards;
 }
 
-to {
+@keyframes fadeIn {
+  to {
     opacity: 1;
   }
 }
@@ -625,6 +704,7 @@ to {
     opacity: 0;
     transform: translateY(12px) scale(0.98);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -671,7 +751,8 @@ to {
   animation: slideDown 0.4s ease-out forwards;
 }
 
-to {
+@keyframes slideDown {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
@@ -691,19 +772,22 @@ to {
   backdrop-filter: blur(10px);
 }
 
-.form-row {
+@media (max-width: 480px) {
+  .form-row {
     grid-template-columns: 1fr;
   }
-  
-.waitlist-card {
+
+  .waitlist-card {
     padding: 32px 24px;
   }
-  
-.waitlist-title {
+
+  .waitlist-title {
     font-size: 32px;
   }
-  
-.orb-1, .orb-2, .orb-3 {
+
+  .orb-1,
+  .orb-2,
+  .orb-3 {
     filter: blur(60px);
   }
 }
