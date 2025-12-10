@@ -10,6 +10,7 @@ A beautiful welcome page built with React, TypeScript, and JSX featuring a sleek
 - **Black Theme**: Elegant dark theme with white text
 - **Smooth Animations**: Fade-in animations for better user experience
 
+
 ## Getting Started
 
 ### Prerequisites
