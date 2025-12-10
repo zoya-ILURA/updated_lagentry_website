@@ -1,98 +1,47 @@
-# Lagentry Voice Server
+# Lagentry Backend Server
 
-Backend server for handling voice calls with ElevenLabs integration.
+Express.js backend server for Lagentry voice call features.
 
-## Setup
+## Local Development
 
-1. Install dependencies:
 ```bash
-cd server
 npm install
-```
-
-2. Start the server:
-```bash
 npm start
+# or
+npm run dev  # with nodemon for auto-reload
 ```
 
-Or for development with auto-reload:
-```bash
-npm run dev
-```
+Server runs on `http://localhost:5001`
 
-The server will run on port 3001.
+## Environment Variables
 
-## Features
+Set these in your hosting platform (Vercel, Railway, etc.):
 
-- **Voice Call Initiation**: `/api/start-voice-call` - Starts a voice conversation with AI agents
-- **Audio Generation**: Uses ElevenLabs API to convert text to natural speech
-- **Agent Prompts**: Pre-configured prompts for different agent types (Lead Qualification, Customer Support, Healthcare)
-- **Real-time Audio**: Serves generated audio files for immediate playback
+- `VAPI_API_KEY` - VAPI private API key
+- `VAPI_PUBLIC_KEY` - VAPI public API key  
+- `VAPI_BASE_URL` - VAPI API base URL (default: https://api.vapi.ai)
+- `VAPI_PHONE_NUMBER_ID` - VAPI phone number ID
+- `ELEVENLABS_API_KEY` - ElevenLabs API key
+- `PORT` - Server port (optional, defaults to 5001)
+- `FRONTEND_URL` - Frontend URL for CORS (optional)
+- `NETLIFY_URL` - Netlify URL for CORS (optional)
 
 ## API Endpoints
 
-### POST `/api/start-voice-call`
-Initiates a voice call with an AI agent.
+- `GET /health` - Health check endpoint
+- `POST /api/start-voice-call` - Start a voice call with VAPI
+- `POST /api/update-agent-prompt` - Update agent prompt
+- `POST /api/end-conversation/:conversationId` - End a conversation
 
-**Request Body:**
-```json
-{
-  "prompt": "Agent conversation prompt",
-  "voiceId": "ElevenLabs voice ID",
-  "userName": "User's name",
-  "userEmail": "user@example.com",
-  "userPhone": "+1234567890",
-  "agentType": "lead-qualification"
-}
-```
+## Deployment
 
-**Response:**
-```json
-{
-  "success": true,
-  "conversationId": "conv_123456789",
-  "message": "Voice call initiated successfully",
-  "greeting": "Hello John! I'm your AI assistant...",
-  "audioUrl": "/api/audio/conv_123456789/greeting"
-}
-```
+See `../BACKEND_DEPLOYMENT.md` for detailed deployment instructions.
 
-### GET `/api/audio/:conversationId/:type`
-Serves generated audio files.
+### Quick Deploy to Vercel
 
-## Configuration
-
-The server uses the following ElevenLabs configuration:
-- **API Key**: `sk_e80154af3364e59ac77e6395da1a8d39c462a8751a205a5b`
-- **Voice ID**: `jqcCZkN6Knx8BJ5TBdYR`
-
-## Agent Types
-
-1. **Lead Qualification** (`lead-qualification`)
-   - Qualifies potential customers
-   - Understands business needs
-   - Recommends Lagentry solutions
-
-2. **Customer Support** (`customer-support`)
-   - Restaurant customer service
-   - Handles reservations and inquiries
-   - Demonstrates natural conversation
-
-3. **Healthcare** (`healthcare`)
-   - Healthcare receptionist
-   - Appointment scheduling
-   - Professional medical communication
-
-## Running with Frontend
-
-To run both frontend and backend together:
 ```bash
-npm run dev
+cd server
+vercel
 ```
 
-This will start:
-- React frontend on port 3000
-- Express backend on port 3001
-
-
-
+Make sure to set all environment variables in Vercel dashboard.

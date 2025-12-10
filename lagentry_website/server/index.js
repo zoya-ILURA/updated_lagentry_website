@@ -668,10 +668,67 @@ const AGENT_CONFIGS = {
 };
 
 // CORS configuration - allow requests from frontend
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:5173',
+  'http://127.0.0.1:3000',
+  // Production domains
+  'https://lagentry.com',
+  'https://www.lagentry.com',
+  // Add your Netlify domain here (or use environment variable)
+  process.env.FRONTEND_URL,
+  process.env.NETLIFY_URL
+].filter(Boolean); // Remove undefined values
+
+// CORS middleware with explicit configuration
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:3000'],
-  credentials: true
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Check if origin is in allowed list
+    if (allowedOrigins.indexOf(origin) !== -1 || 
+        process.env.NODE_ENV === 'development' ||
+        origin?.includes('netlify.app') ||
+        origin?.includes('vercel.app') ||
+        origin?.includes('lagentry.com')) {
+      callback(null, true);
+    } else {
+      console.log('CORS blocked origin:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+  exposedHeaders: ['Content-Length', 'Content-Type'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204
 }));
+
+// Explicit OPTIONS handler for preflight requests (additional safety)
+app.options('*', cors());
+
+// Manual CORS headers as fallback (for Vercel compatibility)
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin && (origin.includes('lagentry.com') || 
+                 origin.includes('netlify.app') || 
+                 origin.includes('localhost') ||
+                 origin.includes('127.0.0.1'))) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
+  }
+  
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+  next();
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
