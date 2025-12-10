@@ -679,7 +679,32 @@ const allowedOrigins = [
   process.env.NETLIFY_URL
 ].filter(Boolean);
 
-// Handle ALL requests first to set CORS headers (critical for Vercel)
+// Handle OPTIONS preflight requests FIRST - before any other middleware
+app.options('*', (req, res) => {
+  const origin = req.headers.origin;
+  
+  // Check if origin is allowed
+  const isAllowed = !origin || 
+    allowedOrigins.includes(origin) ||
+    (origin && origin.includes('lagentry.com')) ||
+    (origin && origin.includes('netlify.app')) ||
+    (origin && origin.includes('localhost')) ||
+    (origin && origin.includes('127.0.0.1')) ||
+    process.env.NODE_ENV === 'development';
+  
+  if (origin && isAllowed) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
+    res.setHeader('Access-Control-Max-Age', '86400');
+  }
+  
+  console.log('OPTIONS preflight request from:', origin, 'Status: 204');
+  return res.status(204).end();
+});
+
+// Handle ALL requests to set CORS headers (critical for Vercel)
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   
@@ -699,12 +724,6 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
     res.setHeader('Access-Control-Max-Age', '86400'); // 24 hours
-  }
-  
-  // Handle preflight OPTIONS request - MUST return early
-  if (req.method === 'OPTIONS') {
-    console.log('OPTIONS preflight request from:', origin);
-    return res.status(204).end();
   }
   
   next();
