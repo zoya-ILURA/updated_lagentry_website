@@ -126,7 +126,7 @@ html::-webkit-scrollbar-thumb:hover {
     font-size: 14px;
   }
   
-h1 { font-size: 1.75rem !important; }
-h2 { font-size: 1.5rem !important; }
-h3 { font-size: 1.25rem !important; }
+  h1 { font-size: 1.75rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  h3 { font-size: 1.25rem !important; }
 }
