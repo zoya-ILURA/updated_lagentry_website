@@ -433,6 +433,18 @@
   transition: color 0.3s ease;
 }
 
+/* Homepage link - only visible on mobile */
+.mobile-homepage {
+  display: block;
+}
+
+/* Hide homepage link on desktop (mobile menu is already hidden on desktop) */
+@media (min-width: 1201px) {
+  .mobile-homepage {
+    display: none;
+  }
+}
+
 .mobile-nav-item:hover {
   color: #8b5cf6;
 }

@@ -1032,7 +1032,7 @@
     /* Allow wrapping on mobile */
     /* Reduced padding slightly to give more text space */
 .agent-demo-title {
-    font-size: 2rem;
+    font-size: 2.5rem;
     text-align: center;
     white-space: normal;
     word-wrap: break-word;
@@ -1040,8 +1040,15 @@
     overflow: visible;
     max-width: 100%;
     box-sizing: border-box;
-    padding: 0 10px;
-    line-height: 1.2;
+    padding: 0 16px;
+    line-height: 1.3;
+  }
+  
+  .agent-demo-subtitle {
+    display: block;
+    font-size: 1.1rem;
+    padding: 0 16px;
+    margin-top: 1rem;
   }
 
     /* Only hide horizontal overflow on mobile */
@@ -1217,11 +1224,11 @@
     box-sizing: border-box;
   }
 
-    /* Reduced from 4.5rem */
+    /* Increased size for tablet */
     /* Allow wrapping on mobile */
     /* Add small padding to prevent edge cutoff on mobile */
 .agent-demo-title {
-    font-size: 3rem;
+    font-size: 5.5rem;
     margin-bottom: 2rem;
     text-align: center;
     white-space: normal;
@@ -1230,7 +1237,9 @@
     overflow: visible;
     max-width: 100%;
     box-sizing: border-box;
-    padding: 0 8px;
+    padding: 0 20px;
+    width: 100%;
+    line-height: 1.2;
   }
 
     /* Prevent text cutoff on mobile */
@@ -1335,6 +1344,11 @@
   opacity: 0;
   transform: translateY(30px);
   animation: fadeInUp 0.8s ease-out forwards;
+  padding: 0 32px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
 }
 
   /* Reduced from 6rem */
@@ -1343,9 +1357,9 @@
   /* Restored for desktop - no wrapping */
 .agent-demo-title {
   font-family: 'Geist', sans-serif;
-  font-size: 4.5rem;
+  font-size: 7.5rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 30%, #b0b0b0 60%, #808080 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1355,6 +1369,12 @@
   overflow: visible;
   word-wrap: normal;
   text-overflow: clip;
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0 24px;
+  line-height: 1.1;
 }
 
 /* Remove purple gradient - use grey and white gradient instead */
@@ -1367,11 +1387,15 @@
 
 .agent-demo-subtitle {
   font-family: 'Geist', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.8rem;
   color: #b0b0b0;
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
+  padding: 0 24px;
+  box-sizing: border-box;
+  overflow: visible;
+  word-wrap: break-word;
 }
 
 /* Carousel Arrows */
@@ -1876,12 +1900,16 @@ video {
 
 .agent-card-name {
   font-family: 'Geist', sans-serif;
-  font-size: 2.5rem;
+  font-size: 3.5rem;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 1.5rem;
   transition: all 0.3s ease;
   line-height: 1.2;
+  overflow: visible;
+  word-wrap: break-word;
+  padding: 0 8px;
+  box-sizing: border-box;
 }
 
 .agent-card-inner:hover .agent-card-name {
@@ -2101,7 +2129,10 @@ video {
   }
 
 .agent-card-name {
-    font-size: 2rem;
+    font-size: 2.5rem;
+    padding: 0 12px;
+    overflow: visible;
+    word-wrap: break-word;
   }
 
 .agent-card-description {
@@ -2188,11 +2219,16 @@ video {
   }
 
 .agent-demo-title {
-    font-size: 1.75rem;
+    font-size: 2.25rem;
+    padding: 0 16px;
+    line-height: 1.3;
   }
 
 .agent-demo-subtitle {
-    font-size: 0.9rem;
+    font-size: 1rem;
+    padding: 0 16px;
+    margin-top: 0.75rem;
+    display: block;
   }
 
 .agent-cards-container {
@@ -2218,7 +2254,10 @@ video {
   }
 
 .agent-card-name {
-    font-size: 1.75rem;
+    font-size: 2.25rem;
+    padding: 0 12px;
+    overflow: visible;
+    word-wrap: break-word;
     margin-bottom: 1rem;
   }
 
@@ -2354,11 +2393,18 @@ video {
   }
 
 .agent-demo-title {
-    font-size: 1.5rem;
+    font-size: 3rem;
+    text-align: center;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    line-height: 1.3;
   }
 
 .agent-demo-subtitle {
-    font-size: 0.85rem;
+    font-size: 1.1rem;
+    padding: 0 20px;
+    margin-top: 1rem;
   }
 
 .agent-card-inner {
@@ -2367,7 +2413,10 @@ video {
   }
 
 .agent-card-name {
-    font-size: 1.5rem;
+    font-size: 2rem;
+    padding: 0 12px;
+    overflow: visible;
+    word-wrap: break-word;
     margin-bottom: 0.75rem;
   }
 

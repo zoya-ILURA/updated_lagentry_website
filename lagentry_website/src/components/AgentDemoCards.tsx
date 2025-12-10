@@ -268,7 +268,9 @@ const AgentDemoCards: React.FC = () => {
     <div className="agent-demo-section" ref={sectionRef}>
       <div className="agent-demo-container">
         <div className="agent-demo-header">
-          <h2 className="agent-demo-title gradient-purple-text">Meet our AI Employees</h2>
+          <h2 className="agent-demo-title gradient-purple-text">
+            Meet our AI Employees
+          </h2>
           <p className="agent-demo-subtitle">
             Experience the power of intelligent automation across all domains
           </p>

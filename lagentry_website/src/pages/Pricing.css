@@ -257,7 +257,8 @@
   margin-bottom: 16px;
   display: flex;
   align-items: baseline;
-  gap: 6px;
+  gap: 0;
+  white-space: nowrap;
 }
 
 .price-main {
@@ -273,6 +274,7 @@
   font-size: 0.9rem;
   font-weight: 400;
   color: #9aa3b2;
+  margin-left: 2px;
 }
 
 .card-content {
@@ -371,8 +373,6 @@
 
 /* Responsive Design */
 @media (max-width: 900px) {
-  .pricing-grid {}
-
   .pricing-grid-4 {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;

@@ -224,10 +224,10 @@
   }
 }
 
-  /* Reduced from 9rem to avoid clipping */
+  /* Increased size for intro animation */
 .sliding-text h2 {
   font-family: 'Geist', sans-serif;
-  font-size: 8rem;
+  font-size: 9.5rem;
   font-weight: 700;
   color: #ffffff;
   text-align: center;
@@ -241,24 +241,24 @@
 }
 
 /* Base word animation - will be overridden by specific classes */
-  /* Base desktop size */
+  /* Increased base desktop size */
 .word-animation {
   font-family: 'Geist', sans-serif;
   will-change: transform, opacity;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
-  font-size: 8rem;
+  font-size: 9.5rem;
 }
 
 /* 1. "Introducing" - Kinetic Typography with Scale + Fade */
   /* Increased from 0.08em for more gap between letters */
-  /* Desktop size */
+  /* Increased desktop size */
   /* Ensure it's in caps */
 .word-animation.typewriter-reveal {
   animation: kineticReveal 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   font-weight: 600;
   letter-spacing: 0.15em;
-  font-size: 8rem;
+  font-size: 9.5rem;
   text-transform: uppercase;
 }
 

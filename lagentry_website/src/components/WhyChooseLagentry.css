@@ -589,6 +589,7 @@
 .feature-content {
   flex: 1;
   padding-left: 40px;
+  text-align: left;
 }
 
 .feature-content h3 {
@@ -610,6 +611,7 @@
   line-height: 1.6;
   color: #ccc;
   margin-bottom: 30px;
+  text-align: left;
 }
 
 .feature-list {
@@ -717,40 +719,86 @@
   padding: 10px 12px;
   margin-top: 8px;
   border: 1px solid #222;
+  gap: 12px;
+  min-width: 0;
 }
 
 .pes-row-main {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 10px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .pes-row-title {
   font-size: 0.85rem;
   color: #f5f5f5;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .pes-row-logos {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-left: 8px;
+  gap: 6px;
+  margin-left: auto;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  max-width: fit-content;
+  overflow: visible;
+}
+
+/* Desktop and laptop view - logos in one line */
+@media (min-width: 768px) {
+  .pes-row-logos {
+    gap: 6px;
+    flex-wrap: nowrap;
+    overflow-x: visible;
+  }
+}
+
+/* Mobile view - still try to keep in one line, but allow horizontal scroll if needed */
+@media (max-width: 767px) {
+  .pes-row-logos {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    max-width: 100%;
+    margin-left: 8px;
+  }
+  
+  .pes-row-logos::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .pes-row-logos img {
+    flex-shrink: 0;
+  }
 }
 
 .pes-row-logos img {
   height: 20px;
   width: 20px;
-  object-fit: cover;
+  min-width: 20px;
+  max-width: 20px;
+  object-fit: contain;
   object-position: center;
   border-radius: 4px;
   border: 1px solid #111;
   background: #1a1a1a;
-  padding: 0;
+  padding: 2px;
   box-sizing: border-box;
   position: relative;
   transition: transform 0.15s ease, z-index 0.15s ease, box-shadow 0.15s ease;
+  flex-shrink: 0;
+  display: block;
 }
 
 .pes-row-logos img:hover {
@@ -761,10 +809,11 @@
 
 .pes-row-price {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  flex-direction: row;
+  align-items: baseline;
   font-size: 0.8rem;
   white-space: nowrap;
+  gap: 0;
 }
 
 .pes-row-price span:first-child {
@@ -773,6 +822,7 @@
 
 .pes-row-price-muted {
   color: #999;
+  margin-left: 2px;
 }
 
 .agent-matrix .pes-row {
@@ -884,6 +934,11 @@
     text-align: center;
     gap: 40px;
   }
+  
+  .feature-content {
+    text-align: left !important;
+    padding-left: 0;
+  }
 
   .feature-list {
     display: inline-block;
@@ -936,12 +991,21 @@
     line-height: 1.3;
     word-wrap: break-word;
     padding: 0 0.5rem;
+    text-align: center;
   }
 
 .feature-description {
     font-size: 0.95rem;
     line-height: 1.6;
-    padding: 0 0.5rem;
+    padding: 0;
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  .feature-content {
+    text-align: left !important;
+    padding-left: 0;
   }
 
 .feature-list {
@@ -1032,7 +1096,19 @@
 
 .feature-description {
     font-size: 0.85rem;
-    padding: 0 0.25rem;
+    padding: 0;
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  .feature-content {
+    text-align: left !important;
+    padding-left: 0;
+  }
+  
+  .feature-content h3 {
+    text-align: center;
   }
 
 .feature-list {

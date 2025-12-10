@@ -30,14 +30,18 @@ const Features: React.FC = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Initialize videos - don't autoplay, let user control
+  // Initialize videos - preload them, especially for mobile
   useEffect(() => {
     const initializeVideos = () => {
       videoRefs.current.forEach((video) => {
         if (video) {
           video.muted = true;
           video.loop = true;
-          video.preload = "metadata";
+          video.preload = "auto"; // Preload videos for mobile
+          // Force load on mobile devices
+          if (window.innerWidth <= 768) {
+            video.load(); // Explicitly trigger loading
+          }
           // Reset to beginning when loaded
           video.addEventListener('loadeddata', () => {
             video.currentTime = 0;
@@ -46,10 +50,13 @@ const Features: React.FC = () => {
       });
     };
 
-    initializeVideos();
+    // Small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      initializeVideos();
+    }, 100);
 
     return () => {
-      // Cleanup if needed
+      clearTimeout(timer);
     };
   }, []);
 
@@ -132,7 +139,7 @@ const Features: React.FC = () => {
                     loop
                     muted
                     playsInline
-                    preload="none"
+                    preload="auto"
                     crossOrigin="anonymous"
                     onError={(e) => {
                       console.error(`Video ${video.id} (${video.video}) loading error:`, e);

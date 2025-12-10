@@ -592,7 +592,6 @@ const BookDemo: React.FC = () => {
             playsInline
           />
           <div className="demo-bottom-video-caption">
-            <h3 className="demo-bottom-video-title">Built for the MENA World</h3>
             <p className="demo-bottom-video-subtitle">Understands Your Market, Language, and Law.</p>
           </div>
         </div>

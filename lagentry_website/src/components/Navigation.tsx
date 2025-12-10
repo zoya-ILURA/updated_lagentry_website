@@ -206,6 +206,7 @@ const Navigation: React.FC = () => {
       {/* Mobile Dropdown Menu */}
       <div className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
         <div className="mobile-menu-content">
+          <div className="mobile-nav-item mobile-homepage" onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }} style={{ cursor: 'pointer' }}>Homepage</div>
           <div className="mobile-nav-item" onClick={() => { handleAgentsClick(); setIsMobileMenuOpen(false); }} style={{ cursor: 'pointer' }}>Agents</div>
           <div className="mobile-nav-item" onClick={() => { handleFeaturesClick(); setIsMobileMenuOpen(false); }} style={{ cursor: 'pointer' }}>Features</div>
           <div className="mobile-nav-item" onClick={() => { navigate('/pricing'); setIsMobileMenuOpen(false); }} style={{ cursor: 'pointer' }}>Pricing</div>

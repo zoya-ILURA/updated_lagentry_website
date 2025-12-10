@@ -190,12 +190,6 @@ const MenaCard: React.FC<MenaCardProps> = ({ theme = 'dark' }) => {
           } as React.CSSProperties}
         >
           <div className="mena-card-content">
-            <h2 
-              ref={titleRef}
-              className={`mena-card-title ${isVisible ? 'visible' : ''}`}
-            >
-              Built for the MENA World
-            </h2>
             <p 
               ref={taglineRef}
               className={`mena-card-tagline ${isVisible ? 'visible' : ''}`}
