@@ -674,6 +674,7 @@ const allowedOrigins = [
   'http://127.0.0.1:3000',
   'https://lagentry.com',
   'https://www.lagentry.com',
+  'https://lagentry-backend-rho.vercel.app',
   process.env.FRONTEND_URL,
   process.env.NETLIFY_URL
 ].filter(Boolean);
@@ -719,20 +720,12 @@ app.use((req, res, next) => {
 });
 
 // Use cors middleware as backup (but OPTIONS already handled above)
+// Use cors middleware as backup
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || isOriginAllowed(origin)) {
-      callback(null, true);
-    } else {
-      console.log('CORS blocked origin:', origin);
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
+  origin: '*', // Allow all origins in the express middleware as well, relying on vercel.json for strictness if needed, or Vercel handles it.
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
-  preflightContinue: false,
-  optionsSuccessStatus: 204
+  credentials: true
 }));
 
 app.use(express.json());
@@ -749,8 +742,8 @@ app.get('/health', (req, res) => {
 app.get('/api/test-cors', (req, res) => {
   const origin = req.headers.origin;
   setCORSHeaders(res, origin);
-  res.json({ 
-    message: 'CORS test successful', 
+  res.json({
+    message: 'CORS test successful',
     origin: origin,
     allowed: isOriginAllowed(origin)
   });
@@ -875,7 +868,7 @@ app.post('/api/start-voice-call', async (req, res) => {
     // Otherwise, use the cached agent ID
     let agentId;
     let agent;
-    
+
     if (userName && userName.trim()) {
       // Create a personalized agent for this specific user
       agent = await createVAPIAgent(agentType, userName);
@@ -908,9 +901,9 @@ app.post('/api/start-voice-call', async (req, res) => {
     // Create a phone call via VAPI (for WebRTC, we'll use a different approach)
     // For web-based calls, VAPI supports WebRTC via their SDK
     // We'll return the agent ID and let the frontend handle WebRTC connection
-    
+
     const conversationId = `conv_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    
+
     // Store conversation data
     activeConversations.set(conversationId, {
       agentId,
@@ -947,7 +940,7 @@ app.post('/api/start-voice-call', async (req, res) => {
 app.post('/api/update-agent-prompt', async (req, res) => {
   try {
     const { agentType, prompt } = req.body;
-    
+
     const agentId = vapiAgentIds.get(agentType);
     if (!agentId) {
       return res.status(404).json({
@@ -1058,12 +1051,12 @@ app.get('/api/audio/:conversationId/:type', async (req, res) => {
     if (type === 'greeting') {
       const greetingMessage = generateGreeting(conversation.agentType, conversation.userName);
       const audioBuffer = await textToSpeech(greetingMessage, conversation.voiceId);
-      
+
       res.set({
         'Content-Type': 'audio/mpeg',
         'Content-Length': audioBuffer.length
       });
-      
+
       res.send(audioBuffer);
     } else {
       res.status(404).json({ error: 'Audio type not found' });
@@ -1077,7 +1070,7 @@ app.get('/api/audio/:conversationId/:type', async (req, res) => {
 // End conversation endpoint
 app.post('/api/end-conversation/:conversationId', (req, res) => {
   const { conversationId } = req.params;
-  
+
   if (activeConversations.has(conversationId)) {
     activeConversations.delete(conversationId);
     res.json({ success: true, message: 'Conversation ended' });
@@ -1092,11 +1085,11 @@ const wss = new WebSocket.Server({ server });
 
 wss.on('connection', (ws) => {
   console.log('WebSocket connection established');
-  
+
   ws.on('message', async (message) => {
     try {
       const data = JSON.parse(message);
-      
+
       if (data.type === 'audio_chunk') {
         // Handle incoming audio from user
         // Process speech-to-text, generate AI response, convert to speech
@@ -1106,7 +1099,7 @@ wss.on('connection', (ws) => {
       console.error('WebSocket message error:', error);
     }
   });
-  
+
   ws.on('close', () => {
     console.log('WebSocket connection closed');
   });
@@ -1115,7 +1108,7 @@ wss.on('connection', (ws) => {
 server.listen(PORT, async () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`Voice call API available at http://localhost:${PORT}/api/start-voice-call`);
-  
+
   // Initialize VAPI agents on startup (non-blocking)
   initializeVAPIAgents().catch(err => {
     console.error('Failed to initialize VAPI agents on startup:', err);
