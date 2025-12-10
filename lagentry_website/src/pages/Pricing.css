@@ -376,111 +376,113 @@
     font-size: 2.2rem;
   }
   
+  .billing-toggle {
     min-width: 180px; /* Reduced from 220px */
-.billing-toggle {
   }
   
+  .toggle-option {
     padding: 6px 18px; /* Reduced from 10px 28px */
     font-size: 0.85rem; /* Reduced from 1rem */
-.toggle-option {
   }
 }
 
+@media (max-width: 768px) {
+  .pricing-container {
     padding: 120px 12px 30px; /* Increased top padding for mobile */
-.pricing-container {
   }
   
-.pricing-title {
+  .pricing-title {
     font-size: 2.5rem;
   }
   
-.pricing-subtitle {
+  .pricing-subtitle {
     font-size: 1.1rem;
   }
   
-.pricing-grid-4 {
+  .pricing-grid-4 {
     grid-template-columns: 1fr;
     gap: 20px;
   }
   
-.pricing-card {
+  .pricing-card {
     min-height: 600px;
   }
   
-.card-inner {
+  .card-inner {
     padding: 20px;
   }
   
-.plan-title {
+  .plan-title {
     font-size: 1.3rem;
   }
   
-.price-main {
+  .price-main {
     font-size: 2.2rem;
   }
   
-.feature-item {
+  .feature-item {
     font-size: 0.85rem;
   }
 }
 
+@media (max-width: 480px) {
+  .pricing-container {
     padding: 100px 12px 20px; /* Increased top padding for small mobile */
-.pricing-container {
   }
   
-.billing-toggle {
+  .billing-toggle {
     width: 100%;
     max-width: 280px;
   }
   
-.toggle-option {
+  .toggle-option {
     flex: 1;
     padding: 8px 16px;
     font-size: 0.85rem;
   }
   
-.yearly-savings-text {
+  .yearly-savings-text {
     font-size: 0.8rem;
     text-align: center;
     padding: 0 20px;
   }
   
-.pricing-title {
+  .pricing-title {
     font-size: 2rem;
     line-height: 1.2;
     word-wrap: break-word;
     padding: 0 0.25rem;
   }
   
-.pricing-subtitle {
+  .pricing-subtitle {
     font-size: 1rem;
     line-height: 1.5;
     word-wrap: break-word;
     padding: 0 0.25rem;
   }
   
-.pricing-card {
+  .pricing-card {
     min-height: 550px;
   }
   
-.card-inner {
+  .card-inner {
     padding: 18px;
   }
   
-.plan-title {
+  .plan-title {
     font-size: 1.2rem;
   }
   
-.price-main {
+  .price-main {
     font-size: 2rem;
   }
   
-.feature-item {
+  .feature-item {
     font-size: 0.8rem;
     margin-bottom: 6px;
   }
   
-.cta-button {
+  .cta-button {
     font-size: 0.9rem;
     padding: 10px 16px;
   }
