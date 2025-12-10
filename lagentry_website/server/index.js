@@ -825,14 +825,18 @@ async function createVAPIAgent(agentType, userName = null) {
           provider: '11labs',
           voiceId: config.voiceId
         },
+        transcriber: {
+          provider: 'gladia',
+          model: 'fast'
+        },
         firstMessage: personalizedFirstMessage,
         firstMessageMode: 'assistant-speaks-first', // Agent speaks first, doesn't wait for user
         voicemailDetectionEnabled: false,
         recordingEnabled: false,
         // Increase timeouts to prevent premature call termination
-        customerJoinTimeoutSeconds: 30,
-        silenceTimeoutSeconds: 60, // Increase from default 30 to 60 seconds
-        maxDurationSeconds: 60 // 1 minute max call duration for preview
+        customerJoinTimeoutSeconds: 60, // Increased from 30 to 60 seconds
+        silenceTimeoutSeconds: 90, // Increased from 60 to 90 seconds
+        maxDurationSeconds: 300 // Increased from 60 to 300 seconds (5 minutes) for better testing
       })
     });
 

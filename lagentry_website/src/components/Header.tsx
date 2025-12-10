@@ -277,8 +277,8 @@ const Header: React.FC = () => {
         return;
       }
       
-      const duration = 0.6;
-      const pause = 1.2;
+      const duration = 0.4;
+      const pause = 0.6; // Total ~1 second per word change
       
       // Slide current word up and fade out
       tl.to(dynamicEl, {
@@ -309,14 +309,14 @@ const Header: React.FC = () => {
         force3D: true
       });
       
-      // Pause before next word
+      // Pause before next word (reduced for faster rotation)
       if (idx < dynamicWords.length - 1) {
         tl.to({}, { duration: pause });
       }
     });
     
-    // Final pause after last word
-    tl.to({}, { duration: 1.2 });
+    // Final pause after last word (reduced)
+    tl.to({}, { duration: 0.6 });
     
     // Fade out entire container together (static + dynamic) smoothly - they disappear as one
     tl.to([containerEl, staticEl, dynamicEl], {

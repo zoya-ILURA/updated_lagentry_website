@@ -248,11 +248,47 @@ const VoiceAgentsPreview: React.FC = () => {
             vapi.on('error', (error: any) => {
                 console.error('Call error:', error);
                 setCallState('ended');
-                if (error?.errorMsg) {
-                    alert(`Call error: ${error.errorMsg}`);
-                } else {
-                    alert('Call error occurred. Please try again.');
+                
+                // Extract error message properly
+                let errorMessage = 'Call error occurred. Please try again.';
+                
+                if (error) {
+                    if (typeof error === 'string') {
+                        errorMessage = error;
+                    } else if (error.errorMsg) {
+                        errorMessage = error.errorMsg;
+                    } else if (error.message) {
+                        errorMessage = error.message;
+                    } else if (error.error) {
+                        errorMessage = typeof error.error === 'string' ? error.error : 'An error occurred';
+                    } else if (error.status) {
+                        errorMessage = `Call failed with status: ${error.status}`;
+                    } else if (error.endedReason) {
+                        // Handle VAPI meeting ended errors
+                        if (error.endedReason.includes('Meeting has ended') || error.endedReason === 'meeting-ended') {
+                            errorMessage = 'The meeting ended. This may be due to connection issues or timeout. Please try again.';
+                        } else {
+                            errorMessage = `Call ended: ${error.endedReason}`;
+                        }
+                    } else {
+                        // Try to stringify the error object safely
+                        try {
+                            const errorStr = JSON.stringify(error);
+                            if (errorStr !== '{}' && errorStr !== 'null') {
+                                // Check if it contains meeting ended info
+                                if (errorStr.includes('Meeting has ended') || errorStr.includes('meeting-ended')) {
+                                    errorMessage = 'The meeting ended. This may be due to connection issues or timeout. Please try again.';
+                                } else {
+                                    errorMessage = `Call error: ${errorStr.substring(0, 150)}`;
+                                }
+                            }
+                        } catch (e) {
+                            // If stringification fails, use default message
+                        }
+                    }
                 }
+                
+                alert(errorMessage);
                 vapiCallRef.current = null;
             });
 
@@ -290,44 +326,94 @@ const VoiceAgentsPreview: React.FC = () => {
                 console.log('Status update:', status);
                 if (status.status === 'ended' && status.endedReason) {
                     console.error('Call ended reason:', status.endedReason);
+                    setCallState('ended');
+                    
+                    let errorMessage = 'Call ended unexpectedly.';
+                    
                     if (status.endedReason === 'silence-timed-out') {
-                        alert('Call ended due to no audio detected. Please check your microphone and try again.');
+                        errorMessage = 'Call ended due to no audio detected. Please check your microphone and try again.';
+                    } else if (status.endedReason === 'meeting-ended' || status.endedReason?.includes('Meeting has ended')) {
+                        errorMessage = 'The meeting ended. This may be due to connection issues or timeout. Please try again.';
+                    } else if (status.endedReason === 'customer-join-timeout') {
+                        errorMessage = 'Call timed out while connecting. Please check your microphone permissions and try again.';
+                    } else if (status.endedReason) {
+                        errorMessage = `Call ended: ${status.endedReason}`;
                     }
+                    
+                    alert(errorMessage);
+                    vapiCallRef.current = null;
                 }
             });
 
             // Start WebRTC call
-            console.log('Starting VAPI call...');
-            await vapi.start(data.agentId);
-            console.log('VAPI call initiated successfully');
+            console.log('Starting VAPI call with agent ID:', data.agentId);
+            console.log('VAPI instance:', vapi);
+            
+            try {
+                await vapi.start(data.agentId);
+                console.log('VAPI call initiated successfully');
+            } catch (startError: any) {
+                console.error('Error starting VAPI call:', startError);
+                setCallState('ended');
+                
+                let startErrorMessage = 'Failed to start the call. Please try again.';
+                if (startError?.message) {
+                    startErrorMessage = startError.message;
+                } else if (typeof startError === 'string') {
+                    startErrorMessage = startError;
+                }
+                
+                alert(`Unable to start call: ${startErrorMessage}`);
+                vapiCallRef.current = null;
+                return;
+            }
 
         } catch (error: any) {
             console.error('Voice call error:', error);
             console.error('Error details:', {
-                message: error.message,
-                stack: error.stack,
-                name: error.name
+                message: error?.message,
+                stack: error?.stack,
+                name: error?.name,
+                error: error
             });
             setCallState('ended');
 
             let errorMessage = 'Unknown error occurred.';
-            if (error.message) {
-                errorMessage = error.message;
-            } else if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
-                const isDev = process.env.NODE_ENV === 'development';
-                if (isDev) {
-                    errorMessage = 'Failed to connect to backend server. Please ensure the backend server is running on port 5001.';
+            
+            // Properly extract error message
+            if (error) {
+                if (typeof error === 'string') {
+                    errorMessage = error;
+                } else if (error.message) {
+                    errorMessage = error.message;
+                } else if (error.error) {
+                    errorMessage = typeof error.error === 'string' ? error.error : 'An error occurred';
+                } else if (error instanceof TypeError && error.message?.includes('Failed to fetch')) {
+                    const isDev = process.env.NODE_ENV === 'development';
+                    if (isDev) {
+                        errorMessage = 'Failed to connect to backend server. Please ensure the backend server is running on port 5001.';
+                    } else {
+                        errorMessage = 'Failed to connect to backend server. The service may be temporarily unavailable. Please try again later.';
+                    }
                 } else {
-                    errorMessage = 'Failed to connect to backend server. The service may be temporarily unavailable. Please try again later.';
+                    // Try to get a meaningful error message
+                    try {
+                        const errorStr = JSON.stringify(error);
+                        if (errorStr !== '{}' && errorStr !== 'null') {
+                            errorMessage = `Error: ${errorStr}`;
+                        }
+                    } catch (e) {
+                        // If stringification fails, use default
+                    }
                 }
             }
 
             // Show user-friendly error messages
-            if (error.message && (error.message.includes('Backend URL not configured') || error.message.includes('Backend service is not configured'))) {
+            if (errorMessage.includes('Backend URL not configured') || errorMessage.includes('Backend service is not configured')) {
                 // This should not happen in production if env var is set correctly
                 console.error('Configuration error:', errorMessage);
                 alert('Service configuration error. Please contact support.');
-            } else if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+            } else if (errorMessage.includes('Failed to fetch') || (error instanceof TypeError && error?.message?.includes('Failed to fetch'))) {
                 const isDev = process.env.NODE_ENV === 'development';
                 if (isDev) {
                     alert(`Failed to start call: ${errorMessage}\n\nPlease check:\n1. Backend server is running (http://localhost:5001)\n2. No firewall blocking the connection\n3. Check browser console for more details`);
@@ -336,9 +422,10 @@ const VoiceAgentsPreview: React.FC = () => {
                     alert(`Unable to start call at this time. Please try again in a moment.\n\nIf the problem persists, please contact support.`);
                 }
             } else {
-                // For other errors, show a user-friendly message
+                // For other errors, show a user-friendly message (limit length to avoid issues)
                 console.error('Call failed:', errorMessage);
-                alert(`Unable to start call: ${errorMessage}`);
+                const displayMessage = errorMessage.length > 200 ? errorMessage.substring(0, 200) + '...' : errorMessage;
+                alert(`Unable to start call: ${displayMessage}`);
             }
         }
     };
