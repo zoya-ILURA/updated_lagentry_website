@@ -1078,16 +1078,25 @@ wss.on('connection', (ws) => {
   });
 });
 
-server.listen(PORT, async () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Voice call API available at http://localhost:${PORT}/api/start-voice-call`);
+// For Vercel serverless functions, export the app
+// For local development, start the server
+if (process.env.VERCEL || process.env.NOW) {
+  // Running on Vercel - just export the app (serverless function)
+  module.exports = app;
+} else {
+  // Running locally - start the server
+  server.listen(PORT, async () => {
+    console.log(`Server running on port ${PORT}`);
+    console.log(`Voice call API available at http://localhost:${PORT}/api/start-voice-call`);
 
-  // Using fixed assistant IDs - no initialization needed
-  console.log('Using fixed assistant IDs:');
-  console.log('  - Customer Support (Zara):', FIXED_ASSISTANT_IDS['customer-support']);
-  console.log('  - Lead Qualification (Layla):', FIXED_ASSISTANT_IDS['lead-qualification']);
-  console.log('  - Real Estate (Ahmed):', FIXED_ASSISTANT_IDS['real-estate']);
-});
-
-module.exports = app;
+    // Using fixed assistant IDs - no initialization needed
+    console.log('Using fixed assistant IDs:');
+    console.log('  - Customer Support (Zara):', FIXED_ASSISTANT_IDS['customer-support']);
+    console.log('  - Lead Qualification (Layla):', FIXED_ASSISTANT_IDS['lead-qualification']);
+    console.log('  - Real Estate (Ahmed):', FIXED_ASSISTANT_IDS['real-estate']);
+  });
+  
+  // Export app for compatibility
+  module.exports = app;
+}
 
