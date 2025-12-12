@@ -728,7 +728,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  gap: 11px;
+  gap: 10px;
   flex: 1;
   min-width: 0;
   overflow: hidden;
