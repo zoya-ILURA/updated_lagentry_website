@@ -47,7 +47,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Resources, Legal, Contact in 2x2 grid - AFTER social icons */}
+          {/* Resources, Contact, Legal in 3 columns with equal spacing */}
           <div className="footer-sections-grid">
             {/* Resources Section */}
             <div className="footer-section">
@@ -59,7 +59,7 @@ const Footer: React.FC = () => {
               </ul>
             </div>
 
-            {/* Contact Section - moved to middle */}
+            {/* Contact Section - in the middle */}
             <div className="footer-section">
               <h3 className="footer-heading">Contact</h3>
               <ul className="footer-links">

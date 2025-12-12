@@ -53,12 +53,13 @@
   margin-bottom: 3rem;
 }
 
-/* Footer sections grid (Resources, Legal, Contact) - FIRST */
+/* Footer sections grid (Resources, Contact, Legal) - FIRST */
 .footer-sections-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* 2 columns */
-  gap: 2rem;
+  grid-template-columns: 1fr 1fr 1fr; /* 3 equal columns with same gap */
+  gap: 12rem; /* Increased gap between all columns */
   width: 100%;
+  align-items: start;
 }
 
 /* Lagentry section - AFTER sections grid */
@@ -429,10 +430,10 @@
     margin-bottom: 2rem;
   }
 
-  /* Resources, Legal, Contact in 2x2 grid on mobile */
+  /* Resources, Legal, Contact on mobile - adjust layout */
   .footer-sections-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* 2 columns */
+    grid-template-columns: 1fr; /* Stack vertically on mobile */
     gap: 2rem;
     width: 100%;
   }
@@ -466,6 +467,12 @@
   
 .footer-content {
     gap: 1.5rem;
+  }
+
+  /* Stack columns vertically on very small screens */
+  .footer-sections-grid {
+    grid-template-columns: 1fr; /* Single column on very small screens */
+    gap: 2rem;
   }
   
   .logo-l,

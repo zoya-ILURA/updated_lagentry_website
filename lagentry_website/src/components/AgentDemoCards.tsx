@@ -14,7 +14,7 @@ import agentBg from './agentbg2.png';
 const aiCFOVideo = '/AICFO.MP4';
 const hrVideo = '/HRvc.mp4';
 const healthcareVideo = '/Healthcare-agent.mp4';
-const realEstateVideo = '/videos/real-estate-updated.mp4';
+const realEstateVideo = '/real.mp4';
 
 interface AgentCard {
   id: string;
@@ -769,13 +769,13 @@ const AgentDemoCards: React.FC = () => {
                                 if (agent.id === 'agent-1' && video.src.includes('sales-agent-updated')) {
                                   video.src = '/sales.mp4';
                                   video.load();
-                                } else if (agent.id === 'agent-3' && video.src.includes('real-estate')) {
+                                } else if (agent.id === 'agent-3' && video.src.includes('real')) {
                                   // Try multiple alternative paths for real estate video
                                   const alternatives = [
+                                    '/real.mp4',
+                                    '/videos/real.mp4',
                                     '/real-estate-updated.mp4',
-                                    '/videos/real-estate-updated.mp4',
-                                    '/real-estate.mp4',
-                                    '/videos/real-estate.mp4'
+                                    '/videos/real-estate-updated.mp4'
                                   ];
                                   const currentSrc = video.src;
                                   const currentIndex = alternatives.findIndex(alt => currentSrc.includes(alt.split('/').pop() || ''));
@@ -878,13 +878,13 @@ const AgentDemoCards: React.FC = () => {
                                 if (agent.id === 'agent-1' && video.src.includes('sales-agent-updated')) {
                                   video.src = '/sales.mp4';
                                   video.load();
-                                } else if (agent.id === 'agent-3' && video.src.includes('real-estate')) {
+                                } else if (agent.id === 'agent-3' && video.src.includes('real')) {
                                   // Try multiple alternative paths for real estate video
                                   const alternatives = [
+                                    '/real.mp4',
+                                    '/videos/real.mp4',
                                     '/real-estate-updated.mp4',
-                                    '/videos/real-estate-updated.mp4',
-                                    '/real-estate.mp4',
-                                    '/videos/real-estate.mp4'
+                                    '/videos/real-estate-updated.mp4'
                                   ];
                                   const currentSrc = video.src;
                                   const currentIndex = alternatives.findIndex(alt => currentSrc.includes(alt.split('/').pop() || ''));

@@ -349,9 +349,18 @@ const VoiceAgentsPreview: React.FC = () => {
             console.log('Starting VAPI call with agent ID:', data.agentId);
             console.log('VAPI instance:', vapi);
             
+            // Prepare variables for the call (including customer_name)
+            const callVariables = data.variables || {};
+            if (formData.name && formData.name.trim()) {
+                callVariables.customer_name = formData.name.trim();
+            }
+            
             try {
-                await vapi.start(data.agentId);
-                console.log('VAPI call initiated successfully');
+                // Pass variables when starting the call
+                await vapi.start(data.agentId, {
+                    variables: callVariables
+                });
+                console.log('VAPI call initiated successfully with variables:', callVariables);
             } catch (startError: any) {
                 console.error('Error starting VAPI call:', startError);
                 setCallState('ended');

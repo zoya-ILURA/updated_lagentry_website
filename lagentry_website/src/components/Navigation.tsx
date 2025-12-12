@@ -113,72 +113,86 @@ const Navigation: React.FC = () => {
               className={`agents-dropdown ${isAgentsOpen ? 'open' : ''}`}
               onClick={(e) => e.stopPropagation()}
             >
-              <button type="button" onClick={(e) => handleAgentItemClick('/agents/gtm-sales', e)}>
-                <div className="agents-dropdown-pill">
-                  <div className="agents-dropdown-blob agents-blob-sales" />
-                  <div className="agents-dropdown-copy">
-                    <span className="agents-dropdown-title">GTM &amp; Sales Agent</span>
-                    <span className="agents-dropdown-subtitle">
-                      Drive outreach, qualify intent, and keep deals in motion.
-                    </span>
+              <div className="agents-dropdown-grid">
+                <button type="button" onClick={(e) => handleAgentItemClick('/agents/gtm-sales', e)}>
+                  <div className="agents-dropdown-pill">
+                    <div className="agents-dropdown-blob">
+                      <img src="/images/ChatGPT_Image_Oct_22__2025__04_29_44_PM-removebg-preview.png" alt="GTM & Sales Agent" className="agents-dropdown-image" />
+                    </div>
+                    <div className="agents-dropdown-copy">
+                      <span className="agents-dropdown-title">GTM &amp; Sales Agent</span>
+                      <span className="agents-dropdown-subtitle">
+                        Drive outreach, qualify intent, and keep deals in motion.
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </button>
-              <button type="button" onClick={(e) => handleAgentItemClick('/agents/hr-recruitment', e)}>
-                <div className="agents-dropdown-pill">
-                  <div className="agents-dropdown-blob agents-blob-hr" />
-                  <div className="agents-dropdown-copy">
-                    <span className="agents-dropdown-title">HR &amp; Recruitment</span>
-                    <span className="agents-dropdown-subtitle">
-                      Orchestrate hiring, onboarding, and people ops flows.
-                    </span>
+                </button>
+                <button type="button" onClick={(e) => handleAgentItemClick('/agents/hr-recruitment', e)}>
+                  <div className="agents-dropdown-pill">
+                    <div className="agents-dropdown-blob">
+                      <img src="/images/ChatGPT_Image_Oct_22__2025__04_14_54_PM-removebg-preview.png" alt="HR & Recruitment Agent" className="agents-dropdown-image" />
+                    </div>
+                    <div className="agents-dropdown-copy">
+                      <span className="agents-dropdown-title">HR &amp; Recruitment</span>
+                      <span className="agents-dropdown-subtitle">
+                        Orchestrate hiring, onboarding, and people ops flows.
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </button>
-              <button type="button" onClick={(e) => handleAgentItemClick('/agents/cfo-finance', e)}>
-                <div className="agents-dropdown-pill">
-                  <div className="agents-dropdown-blob agents-blob-cfo" />
-                  <div className="agents-dropdown-copy">
-                    <span className="agents-dropdown-title">CFO &amp; Finance</span>
-                    <span className="agents-dropdown-subtitle">
-                      See cash, margin, and risk in one focused lane.
-                    </span>
+                </button>
+                <button type="button" onClick={(e) => handleAgentItemClick('/agents/cfo-finance', e)}>
+                  <div className="agents-dropdown-pill">
+                    <div className="agents-dropdown-blob">
+                      <img src="/images/ChatGPT_Image_Oct_22__2025__03_54_44_PM-removebg-preview.png" alt="CFO & Finance Agent" className="agents-dropdown-image" />
+                    </div>
+                    <div className="agents-dropdown-copy">
+                      <span className="agents-dropdown-title">CFO &amp; Finance</span>
+                      <span className="agents-dropdown-subtitle">
+                        See cash, margin, and risk in one focused lane.
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </button>
-              <button type="button" onClick={(e) => handleAgentItemClick('/agents/customer-support', e)}>
-                <div className="agents-dropdown-pill">
-                  <div className="agents-dropdown-blob agents-blob-support" />
-                  <div className="agents-dropdown-copy">
-                    <span className="agents-dropdown-title">Customer Support</span>
-                    <span className="agents-dropdown-subtitle">
-                      Always-on help that feeds product with real signals.
-                    </span>
+                </button>
+                <button type="button" onClick={(e) => handleAgentItemClick('/agents/customer-support', e)}>
+                  <div className="agents-dropdown-pill">
+                    <div className="agents-dropdown-blob">
+                      <img src="/images/ChatGPT_Image_Oct_22__2025_at_02_45_40_PM-removebg-preview.png" alt="Customer Support Agent" className="agents-dropdown-image" />
+                    </div>
+                    <div className="agents-dropdown-copy">
+                      <span className="agents-dropdown-title">Customer Support</span>
+                      <span className="agents-dropdown-subtitle">
+                        Always-on help that feeds product with real signals.
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </button>
-              <button type="button" onClick={(e) => handleAgentItemClick('/agents/real-estate', e)}>
-                <div className="agents-dropdown-pill">
-                  <div className="agents-dropdown-blob agents-blob-realestate" />
-                  <div className="agents-dropdown-copy">
-                    <span className="agents-dropdown-title">Real Estate &amp; Property</span>
-                    <span className="agents-dropdown-subtitle">
-                      From leads to leases and maintenance, handled quietly.
-                    </span>
+                </button>
+                <button type="button" onClick={(e) => handleAgentItemClick('/agents/real-estate', e)}>
+                  <div className="agents-dropdown-pill">
+                    <div className="agents-dropdown-blob">
+                      <img src="/images/ChatGPT_Image_Oct_22__2025_at_04_55_49_PM-removebg-preview.png" alt="Real Estate & Property Agent" className="agents-dropdown-image" />
+                    </div>
+                    <div className="agents-dropdown-copy">
+                      <span className="agents-dropdown-title">Real Estate &amp; Property</span>
+                      <span className="agents-dropdown-subtitle">
+                        From leads to leases and maintenance, handled quietly.
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </button>
-              <button type="button" onClick={(e) => handleAgentItemClick('/agents/healthcare', e)}>
-                <div className="agents-dropdown-pill">
-                  <div className="agents-dropdown-blob agents-blob-healthcare" />
-                  <div className="agents-dropdown-copy">
-                    <span className="agents-dropdown-title">Healthcare</span>
-                    <span className="agents-dropdown-subtitle">
-                      Coordinate intake, scheduling, and follow‑ups with care.
-                    </span>
+                </button>
+                <button type="button" onClick={(e) => handleAgentItemClick('/agents/healthcare', e)}>
+                  <div className="agents-dropdown-pill">
+                    <div className="agents-dropdown-blob">
+                      <img src="/images/ChatGPT_Image_Oct_8__2025_at_03_27_37_PM-removebg-preview.png" alt="Healthcare Agent" className="agents-dropdown-image" />
+                    </div>
+                    <div className="agents-dropdown-copy">
+                      <span className="agents-dropdown-title">Healthcare</span>
+                      <span className="agents-dropdown-subtitle">
+                        Coordinate intake, scheduling, and follow‑ups with care.
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </button>
+                </button>
+              </div>
             </div>
           </div>
           <div className="nav-item" onClick={handleFeaturesClick} style={{ cursor: 'pointer' }}>Features</div>

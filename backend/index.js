@@ -109,9 +109,15 @@ const AGENT_CONFIGS = {
   }
 };
 
-// Store active conversations and VAPI agent IDs
+// Store active conversations
 const activeConversations = new Map();
-const vapiAgentIds = new Map();
+
+// Fixed Assistant IDs - Use these instead of creating new assistants
+const FIXED_ASSISTANT_IDS = {
+  'customer-support': 'f3532a03-0578-4077-82f2-19780af488f2', // Zara
+  'lead-qualification': '492b6725-429d-4208-9e45-0d394d24b6c6', // Layla
+  'real-estate': '9bf691cb-b73e-4e7e-ab2f-258c6468f5eb' // Ahmed
+};
 
 // Function to create VAPI agent
 async function createVAPIAgent(agentType, userName = null) {
@@ -238,38 +244,22 @@ app.post('/api/start-voice-call', async (req, res) => {
       });
     }
 
-    // For personalized calls, create a temporary agent with user's name
-    // Otherwise, use the cached agent ID
-    let agentId;
-    let agent;
+    // Use fixed assistant IDs instead of creating new assistants
+    const agentId = FIXED_ASSISTANT_IDS[agentType];
     
+    if (!agentId) {
+      return res.status(400).json({
+        success: false,
+        error: `No fixed assistant ID configured for agent type: ${agentType}`
+      });
+    }
+
+    console.log(`Using fixed assistant ID for ${agentType}:`, agentId);
+    
+    // If userName is provided, we'll pass it as {{customer_name}} to the agent
+    // The agent prompt should handle this variable
     if (userName && userName.trim()) {
-      // Create a personalized agent for this specific user
-      agent = await createVAPIAgent(agentType, userName);
-      if (agent) {
-        agentId = agent.id;
-        console.log(`Created personalized agent for ${userName}:`, agentId);
-      } else {
-        return res.status(500).json({
-          success: false,
-          error: 'Failed to create personalized VAPI agent'
-        });
-      }
-    } else {
-      // Use cached agent ID for non-personalized calls
-      agentId = vapiAgentIds.get(agentType);
-      if (!agentId) {
-        agent = await createVAPIAgent(agentType);
-        if (agent) {
-          agentId = agent.id;
-          vapiAgentIds.set(agentType, agentId);
-        } else {
-          return res.status(500).json({
-            success: false,
-            error: 'Failed to create VAPI agent'
-          });
-        }
-      }
+      console.log(`User name ${userName} will be sent as {{customer_name}} to agent prompt`);
     }
 
     const conversationId = `conv_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -285,13 +275,21 @@ app.post('/api/start-voice-call', async (req, res) => {
       prompt
     });
 
+    // Prepare variables to pass to the agent (customer_name will be available as {{customer_name}} in the prompt)
+    const variables = {};
+    if (userName && userName.trim()) {
+      variables.customer_name = userName.trim();
+    }
+
     res.json({
       success: true,
       conversationId,
       agentId,
       message: 'Voice call initiated successfully',
       webRTCEnabled: true,
-      publicApiKey: VAPI_PUBLIC_KEY
+      publicApiKey: VAPI_PUBLIC_KEY,
+      // Pass customer name as variable for the agent prompt
+      variables: variables
     });
 
   } catch (error) {

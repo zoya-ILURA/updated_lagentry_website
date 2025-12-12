@@ -276,9 +276,9 @@
   background: rgba(0, 0, 0, 0.5);
 }
 
-  /* 20px padding from sides */
+  /* Centered container with side gaps */
 .agent-demo-container {
-  max-width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
   width: 100%;
@@ -356,11 +356,11 @@
   /* 20px side padding for laptop view */
 .agent-card-inner-stacked {
   display: grid;
-  grid-template-columns: 0.5fr 0.5fr;
-  gap: 2.5rem;
+  grid-template-columns: 0.6fr 0.4fr;
+  gap: 60px;
   align-items: start;
   justify-items: stretch;
-  padding: 1.25rem 20px;
+  padding: 1.25rem 0;
   position: relative;
   z-index: 1;
   width: 100%;
@@ -373,9 +373,9 @@
 }
 
 /* Alternating layouts - video and text positions alternate */
-  /* Wider: Video left (50%), text right (50%) */
+  /* Wider: Video left (60%), text right (40%) */
 .agent-card-stacked.layout-left-visual .agent-card-inner-stacked {
-  grid-template-columns: 0.5fr 0.5fr;
+  grid-template-columns: 0.6fr 0.4fr;
 }
 
 /* CFO card - give more space for text to prevent truncation */
@@ -385,11 +385,11 @@
   /* Ensure top alignment */
   /* Reduced gap */
 .cfo-card .agent-card-inner-stacked {
-  grid-template-columns: 0.5fr 0.5fr;
+  grid-template-columns: 0.6fr 0.4fr;
   min-width: 0;
-  padding: 1.25rem 20px;
+  padding: 1.25rem 0;
   align-items: start;
-  gap: 3rem;
+  gap: 60px;
 }
 
   /* Allow flex item to shrink */
@@ -400,45 +400,48 @@
 }
 
 /* Apply same grid layout to all agent cards */
-  /* Wider: video 50%, text 50% */
+  /* Wider: video 60%, text 40% */
   /* Ensure top alignment */
-  /* 20px side padding for laptop view */
-  /* Reduced gap */
+  /* No side padding - text moves to edge */
+  /* Increased gap to move text away from video */
 .agent-card-stacked.layout-left-visual .agent-card-inner-stacked {
-  grid-template-columns: 0.5fr 0.5fr;
+  grid-template-columns: 0.6fr 0.4fr;
   min-width: 0;
   overflow: visible;
   align-items: start;
-  padding: 1.25rem 20px;
-  gap: 1rem;
+  padding: 1.25rem 0;
+  gap: 80px;
 }
 
 .agent-card-stacked.layout-left-visual .agent-content-panel-stacked {
   min-width: 0;
   overflow: visible;
+  padding: 0;
+  padding-right: 0;
+  padding-left: 0;
 }
 
 /* Right visual layout (Real Estate, HR) - text left, video right */
-  /* Wider: text 50%, video 50% */
+  /* Wider: text 40%, video 60% */
   /* Reduced gap */
   /* Ensure top alignment */
-  /* 20px side padding for laptop view */
+  /* No side padding - text moves to edge */
 .agent-card-stacked.layout-right-visual .agent-card-inner-stacked {
-  grid-template-columns: 0.5fr 0.5fr;
-  gap: 3rem;
+  grid-template-columns: 0.4fr 0.6fr;
+  gap: 60px;
   min-width: 0;
   overflow: visible;
   align-items: start;
-  padding: 1.25rem 20px;
+  padding: 1.25rem 0;
 }
 
-  /* Increased spacing between content and video on right */
+  /* Text moved to left edge */
   /* No padding on left for right-visual */
 .agent-card-stacked.layout-right-visual .agent-content-panel-stacked {
   min-width: 0;
   overflow: visible;
   padding: 0;
-  padding-right: 4rem;
+  padding-right: 0;
   padding-left: 0;
   align-items: flex-start;
   justify-content: flex-start;
@@ -552,7 +555,8 @@
 .cfo-card.layout-left-visual .agent-visual-panel-stacked .agent-video-container {
   margin-left: 0;
   max-width: 100%;
-  aspect-ratio: 1.777778;
+  aspect-ratio: 2.6;
+  min-height: 550px;
 }
 
 /* Align video top with subtitle (description) - account for title height + margin */
@@ -573,7 +577,7 @@
   max-width: 100%;
   height: auto;
   min-height: 550px;
-  aspect-ratio: 1.777778;
+  aspect-ratio: 2.6;
   border-radius: 24px !important;
   overflow: hidden !important;
   background: rgba(0, 0, 0, 0.3);
@@ -994,8 +998,8 @@
 @media (max-width: 768px) {
     /* 14px padding on mobile */
 .agent-demo-container {
-    max-width: 100%;
-    padding: 0 14px;
+    max-width: 1200px;
+    padding: 0 20px;
   }
 
     /* 14px padding from sides on mobile */
@@ -1245,6 +1249,8 @@
     /* Prevent text cutoff on mobile */
 .agent-demo-container {
     overflow: visible;
+    max-width: 1200px;
+    padding: 0 20px;
   }
 
     /* Remove subtext for mobile */
