@@ -149,8 +149,8 @@ const VoiceAgentsPreview: React.FC = () => {
             let backendUrl: string;
 
             if (isDevelopment) {
-                // Use proxy in development (package.json has proxy: "http://localhost:5001")
-                backendUrl = '';
+                // Directly use backend URL in development
+                backendUrl = 'http://localhost:5001';
             } else {
                 // In production, REACT_APP_BACKEND_URL must be set in Netlify environment variables
                 backendUrl = process.env.REACT_APP_BACKEND_URL || '';
@@ -245,14 +245,23 @@ const VoiceAgentsPreview: React.FC = () => {
                 vapiCallRef.current = null;
             });
 
-            vapi.on('error', (error: any) => {
+            vapi.on('error', async (error: any) => {
                 console.error('Call error:', error);
-                setCallState('ended');
+                console.error('Error type:', typeof error);
+                console.error('Error keys:', error ? Object.keys(error) : 'no keys');
                 
-                // Extract error message properly
+                // Try to extract error message from Response object
                 let errorMessage = 'Call error occurred. Please try again.';
                 
-                if (error) {
+                if (error && error instanceof Response) {
+                    try {
+                        const errorData = await error.json();
+                        console.error('Error response data:', errorData);
+                        errorMessage = errorData.message || errorData.error || `HTTP ${error.status}: ${error.statusText}`;
+                    } catch (e) {
+                        errorMessage = `HTTP ${error.status}: ${error.statusText}`;
+                    }
+                } else if (error) {
                     if (typeof error === 'string') {
                         errorMessage = error;
                     } else if (error.errorMsg) {
@@ -279,7 +288,7 @@ const VoiceAgentsPreview: React.FC = () => {
                                 if (errorStr.includes('Meeting has ended') || errorStr.includes('meeting-ended')) {
                                     errorMessage = 'The meeting ended. This may be due to connection issues or timeout. Please try again.';
                                 } else {
-                                    errorMessage = `Call error: ${errorStr.substring(0, 150)}`;
+                                    errorMessage = `Call error: ${errorStr.substring(0, 200)}`;
                                 }
                             }
                         } catch (e) {
@@ -288,7 +297,9 @@ const VoiceAgentsPreview: React.FC = () => {
                     }
                 }
                 
+                console.error('Final error message:', errorMessage);
                 alert(errorMessage);
+                setCallState('ended');
                 vapiCallRef.current = null;
             });
 
@@ -356,22 +367,35 @@ const VoiceAgentsPreview: React.FC = () => {
             }
             
             try {
-                // Pass variables when starting the call
-                await vapi.start(data.agentId, {
-                    variables: callVariables
-                });
-                console.log('VAPI call initiated successfully with variables:', callVariables);
+                // Try VAPI start with just the assistantId as a string (most common format)
+                console.log('Attempting to start VAPI call with assistantId:', data.agentId);
+                await vapi.start(data.agentId);
+                console.log('VAPI call initiated successfully with assistant ID:', data.agentId);
             } catch (startError: any) {
                 console.error('Error starting VAPI call:', startError);
+                console.error('Start error type:', typeof startError);
+                console.error('Start error details:', startError);
+                
                 setCallState('ended');
                 
                 let startErrorMessage = 'Failed to start the call. Please try again.';
-                if (startError?.message) {
+                
+                // Try to extract error from Response object
+                if (startError && startError instanceof Response) {
+                    try {
+                        const errorData = await startError.json();
+                        console.error('Start error response data:', errorData);
+                        startErrorMessage = errorData.message || errorData.error || `HTTP ${startError.status}: ${startError.statusText}`;
+                    } catch (e) {
+                        startErrorMessage = `HTTP ${startError.status}: ${startError.statusText}`;
+                    }
+                } else if (startError?.message) {
                     startErrorMessage = startError.message;
                 } else if (typeof startError === 'string') {
                     startErrorMessage = startError;
                 }
                 
+                console.error('Final start error message:', startErrorMessage);
                 alert(`Unable to start call: ${startErrorMessage}`);
                 vapiCallRef.current = null;
                 return;

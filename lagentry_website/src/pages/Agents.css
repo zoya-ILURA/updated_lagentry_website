@@ -60,12 +60,54 @@
 .carousel {
   position: relative;
   height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .orbit {
   position: relative;
   width: 100%;
   height: 100%;
+}
+
+.nav {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  background: rgba(15, 23, 42, 0.8);
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.nav:hover {
+  background: rgba(15, 23, 42, 0.95);
+  border-color: rgba(148, 163, 184, 0.5);
+  transform: scale(1.05);
+}
+
+.nav:active {
+  transform: scale(0.95);
+}
+
+.nav--prev {
+  left: 10px;
+}
+
+.nav--next {
+  right: 10px;
+}
+
+.nav svg {
+  width: 20px;
+  height: 20px;
 }
 
 .thumb {
@@ -130,19 +172,127 @@
   .card {
     padding: 1.75rem 1.5rem 2.25rem;
     max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
   }
 
-  .card-title {
+  .title {
     font-size: 1.75rem;
     line-height: 1.3;
+    margin: 0 0 1.25rem;
     word-wrap: break-word;
+  }
+
+  .carousel {
+    height: 220px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 0 auto;
+  }
+
+  .orbit {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+  }
+
+  .thumb {
+    width: 80px;
+    height: 80px;
+  }
+
+  .nav {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    background: rgba(15, 23, 42, 0.8);
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.2s ease;
+  }
+
+  .nav:hover {
+    background: rgba(15, 23, 42, 0.95);
+    border-color: rgba(148, 163, 184, 0.5);
+    transform: scale(1.05);
+  }
+
+  .nav:active {
+    transform: scale(0.95);
+  }
+
+  .nav--prev {
+    left: 5px;
+  }
+
+  .nav--next {
+    right: 5px;
+  }
+
+  .nav svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .meta {
+    margin-top: 1.5rem;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .name {
+    font-size: 1.15rem;
+    margin: 0;
     padding: 0 0.5rem;
   }
 
-  .card-description {
-    font-size: 0.95rem;
-    line-height: 1.6;
+  .role {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
     padding: 0 0.5rem;
+  }
+
+  .bio {
+    font-size: 0.85rem;
+    margin-top: 0.75rem;
+    padding: 0 0.5rem;
+    line-height: 1.5;
+    max-width: 100%;
+  }
+
+  .cta {
+    margin-top: 1rem;
+    padding: 0.55rem 1.2rem;
+    font-size: 0.85rem;
+  }
+
+  .bg-blob--1 {
+    width: 240px;
+    height: 240px;
+    top: -60px;
+    left: -30px;
+  }
+
+  .bg-blob--2 {
+    width: 200px;
+    height: 200px;
+    right: -50px;
+  }
+
+  .bg-blob--3 {
+    width: 180px;
+    height: 180px;
+    bottom: -50px;
   }
 }
 
@@ -154,16 +304,96 @@
   .card {
     padding: 1.5rem 1rem 2rem;
     border-radius: 16px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
-  .card-title {
+  .title {
     font-size: 1.5rem;
+    margin: 0 0 1rem;
+  }
+
+  .carousel {
+    height: 180px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .orbit {
+    width: 100%;
+    height: 100%;
+  }
+
+  .thumb {
+    width: 65px;
+    height: 65px;
+  }
+
+  .nav {
+    width: 32px;
+    height: 32px;
+  }
+
+  .nav--prev {
+    left: 3px;
+  }
+
+  .nav--next {
+    right: 3px;
+  }
+
+  .nav svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .meta {
+    margin-top: 1.25rem;
+    padding: 0;
+    width: 100%;
+  }
+
+  .name {
+    font-size: 1rem;
     padding: 0 0.25rem;
   }
 
-  .card-description {
+  .role {
     font-size: 0.85rem;
+    margin-top: 0.4rem;
     padding: 0 0.25rem;
+  }
+
+  .bio {
+    font-size: 0.8rem;
+    margin-top: 0.6rem;
+    padding: 0 0.25rem;
+    line-height: 1.5;
+  }
+
+  .cta {
+    margin-top: 0.9rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .bg-blob--1 {
+    width: 200px;
+    height: 200px;
+    top: -50px;
+    left: -30px;
+  }
+
+  .bg-blob--2 {
+    width: 180px;
+    height: 180px;
+    right: -40px;
+  }
+
+  .bg-blob--3 {
+    width: 150px;
+    height: 150px;
+    bottom: -40px;
   }
 }
 
