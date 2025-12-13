@@ -90,6 +90,10 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+  display: block !important;
+  background: transparent;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .logo-text-image {
@@ -428,6 +432,49 @@
 
 .mobile-nav-item:hover {
   color: #8b5cf6;
+}
+
+/* Mobile Agents Submenu */
+.mobile-agents-parent {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-agents-submenu {
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobile-nav-subitem {
+  color: rgba(255, 255, 255, 0.8);
+  font-family: 'Geist', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.mobile-nav-subitem:hover {
+  color: #8b5cf6;
+  padding-left: 0.5rem;
 }
 
 .mobile-demo-button {

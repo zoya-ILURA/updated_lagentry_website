@@ -32,31 +32,21 @@ const steps: Step[] = [
 const ChooseConnectComplete: React.FC = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [stepTitles, setStepTitles] = useState<{ [key: number]: string }>({});
   const sectionRef = useRef<HTMLDivElement>(null);
+  const typewriterTimeouts = useRef<{ [key: number]: NodeJS.Timeout | null }>({});
 
   useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
-            // Start step animation sequence
+            // Start all steps instantly - no delay
             setTimeout(() => {
-              setActiveStep(0);
-              interval = setInterval(() => {
-                setActiveStep((prev) => {
-                  if (prev >= steps.length - 1) {
-                    if (interval) {
-                      clearInterval(interval);
-                    }
-                    return prev;
-                  }
-                  return prev + 1;
-                });
-              }, 2000);
-            }, 500);
+              // Set all steps to active immediately
+              setActiveStep(steps.length - 1); // Set to last step so all are active
+            }, 100);
           }
         });
       },
@@ -71,11 +61,41 @@ const ChooseConnectComplete: React.FC = () => {
       if (sectionRef.current) {
         observer.unobserve(sectionRef.current);
       }
-      if (interval) {
-        clearInterval(interval);
-      }
+      // Clear all typewriter timeouts
+      Object.values(typewriterTimeouts.current).forEach(timeout => {
+        if (timeout) clearTimeout(timeout);
+      });
     };
   }, []);
+
+  // Typewriter effect for step titles - start all at once
+  useEffect(() => {
+    if (activeStep >= steps.length - 1) {
+      // Start typewriter for all steps simultaneously
+      steps.forEach((step, index) => {
+        // Clear any existing timeout for this step
+        if (typewriterTimeouts.current[step.number]) {
+          clearTimeout(typewriterTimeouts.current[step.number]!);
+        }
+
+        // Reset and start typing
+        setStepTitles(prev => ({ ...prev, [step.number]: '' }));
+        let currentIndex = 0;
+        const typeText = () => {
+          if (currentIndex < step.title.length) {
+            setStepTitles(prev => ({
+              ...prev,
+              [step.number]: step.title.slice(0, currentIndex + 1)
+            }));
+            currentIndex++;
+            typewriterTimeouts.current[step.number] = setTimeout(typeText, 80); // 80ms per character
+          }
+        };
+        // Start typing immediately for all steps
+        typeText();
+      });
+    }
+  }, [activeStep]);
 
   return (
     <div className="choose-connect-complete-section" ref={sectionRef}>
@@ -90,14 +110,26 @@ const ChooseConnectComplete: React.FC = () => {
             <div
               key={step.number}
               className={`step-card step-${step.number} ${activeStep >= index ? 'active' : ''} ${activeStep === index ? 'current' : ''}`}
-              style={{ '--step-delay': `${index * 0.2}s` } as React.CSSProperties}
+              style={{ '--step-delay': '0s' } as React.CSSProperties}
             >
               <div className="step-number-circle">
                 <span className="step-number">{step.number}</span>
               </div>
               
               <div className="step-content">
-                <h3 className="step-title">{step.title}</h3>
+                <h3 className="step-title">
+                  {activeStep >= steps.length - 1
+                    ? (stepTitles[step.number] || step.title) // Show typewriter text or full title if all steps are active
+                    : activeStep > index 
+                      ? step.title // Show full title if step has been completed
+                      : activeStep === index 
+                        ? (stepTitles[step.number] || '') // Show typewriter text if currently active
+                        : '' // Show nothing if step hasn't been reached yet
+                  }
+                  {activeStep >= steps.length - 1 && stepTitles[step.number] && stepTitles[step.number].length < step.title.length && (
+                    <span className="typewriter-cursor">|</span>
+                  )}
+                </h3>
                 <p className="step-description">{step.description}</p>
               </div>
             </div>

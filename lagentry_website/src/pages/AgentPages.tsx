@@ -1,6 +1,162 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './AgentPages.css';
 import Footer from '../components/Footer';
+
+// Animation hook for counting numbers
+const useCountUp = (end: number, duration: number = 2500, startOnMount: boolean = true) => {
+  const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(!startOnMount);
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (hasStarted) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setHasStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasStarted]);
+
+  useEffect(() => {
+    if (!hasStarted) return;
+
+    let startTime: number | null = null;
+    
+    const animate = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      
+      // Smooth ease-out function for consistent animation with progress bars
+      const smoothProgress = 1 - Math.pow(1 - progress, 2);
+      
+      setCount(end * smoothProgress);
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setCount(end);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [hasStarted, end, duration]);
+
+  return { count, elementRef };
+};
+
+// Animation hook for progress bars
+const useProgressAnimation = (targetWidth: number, duration: number = 4000) => {
+  const [width, setWidth] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setHasStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!hasStarted) return;
+
+    let startTime: number | null = null;
+    const animate = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      // Very smooth ease-in-out for gradual movement
+      const smoothProgress = progress < 0.5 
+        ? 2 * progress * progress 
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+      setWidth(targetWidth * smoothProgress);
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setWidth(targetWidth);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [hasStarted, targetWidth, duration]);
+
+  return { width, elementRef };
+};
+
+// Animated bar component for charts
+const AnimatedBar: React.FC<{ height: number; delay: number }> = ({ height, delay }) => {
+  const [animatedHeight, setAnimatedHeight] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setTimeout(() => {
+            setHasStarted(true);
+          }, delay);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [delay]);
+
+  useEffect(() => {
+    if (!hasStarted) return;
+
+    let startTime: number | null = null;
+    const duration = 4000;
+    const animate = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      // Very smooth ease-in-out for gradual movement
+      const smoothProgress = progress < 0.5 
+        ? 2 * progress * progress 
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+      setAnimatedHeight(height * smoothProgress);
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setAnimatedHeight(height);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [hasStarted, height]);
+
+  return <div className="sales-area-bar" ref={elementRef} style={{ height: `${animatedHeight}%` }}></div>;
+};
 
 type Feature = {
   icon: string;
@@ -21,6 +177,75 @@ interface AgentPageProps {
   config: AgentConfig;
 }
 
+// Animated Number Component
+const AnimatedNumber: React.FC<{ value: number | string; suffix?: string; prefix?: string; duration?: number }> = ({ 
+  value, 
+  suffix = '', 
+  prefix = '', 
+  duration = 2000 
+}) => {
+  const numValue = typeof value === 'string' ? parseFloat(value.replace(/[^0-9.]/g, '')) : value;
+  const { count, elementRef } = useCountUp(numValue, duration);
+  
+  const formatValue = () => {
+    if (typeof value === 'string' && value.includes('%')) {
+      return `${Math.round(count)}%`;
+    }
+    if (typeof value === 'string' && value.includes(',')) {
+      return Math.round(count).toLocaleString();
+    }
+    if (prefix === '$' && numValue >= 1000) {
+      return `${prefix}${(count / 1000).toFixed(1)}M`;
+    }
+    return `${prefix}${Math.round(count)}${suffix}`;
+  };
+
+  return <span ref={elementRef}>{formatValue()}</span>;
+};
+
+// Animated Progress Bar Component
+const AnimatedProgressBar: React.FC<{ 
+  targetWidth: number; 
+  duration?: number; 
+  className?: string; 
+  showValue?: boolean;
+  valueClassName?: string;
+  barClassName?: string;
+}> = ({ 
+  targetWidth, 
+  duration = 2500,
+  className = '',
+  showValue = true,
+  valueClassName = 'hr-chart-value',
+  barClassName = 'hr-chart-bar'
+}) => {
+  const { width, elementRef } = useProgressAnimation(targetWidth, duration);
+  
+  return (
+    <>
+      <div className={`${barClassName} ${className}`} ref={elementRef} style={{ width: `${width}%` }}></div>
+      {showValue && <span className={valueClassName}>{Math.round(width)}%</span>}
+    </>
+  );
+};
+
+// Animated Progress Fill Component (for bars that need just the fill, not the container)
+const AnimatedProgressFill: React.FC<{ 
+  targetWidth: number; 
+  duration?: number; 
+  className?: string;
+}> = ({ 
+  targetWidth, 
+  duration = 4000,
+  className = ''
+}) => {
+  const { width, elementRef } = useProgressAnimation(targetWidth, duration);
+  
+  return (
+    <div className={className} ref={elementRef} style={{ width: `${width}%` }}></div>
+  );
+};
+
 // Enhanced HR Card Component with interactive elements
 interface EnhancedHRCardProps {
   title: string;
@@ -38,11 +263,11 @@ const EnhancedHRCard: React.FC<EnhancedHRCardProps> = ({ title, subtitle, type }
           <>
             <div className="hr-screening-stats">
               <div className="hr-stat-large">
-                <div className="hr-stat-number">847</div>
+                <div className="hr-stat-number"><AnimatedNumber value={847} /></div>
                 <div className="hr-stat-desc">CVs Processed</div>
               </div>
               <div className="hr-stat-large">
-                <div className="hr-stat-number">92%</div>
+                <div className="hr-stat-number"><AnimatedNumber value={92} suffix="%" /></div>
                 <div className="hr-stat-desc">Accuracy Rate</div>
               </div>
             </div>
@@ -50,22 +275,19 @@ const EnhancedHRCard: React.FC<EnhancedHRCardProps> = ({ title, subtitle, type }
               <div className="hr-chart-item">
                 <div className="hr-chart-label">Matched Skills</div>
                 <div className="hr-chart-bar-container">
-                  <div className="hr-chart-bar" style={{ width: '85%' }}></div>
-                  <span className="hr-chart-value">85%</span>
+                  <AnimatedProgressBar targetWidth={85} />
                 </div>
               </div>
               <div className="hr-chart-item">
                 <div className="hr-chart-label">Experience Match</div>
                 <div className="hr-chart-bar-container">
-                  <div className="hr-chart-bar" style={{ width: '78%' }}></div>
-                  <span className="hr-chart-value">78%</span>
+                  <AnimatedProgressBar targetWidth={78} />
                 </div>
               </div>
               <div className="hr-chart-item">
                 <div className="hr-chart-label">Education Match</div>
                 <div className="hr-chart-bar-container">
-                  <div className="hr-chart-bar" style={{ width: '92%' }}></div>
-                  <span className="hr-chart-value">92%</span>
+                  <AnimatedProgressBar targetWidth={92} />
                 </div>
               </div>
             </div>
@@ -81,16 +303,16 @@ const EnhancedHRCard: React.FC<EnhancedHRCardProps> = ({ title, subtitle, type }
           <>
             <div className="hr-outreach-metrics">
               <div className="hr-metric-box">
-                <div className="hr-metric-icon">📞</div>
+                <div className="hr-metric-icon"></div>
                 <div className="hr-metric-info">
-                  <div className="hr-metric-number">1,247</div>
+                  <div className="hr-metric-number"><AnimatedNumber value={1247} /></div>
                   <div className="hr-metric-label">Calls Made</div>
                 </div>
               </div>
               <div className="hr-metric-box">
-                <div className="hr-metric-icon">📅</div>
+                <div className="hr-metric-icon"></div>
                 <div className="hr-metric-info">
-                  <div className="hr-metric-number">89</div>
+                  <div className="hr-metric-number"><AnimatedNumber value={89} /></div>
                   <div className="hr-metric-label">Interviews Scheduled</div>
                 </div>
               </div>
@@ -100,21 +322,21 @@ const EnhancedHRCard: React.FC<EnhancedHRCardProps> = ({ title, subtitle, type }
                 <div className="hr-timeline-dot"></div>
                 <div className="hr-timeline-content">
                   <div className="hr-timeline-title">Initial Contact</div>
-                  <div className="hr-timeline-bar" style={{ width: '100%' }}></div>
+                  <AnimatedProgressFill targetWidth={100} className="hr-timeline-bar" />
                 </div>
               </div>
               <div className="hr-timeline-item">
                 <div className="hr-timeline-dot"></div>
                 <div className="hr-timeline-content">
                   <div className="hr-timeline-title">Details Collected</div>
-                  <div className="hr-timeline-bar" style={{ width: '75%' }}></div>
+                  <AnimatedProgressFill targetWidth={75} className="hr-timeline-bar" />
                 </div>
               </div>
               <div className="hr-timeline-item">
                 <div className="hr-timeline-dot"></div>
                 <div className="hr-timeline-content">
                   <div className="hr-timeline-title">Interview Scheduled</div>
-                  <div className="hr-timeline-bar" style={{ width: '60%' }}></div>
+                  <AnimatedProgressFill targetWidth={60} className="hr-timeline-bar" />
                 </div>
               </div>
             </div>
@@ -130,7 +352,7 @@ const EnhancedHRCard: React.FC<EnhancedHRCardProps> = ({ title, subtitle, type }
           <>
             <div className="hr-interview-stats">
               <div className="hr-stat-card">
-                <div className="hr-stat-value">156</div>
+                <div className="hr-stat-value"><AnimatedNumber value={156} /></div>
                 <div className="hr-stat-label">Interviews Conducted</div>
               </div>
               <div className="hr-stat-card">
@@ -142,21 +364,21 @@ const EnhancedHRCard: React.FC<EnhancedHRCardProps> = ({ title, subtitle, type }
               <div className="hr-progress-item">
                 <div className="hr-progress-label">JD Understanding</div>
                 <div className="hr-progress-track">
-                  <div className="hr-progress-fill" style={{ width: '88%' }}></div>
+                  <AnimatedProgressFill targetWidth={88} className="hr-progress-fill" />
                 </div>
                 <span className="hr-progress-percent">88%</span>
               </div>
               <div className="hr-progress-item">
                 <div className="hr-progress-label">Resume Analysis</div>
                 <div className="hr-progress-track">
-                  <div className="hr-progress-fill" style={{ width: '92%' }}></div>
+                  <AnimatedProgressFill targetWidth={92} className="hr-progress-fill" />
                 </div>
                 <span className="hr-progress-percent">92%</span>
               </div>
               <div className="hr-progress-item">
                 <div className="hr-progress-label">Natural Conversation</div>
                 <div className="hr-progress-track">
-                  <div className="hr-progress-fill" style={{ width: '85%' }}></div>
+                  <AnimatedProgressFill targetWidth={85} className="hr-progress-fill" />
                 </div>
                 <span className="hr-progress-percent">85%</span>
               </div>
@@ -219,11 +441,11 @@ const EnhancedHRCard: React.FC<EnhancedHRCardProps> = ({ title, subtitle, type }
           <>
             <div className="hr-shortlisting-overview">
               <div className="hr-overview-item">
-                <div className="hr-overview-number">247</div>
+                <div className="hr-overview-number"><AnimatedNumber value={247} /></div>
                 <div className="hr-overview-label">Candidates Ranked</div>
               </div>
               <div className="hr-overview-item">
-                <div className="hr-overview-number">23</div>
+                <div className="hr-overview-number"><AnimatedNumber value={23} /></div>
                 <div className="hr-overview-label">Top Candidates Selected</div>
               </div>
             </div>
@@ -231,21 +453,21 @@ const EnhancedHRCard: React.FC<EnhancedHRCardProps> = ({ title, subtitle, type }
               <div className="hr-score-item">
                 <div className="hr-score-label">Top 10% Score</div>
                 <div className="hr-score-bar">
-                  <div className="hr-score-fill" style={{ width: '95%' }}></div>
+                  <AnimatedProgressFill targetWidth={95} className="hr-score-fill" />
                 </div>
                 <span className="hr-score-value">95/100</span>
               </div>
               <div className="hr-score-item">
                 <div className="hr-score-label">Average Score</div>
                 <div className="hr-score-bar">
-                  <div className="hr-score-fill" style={{ width: '78%' }}></div>
+                  <AnimatedProgressFill targetWidth={78} className="hr-score-fill" />
                 </div>
                 <span className="hr-score-value">78/100</span>
               </div>
               <div className="hr-score-item">
                 <div className="hr-score-label">Minimum Threshold</div>
                 <div className="hr-score-bar">
-                  <div className="hr-score-fill" style={{ width: '65%' }}></div>
+                  <AnimatedProgressFill targetWidth={65} className="hr-score-fill" />
                 </div>
                 <span className="hr-score-value">65/100</span>
               </div>
@@ -280,14 +502,14 @@ const EnhancedHRCard: React.FC<EnhancedHRCardProps> = ({ title, subtitle, type }
           <>
             <div className="hr-summaries-stats">
               <div className="hr-stat-box">
-                <div className="hr-stat-icon">📋</div>
+                <div className="hr-stat-icon"></div>
                 <div className="hr-stat-details">
                   <div className="hr-stat-big">189</div>
                   <div className="hr-stat-small">Transcripts Generated</div>
                 </div>
               </div>
               <div className="hr-stat-box">
-                <div className="hr-stat-icon">💡</div>
+                <div className="hr-stat-icon"></div>
                 <div className="hr-stat-details">
                   <div className="hr-stat-big">94%</div>
                   <div className="hr-stat-small">Insight Accuracy</div>
@@ -295,31 +517,31 @@ const EnhancedHRCard: React.FC<EnhancedHRCardProps> = ({ title, subtitle, type }
               </div>
             </div>
             <div className="hr-summaries-features">
-              <div className="hr-feature-tag">✓ Transcripts</div>
-              <div className="hr-feature-tag">✓ Insights</div>
-              <div className="hr-feature-tag">✓ Recommendations</div>
+              <div className="hr-feature-tag">Transcripts</div>
+              <div className="hr-feature-tag">Insights</div>
+              <div className="hr-feature-tag">Recommendations</div>
             </div>
             <div className="hr-summaries-breakdown">
               <div className="hr-breakdown-row">
                 <span className="hr-breakdown-name">Key Insights</span>
                 <div className="hr-breakdown-line">
-                  <div className="hr-breakdown-progress" style={{ width: '92%' }}></div>
+                  <AnimatedProgressFill targetWidth={92} className="hr-breakdown-progress" />
                 </div>
-                <span className="hr-breakdown-percent">92%</span>
+                <span className="hr-breakdown-percent"><AnimatedNumber value={92} suffix="%" /></span>
               </div>
               <div className="hr-breakdown-row">
                 <span className="hr-breakdown-name">Hiring Recommendations</span>
                 <div className="hr-breakdown-line">
-                  <div className="hr-breakdown-progress" style={{ width: '88%' }}></div>
+                  <AnimatedProgressFill targetWidth={88} className="hr-breakdown-progress" />
                 </div>
-                <span className="hr-breakdown-percent">88%</span>
+                <span className="hr-breakdown-percent"><AnimatedNumber value={88} suffix="%" /></span>
               </div>
               <div className="hr-breakdown-row">
                 <span className="hr-breakdown-name">Transcript Quality</span>
                 <div className="hr-breakdown-line">
-                  <div className="hr-breakdown-progress" style={{ width: '96%' }}></div>
+                  <AnimatedProgressFill targetWidth={96} className="hr-breakdown-progress" />
                 </div>
-                <span className="hr-breakdown-percent">96%</span>
+                <span className="hr-breakdown-percent"><AnimatedNumber value={96} suffix="%" /></span>
               </div>
             </div>
             <div className="hr-trend-indicator positive">
@@ -358,6 +580,13 @@ interface EnhancedGTMSalesCardProps {
 
 const EnhancedGTMSalesCard: React.FC<EnhancedGTMSalesCardProps> = ({ title, subtitle, type }) => {
   const [isHovered, setIsHovered] = useState(false);
+  
+  // Animation hooks - only use for analytics type
+  const pipelineValue = type === 'analytics' ? useCountUp(2.4, 2000) : { count: 2.4, elementRef: { current: null } };
+  const winRate = type === 'analytics' ? useCountUp(34, 2000) : { count: 34, elementRef: { current: null } };
+  const dealsClosed = type === 'analytics' ? useProgressAnimation(82, 2000) : { width: 82, elementRef: { current: null } };
+  const avgDealSize = type === 'analytics' ? useProgressAnimation(75, 2000) : { width: 75, elementRef: { current: null } };
+  const salesCycle = type === 'analytics' ? useProgressAnimation(68, 2000) : { width: 68, elementRef: { current: null } };
 
   const renderCardContent = () => {
     switch (type) {
@@ -366,11 +595,11 @@ const EnhancedGTMSalesCard: React.FC<EnhancedGTMSalesCardProps> = ({ title, subt
           <>
             <div className="sales-lead-stats">
               <div className="sales-stat-large">
-                <div className="sales-stat-number">2,847</div>
+                <div className="sales-stat-number"><AnimatedNumber value={2847} /></div>
                 <div className="sales-stat-desc">Leads Generated</div>
               </div>
               <div className="sales-stat-large">
-                <div className="sales-stat-number">68%</div>
+                <div className="sales-stat-number"><AnimatedNumber value={68} suffix="%" /></div>
                 <div className="sales-stat-desc">Qualification Rate</div>
               </div>
             </div>
@@ -396,22 +625,19 @@ const EnhancedGTMSalesCard: React.FC<EnhancedGTMSalesCardProps> = ({ title, subt
               <div className="sales-chart-item">
                 <div className="sales-chart-label">High Intent</div>
                 <div className="sales-chart-bar-container">
-                  <div className="sales-chart-bar" style={{ width: '72%' }}></div>
-                  <span className="sales-chart-value">72%</span>
+                  <AnimatedProgressBar targetWidth={72} barClassName="sales-chart-bar" valueClassName="sales-chart-value" />
                 </div>
               </div>
               <div className="sales-chart-item">
                 <div className="sales-chart-label">Medium Intent</div>
                 <div className="sales-chart-bar-container">
-                  <div className="sales-chart-bar" style={{ width: '58%' }}></div>
-                  <span className="sales-chart-value">58%</span>
+                  <AnimatedProgressBar targetWidth={58} barClassName="sales-chart-bar" valueClassName="sales-chart-value" />
                 </div>
               </div>
               <div className="sales-chart-item">
                 <div className="sales-chart-label">Low Intent</div>
                 <div className="sales-chart-bar-container">
-                  <div className="sales-chart-bar" style={{ width: '35%' }}></div>
-                  <span className="sales-chart-value">35%</span>
+                  <AnimatedProgressBar targetWidth={35} barClassName="sales-chart-bar" valueClassName="sales-chart-value" />
                 </div>
               </div>
             </div>
@@ -433,14 +659,14 @@ const EnhancedGTMSalesCard: React.FC<EnhancedGTMSalesCardProps> = ({ title, subt
           <>
             <div className="sales-enrich-metrics">
               <div className="sales-metric-box">
-                <div className="sales-metric-icon">🏢</div>
+                <div className="sales-metric-icon"></div>
                 <div className="sales-metric-info">
                   <div className="sales-metric-number">1,892</div>
                   <div className="sales-metric-label">Companies Enriched</div>
                 </div>
               </div>
               <div className="sales-metric-box">
-                <div className="sales-metric-icon">📊</div>
+                <div className="sales-metric-icon"></div>
                 <div className="sales-metric-info">
                   <div className="sales-metric-number">94%</div>
                   <div className="sales-metric-label">Data Accuracy</div>
@@ -523,46 +749,46 @@ const EnhancedGTMSalesCard: React.FC<EnhancedGTMSalesCardProps> = ({ title, subt
           <>
             <div className="sales-campaign-stats">
               <div className="sales-stat-box">
-                <div className="sales-stat-icon">📧</div>
+                <div className="sales-stat-icon"></div>
                 <div className="sales-stat-details">
-                  <div className="sales-stat-big">12</div>
+                  <div className="sales-stat-big"><AnimatedNumber value={12} /></div>
                   <div className="sales-stat-small">Active Campaigns</div>
                 </div>
               </div>
               <div className="sales-stat-box">
-                <div className="sales-stat-icon">⚡</div>
+                <div className="sales-stat-icon"></div>
                 <div className="sales-stat-details">
-                  <div className="sales-stat-big">87%</div>
+                  <div className="sales-stat-big"><AnimatedNumber value={87} suffix="%" /></div>
                   <div className="sales-stat-small">Automation Rate</div>
                 </div>
               </div>
             </div>
             <div className="sales-campaign-features">
-              <div className="sales-feature-tag">✓ Email</div>
-              <div className="sales-feature-tag">✓ SMS</div>
-              <div className="sales-feature-tag">✓ LinkedIn</div>
+              <div className="sales-feature-tag">Email</div>
+              <div className="sales-feature-tag">SMS</div>
+              <div className="sales-feature-tag">LinkedIn</div>
             </div>
             <div className="sales-campaign-breakdown">
               <div className="sales-breakdown-row">
                 <span className="sales-breakdown-name">Open Rate</span>
                 <div className="sales-breakdown-line">
-                  <div className="sales-breakdown-progress" style={{ width: '78%' }}></div>
+                  <AnimatedProgressFill targetWidth={78} className="sales-breakdown-progress" />
                 </div>
-                <span className="sales-breakdown-percent">78%</span>
+                <span className="sales-breakdown-percent"><AnimatedNumber value={78} suffix="%" /></span>
               </div>
               <div className="sales-breakdown-row">
                 <span className="sales-breakdown-name">Click Rate</span>
                 <div className="sales-breakdown-line">
-                  <div className="sales-breakdown-progress" style={{ width: '65%' }}></div>
+                  <AnimatedProgressFill targetWidth={65} className="sales-breakdown-progress" />
                 </div>
-                <span className="sales-breakdown-percent">65%</span>
+                <span className="sales-breakdown-percent"><AnimatedNumber value={65} suffix="%" /></span>
               </div>
               <div className="sales-breakdown-row">
                 <span className="sales-breakdown-name">Response Rate</span>
                 <div className="sales-breakdown-line">
-                  <div className="sales-breakdown-progress" style={{ width: '54%' }}></div>
+                  <AnimatedProgressFill targetWidth={54} className="sales-breakdown-progress" />
                 </div>
-                <span className="sales-breakdown-percent">54%</span>
+                <span className="sales-breakdown-percent"><AnimatedNumber value={54} suffix="%" /></span>
               </div>
             </div>
             <div className="sales-trend-indicator positive">
@@ -576,11 +802,11 @@ const EnhancedGTMSalesCard: React.FC<EnhancedGTMSalesCardProps> = ({ title, subt
           <>
             <div className="sales-followup-stats">
               <div className="sales-overview-item">
-                <div className="sales-overview-number">1,456</div>
+                <div className="sales-overview-number"><AnimatedNumber value={1456} /></div>
                 <div className="sales-overview-label">Follow-ups Sent</div>
               </div>
               <div className="sales-overview-item">
-                <div className="sales-overview-number">892</div>
+                <div className="sales-overview-number"><AnimatedNumber value={892} /></div>
                 <div className="sales-overview-label">Responses Received</div>
               </div>
             </div>
@@ -588,23 +814,23 @@ const EnhancedGTMSalesCard: React.FC<EnhancedGTMSalesCardProps> = ({ title, subt
               <div className="sales-score-item">
                 <div className="sales-score-label">Response Rate</div>
                 <div className="sales-score-bar">
-                  <div className="sales-score-fill" style={{ width: '61%' }}></div>
+                  <AnimatedProgressFill targetWidth={61} className="sales-score-fill" />
                 </div>
-                <span className="sales-score-value">61%</span>
+                <span className="sales-score-value"><AnimatedNumber value={61} suffix="%" /></span>
               </div>
               <div className="sales-score-item">
                 <div className="sales-score-label">Follow-up Frequency</div>
                 <div className="sales-score-bar">
-                  <div className="sales-score-fill" style={{ width: '84%' }}></div>
+                  <AnimatedProgressFill targetWidth={84} className="sales-score-fill" />
                 </div>
-                <span className="sales-score-value">84%</span>
+                <span className="sales-score-value"><AnimatedNumber value={84} suffix="%" /></span>
               </div>
               <div className="sales-score-item">
                 <div className="sales-score-label">Conversion Rate</div>
                 <div className="sales-score-bar">
-                  <div className="sales-score-fill" style={{ width: '48%' }}></div>
+                  <AnimatedProgressFill targetWidth={48} className="sales-score-fill" />
                 </div>
-                <span className="sales-score-value">48%</span>
+                <span className="sales-score-value"><AnimatedNumber value={48} suffix="%" /></span>
               </div>
             </div>
             <div className="sales-trend-indicator">
@@ -618,46 +844,46 @@ const EnhancedGTMSalesCard: React.FC<EnhancedGTMSalesCardProps> = ({ title, subt
           <>
             <div className="sales-meeting-stats">
               <div className="sales-stat-box">
-                <div className="sales-stat-icon">🎤</div>
+                <div className="sales-stat-icon"></div>
                 <div className="sales-stat-details">
-                  <div className="sales-stat-big">247</div>
+                  <div className="sales-stat-big"><AnimatedNumber value={247} /></div>
                   <div className="sales-stat-small">Meetings Analyzed</div>
                 </div>
               </div>
               <div className="sales-stat-box">
-                <div className="sales-stat-icon">💡</div>
+                <div className="sales-stat-icon"></div>
                 <div className="sales-stat-details">
-                  <div className="sales-stat-big">96%</div>
+                  <div className="sales-stat-big"><AnimatedNumber value={96} suffix="%" /></div>
                   <div className="sales-stat-small">Insight Accuracy</div>
                 </div>
               </div>
             </div>
             <div className="sales-meeting-features">
-              <div className="sales-feature-tag">✓ Transcripts</div>
-              <div className="sales-feature-tag">✓ Action Items</div>
-              <div className="sales-feature-tag">✓ Sentiment Analysis</div>
+              <div className="sales-feature-tag">Transcripts</div>
+              <div className="sales-feature-tag">Action Items</div>
+              <div className="sales-feature-tag">Sentiment Analysis</div>
             </div>
             <div className="sales-meeting-breakdown">
               <div className="sales-breakdown-row">
                 <span className="sales-breakdown-name">Key Insights</span>
                 <div className="sales-breakdown-line">
-                  <div className="sales-breakdown-progress" style={{ width: '91%' }}></div>
+                  <AnimatedProgressFill targetWidth={91} className="sales-breakdown-progress" />
                 </div>
-                <span className="sales-breakdown-percent">91%</span>
+                <span className="sales-breakdown-percent"><AnimatedNumber value={91} suffix="%" /></span>
               </div>
               <div className="sales-breakdown-row">
                 <span className="sales-breakdown-name">Action Items</span>
                 <div className="sales-breakdown-line">
-                  <div className="sales-breakdown-progress" style={{ width: '88%' }}></div>
+                  <AnimatedProgressFill targetWidth={88} className="sales-breakdown-progress" />
                 </div>
-                <span className="sales-breakdown-percent">88%</span>
+                <span className="sales-breakdown-percent"><AnimatedNumber value={88} suffix="%" /></span>
               </div>
               <div className="sales-breakdown-row">
                 <span className="sales-breakdown-name">Sentiment Score</span>
                 <div className="sales-breakdown-line">
-                  <div className="sales-breakdown-progress" style={{ width: '85%' }}></div>
+                  <AnimatedProgressFill targetWidth={85} className="sales-breakdown-progress" />
                 </div>
-                <span className="sales-breakdown-percent">85%</span>
+                <span className="sales-breakdown-percent"><AnimatedNumber value={85} suffix="%" /></span>
               </div>
             </div>
             <div className="sales-trend-indicator positive">
@@ -669,53 +895,47 @@ const EnhancedGTMSalesCard: React.FC<EnhancedGTMSalesCardProps> = ({ title, subt
       case 'analytics':
         return (
           <>
-            <div className="sales-analytics-stats">
-              <div className="sales-stat-large">
-                <div className="sales-stat-number">$2.4M</div>
-                <div className="sales-stat-desc">Pipeline Value</div>
-              </div>
-              <div className="sales-stat-large">
-                <div className="sales-stat-number">34%</div>
-                <div className="sales-stat-desc">Win Rate</div>
+            <div className="sales-analytics-stats" ref={pipelineValue.elementRef} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.4rem' }}>
+              <div className="sales-stat-large" style={{ flex: 1, padding: '0.5rem' }}>
+                <div className="sales-stat-number" style={{ fontSize: '1.5rem' }}>${pipelineValue.count.toFixed(1)}M</div>
+                <div className="sales-stat-desc" style={{ fontSize: '0.75rem' }}>Pipeline Value</div>
               </div>
             </div>
             {/* Area Chart for Sales Performance */}
             <div className="sales-area-chart">
               <div className="sales-area-title">Monthly Sales Performance</div>
               <div className="sales-area-container">
-                <div className="sales-area-bar" style={{ height: '45%' }}></div>
-                <div className="sales-area-bar" style={{ height: '62%' }}></div>
-                <div className="sales-area-bar" style={{ height: '58%' }}></div>
-                <div className="sales-area-bar" style={{ height: '75%' }}></div>
-                <div className="sales-area-bar" style={{ height: '82%' }}></div>
-                <div className="sales-area-bar" style={{ height: '90%' }}></div>
+                <AnimatedBar height={45} delay={0} />
+                <AnimatedBar height={62} delay={100} />
+                <AnimatedBar height={58} delay={200} />
+                <AnimatedBar height={75} delay={300} />
+                <AnimatedBar height={82} delay={400} />
+                <AnimatedBar height={90} delay={500} />
               </div>
             </div>
             <div className="sales-analytics-chart">
               <div className="sales-chart-item">
                 <div className="sales-chart-label">Deals Closed</div>
-                <div className="sales-chart-bar-container">
-                  <div className="sales-chart-bar" style={{ width: '82%' }}></div>
-                  <span className="sales-chart-value">82%</span>
+                <div className="sales-chart-bar-container" ref={dealsClosed.elementRef}>
+                  <div className="sales-chart-bar" style={{ width: `${dealsClosed.width}%` }}></div>
+                  <span className="sales-chart-value">{Math.round(dealsClosed.width)}%</span>
                 </div>
               </div>
               <div className="sales-chart-item">
                 <div className="sales-chart-label">Avg. Deal Size</div>
-                <div className="sales-chart-bar-container">
-                  <div className="sales-chart-bar" style={{ width: '75%' }}></div>
-                  <span className="sales-chart-value">75%</span>
+                <div className="sales-chart-bar-container" ref={avgDealSize.elementRef}>
+                  <div className="sales-chart-bar" style={{ width: `${avgDealSize.width}%` }}></div>
+                  <span className="sales-chart-value">{Math.round(avgDealSize.width)}%</span>
                 </div>
               </div>
               <div className="sales-chart-item">
                 <div className="sales-chart-label">Sales Cycle</div>
-                <div className="sales-chart-bar-container">
-                  <div className="sales-chart-bar" style={{ width: '68%' }}></div>
-                  <span className="sales-chart-value">68%</span>
+                <div className="sales-chart-bar-container" ref={salesCycle.elementRef}>
+                  <div className="sales-chart-bar" style={{ width: `${salesCycle.width}%` }}></div>
+                  <span className="sales-chart-value">{Math.round(salesCycle.width)}%</span>
                 </div>
               </div>
             </div>
-            {/* Visual Icon */}
-            <div className="sales-visual-icon">📊</div>
             <div className="sales-trend-indicator">
               <span className="sales-trend-arrow">↑</span>
               <span className="sales-trend-text">Revenue increased by 45%</span>
@@ -729,7 +949,7 @@ const EnhancedGTMSalesCard: React.FC<EnhancedGTMSalesCardProps> = ({ title, subt
 
   return (
     <article
-      className="agent-feature-card hr-dashboard-style"
+      className={`agent-feature-card hr-dashboard-style ${type === 'analytics' ? 'sales-analytics-card' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -759,11 +979,11 @@ const EnhancedCFOCard: React.FC<EnhancedCFOCardProps> = ({ title, subtitle, type
           <>
             <div className="cfo-automation-stats">
               <div className="cfo-stat-large">
-                <div className="cfo-stat-number">1,247</div>
+                <div className="cfo-stat-number"><AnimatedNumber value={1247} /></div>
                 <div className="cfo-stat-desc">Transactions Processed</div>
               </div>
               <div className="cfo-stat-large">
-                <div className="cfo-stat-number">98%</div>
+                <div className="cfo-stat-number"><AnimatedNumber value={98} suffix="%" /></div>
                 <div className="cfo-stat-desc">Automation Rate</div>
               </div>
             </div>
@@ -771,22 +991,19 @@ const EnhancedCFOCard: React.FC<EnhancedCFOCardProps> = ({ title, subtitle, type
               <div className="cfo-chart-item">
                 <div className="cfo-chart-label">AP Automation</div>
                 <div className="cfo-chart-bar-container">
-                  <div className="cfo-chart-bar" style={{ width: '95%' }}></div>
-                  <span className="cfo-chart-value">95%</span>
+                  <AnimatedProgressBar targetWidth={95} barClassName="cfo-chart-bar" valueClassName="cfo-chart-value" />
                 </div>
               </div>
               <div className="cfo-chart-item">
                 <div className="cfo-chart-label">AR Processing</div>
                 <div className="cfo-chart-bar-container">
-                  <div className="cfo-chart-bar" style={{ width: '92%' }}></div>
-                  <span className="cfo-chart-value">92%</span>
+                  <AnimatedProgressBar targetWidth={92} barClassName="cfo-chart-bar" valueClassName="cfo-chart-value" />
                 </div>
               </div>
               <div className="cfo-chart-item">
                 <div className="cfo-chart-label">Reconciliation</div>
                 <div className="cfo-chart-bar-container">
-                  <div className="cfo-chart-bar" style={{ width: '88%' }}></div>
-                  <span className="cfo-chart-value">88%</span>
+                  <AnimatedProgressBar targetWidth={88} barClassName="cfo-chart-bar" valueClassName="cfo-chart-value" />
                 </div>
               </div>
             </div>
@@ -801,14 +1018,14 @@ const EnhancedCFOCard: React.FC<EnhancedCFOCardProps> = ({ title, subtitle, type
           <>
             <div className="cfo-cashflow-metrics">
               <div className="cfo-metric-box">
-                <div className="cfo-metric-icon">💰</div>
+                <div className="cfo-metric-icon"></div>
                 <div className="cfo-metric-info">
                   <div className="cfo-metric-number">$2.4M</div>
                   <div className="cfo-metric-label">Cash Balance</div>
                 </div>
               </div>
               <div className="cfo-metric-box">
-                <div className="cfo-metric-icon">📊</div>
+                <div className="cfo-metric-icon"></div>
                 <div className="cfo-metric-info">
                   <div className="cfo-metric-number">18</div>
                   <div className="cfo-metric-label">Months Runway</div>
@@ -891,14 +1108,14 @@ const EnhancedCFOCard: React.FC<EnhancedCFOCardProps> = ({ title, subtitle, type
           <>
             <div className="cfo-revenue-stats">
               <div className="cfo-stat-box">
-                <div className="cfo-stat-icon">📈</div>
+                <div className="cfo-stat-icon"></div>
                 <div className="cfo-stat-details">
                   <div className="cfo-stat-big">$4.2M</div>
                   <div className="cfo-stat-small">Total Revenue</div>
                 </div>
               </div>
               <div className="cfo-stat-box">
-                <div className="cfo-stat-icon">💹</div>
+                <div className="cfo-stat-icon"></div>
                 <div className="cfo-stat-details">
                   <div className="cfo-stat-big">+32%</div>
                   <div className="cfo-stat-small">Growth Rate</div>
@@ -906,31 +1123,31 @@ const EnhancedCFOCard: React.FC<EnhancedCFOCardProps> = ({ title, subtitle, type
               </div>
             </div>
             <div className="cfo-revenue-features">
-              <div className="cfo-feature-tag">✓ P&L Reports</div>
-              <div className="cfo-feature-tag">✓ Balance Sheets</div>
-              <div className="cfo-feature-tag">✓ Forecasts</div>
+              <div className="cfo-feature-tag">P&L Reports</div>
+              <div className="cfo-feature-tag">Balance Sheets</div>
+              <div className="cfo-feature-tag">Forecasts</div>
             </div>
             <div className="cfo-revenue-breakdown">
               <div className="cfo-breakdown-row">
                 <span className="cfo-breakdown-name">Revenue Accuracy</span>
                 <div className="cfo-breakdown-line">
-                  <div className="cfo-breakdown-progress" style={{ width: '96%' }}></div>
+                  <AnimatedProgressFill targetWidth={96} className="cfo-breakdown-progress" />
                 </div>
-                <span className="cfo-breakdown-percent">96%</span>
+                <span className="cfo-breakdown-percent"><AnimatedNumber value={96} suffix="%" /></span>
               </div>
               <div className="cfo-breakdown-row">
                 <span className="cfo-breakdown-name">Forecast Precision</span>
                 <div className="cfo-breakdown-line">
-                  <div className="cfo-breakdown-progress" style={{ width: '89%' }}></div>
+                  <AnimatedProgressFill targetWidth={89} className="cfo-breakdown-progress" />
                 </div>
-                <span className="cfo-breakdown-percent">89%</span>
+                <span className="cfo-breakdown-percent"><AnimatedNumber value={89} suffix="%" /></span>
               </div>
               <div className="cfo-breakdown-row">
                 <span className="cfo-breakdown-name">Report Generation</span>
                 <div className="cfo-breakdown-line">
-                  <div className="cfo-breakdown-progress" style={{ width: '93%' }}></div>
+                  <AnimatedProgressFill targetWidth={93} className="cfo-breakdown-progress" />
                 </div>
-                <span className="cfo-breakdown-percent">93%</span>
+                <span className="cfo-breakdown-percent"><AnimatedNumber value={93} suffix="%" /></span>
               </div>
             </div>
             <div className="cfo-trend-indicator positive">
@@ -956,27 +1173,27 @@ const EnhancedCFOCard: React.FC<EnhancedCFOCardProps> = ({ title, subtitle, type
               <div className="cfo-score-item">
                 <div className="cfo-score-label">PDPL Compliance</div>
                 <div className="cfo-score-bar">
-                  <div className="cfo-score-fill" style={{ width: '100%' }}></div>
+                  <AnimatedProgressFill targetWidth={100} className="cfo-score-fill" />
                 </div>
-                <span className="cfo-score-value">100%</span>
+                <span className="cfo-score-value"><AnimatedNumber value={100} suffix="%" /></span>
               </div>
               <div className="cfo-score-item">
                 <div className="cfo-score-label">NCA Alignment</div>
                 <div className="cfo-score-bar">
-                  <div className="cfo-score-fill" style={{ width: '98%' }}></div>
+                  <AnimatedProgressFill targetWidth={98} className="cfo-score-fill" />
                 </div>
-                <span className="cfo-score-value">98%</span>
+                <span className="cfo-score-value"><AnimatedNumber value={98} suffix="%" /></span>
               </div>
               <div className="cfo-score-item">
                 <div className="cfo-score-label">HIPAA Compliance</div>
                 <div className="cfo-score-bar">
-                  <div className="cfo-score-fill" style={{ width: '97%' }}></div>
+                  <AnimatedProgressFill targetWidth={97} className="cfo-score-fill" />
                 </div>
-                <span className="cfo-score-value">97%</span>
+                <span className="cfo-score-value"><AnimatedNumber value={97} suffix="%" /></span>
               </div>
             </div>
             <div className="cfo-trend-indicator">
-              <span className="cfo-trend-arrow">✓</span>
+              <span className="cfo-trend-arrow">↑</span>
               <span className="cfo-trend-text">All compliance checks passed</span>
             </div>
           </>
@@ -986,14 +1203,14 @@ const EnhancedCFOCard: React.FC<EnhancedCFOCardProps> = ({ title, subtitle, type
           <>
             <div className="cfo-reports-stats">
               <div className="cfo-stat-box">
-                <div className="cfo-stat-icon">📋</div>
+                <div className="cfo-stat-icon"></div>
                 <div className="cfo-stat-details">
                   <div className="cfo-stat-big">156</div>
                   <div className="cfo-stat-small">Reports Generated</div>
                 </div>
               </div>
               <div className="cfo-stat-box">
-                <div className="cfo-stat-icon">⭐</div>
+                <div className="cfo-stat-icon"></div>
                 <div className="cfo-stat-details">
                   <div className="cfo-stat-big">98%</div>
                   <div className="cfo-stat-small">Investor Ready</div>
@@ -1001,9 +1218,9 @@ const EnhancedCFOCard: React.FC<EnhancedCFOCardProps> = ({ title, subtitle, type
               </div>
             </div>
             <div className="cfo-reports-features">
-              <div className="cfo-feature-tag">✓ Financial Summaries</div>
-              <div className="cfo-feature-tag">✓ Investor Reports</div>
-              <div className="cfo-feature-tag">✓ Executive Dashboards</div>
+              <div className="cfo-feature-tag">Financial Summaries</div>
+              <div className="cfo-feature-tag">Investor Reports</div>
+              <div className="cfo-feature-tag">Executive Dashboards</div>
             </div>
             <div className="cfo-reports-breakdown">
               <div className="cfo-breakdown-row">
@@ -1071,50 +1288,35 @@ const EnhancedSupportCard: React.FC<EnhancedSupportCardProps> = ({ title, subtit
           <>
             <div className="support-channel-stats">
               <div className="support-stat-large">
-                <div className="support-stat-number">8,247</div>
+                <div className="support-stat-number"><AnimatedNumber value={8247} /></div>
                 <div className="support-stat-desc">Queries Resolved</div>
               </div>
               <div className="support-stat-large">
-                <div className="support-stat-number">94%</div>
+                <div className="support-stat-number"><AnimatedNumber value={94} suffix="%" /></div>
                 <div className="support-stat-desc">Resolution Rate</div>
               </div>
-            </div>
-            {/* Grid Visual for Multi-Channel */}
-            <div className="support-grid-visual">
-              <div className="support-grid-item">💬</div>
-              <div className="support-grid-item">📧</div>
-              <div className="support-grid-item">📞</div>
-              <div className="support-grid-item">💬</div>
-              <div className="support-grid-item">📱</div>
-              <div className="support-grid-item">🌐</div>
-              <div className="support-grid-item">📨</div>
-              <div className="support-grid-item">💬</div>
             </div>
             <div className="support-channel-chart">
               <div className="support-chart-item">
                 <div className="support-chart-label">Chat</div>
                 <div className="support-chart-bar-container">
-                  <div className="support-chart-bar" style={{ width: '78%' }}></div>
-                  <span className="support-chart-value">78%</span>
+                  <AnimatedProgressBar targetWidth={78} barClassName="support-chart-bar" valueClassName="support-chart-value" />
                 </div>
               </div>
               <div className="support-chart-item">
                 <div className="support-chart-label">Email</div>
                 <div className="support-chart-bar-container">
-                  <div className="support-chart-bar" style={{ width: '85%' }}></div>
-                  <span className="support-chart-value">85%</span>
+                  <AnimatedProgressBar targetWidth={85} barClassName="support-chart-bar" valueClassName="support-chart-value" />
                 </div>
               </div>
               <div className="support-chart-item">
                 <div className="support-chart-label">Voice</div>
                 <div className="support-chart-bar-container">
-                  <div className="support-chart-bar" style={{ width: '72%' }}></div>
-                  <span className="support-chart-value">72%</span>
+                  <AnimatedProgressBar targetWidth={72} barClassName="support-chart-bar" valueClassName="support-chart-value" />
                 </div>
               </div>
             </div>
             {/* Visual Icon */}
-            <div className="support-visual-icon">📡</div>
             <div className="support-trend-indicator">
               <span className="support-trend-arrow">↑</span>
               <span className="support-trend-text">Multi-channel efficiency up 38%</span>
@@ -1126,14 +1328,14 @@ const EnhancedSupportCard: React.FC<EnhancedSupportCardProps> = ({ title, subtit
           <>
             <div className="support-availability-metrics">
               <div className="support-metric-box">
-                <div className="support-metric-icon">🕐</div>
+                <div className="support-metric-icon"></div>
                 <div className="support-metric-info">
                   <div className="support-metric-number">24/7</div>
                   <div className="support-metric-label">Availability</div>
                 </div>
               </div>
               <div className="support-metric-box">
-                <div className="support-metric-icon">⚡</div>
+                <div className="support-metric-icon"></div>
                 <div className="support-metric-info">
                   <div className="support-metric-number">1.2s</div>
                   <div className="support-metric-label">Avg Response Time</div>
@@ -1216,14 +1418,14 @@ const EnhancedSupportCard: React.FC<EnhancedSupportCardProps> = ({ title, subtit
           <>
             <div className="support-knowledge-stats">
               <div className="support-stat-box">
-                <div className="support-stat-icon">📚</div>
+                <div className="support-stat-icon"></div>
                 <div className="support-stat-details">
                   <div className="support-stat-big">1,247</div>
                   <div className="support-stat-small">Articles Learned</div>
                 </div>
               </div>
               <div className="support-stat-box">
-                <div className="support-stat-icon">🔄</div>
+                <div className="support-stat-icon"></div>
                 <div className="support-stat-details">
                   <div className="support-stat-big">87%</div>
                   <div className="support-stat-small">Auto-Updated</div>
@@ -1231,9 +1433,9 @@ const EnhancedSupportCard: React.FC<EnhancedSupportCardProps> = ({ title, subtit
               </div>
             </div>
             <div className="support-knowledge-features">
-              <div className="support-feature-tag">✓ Doc Learning</div>
-              <div className="support-feature-tag">✓ FAQ Updates</div>
-              <div className="support-feature-tag">✓ Context Understanding</div>
+              <div className="support-feature-tag">Doc Learning</div>
+              <div className="support-feature-tag">FAQ Updates</div>
+              <div className="support-feature-tag">Context Understanding</div>
             </div>
             <div className="support-knowledge-breakdown">
               <div className="support-breakdown-row">
@@ -1281,23 +1483,23 @@ const EnhancedSupportCard: React.FC<EnhancedSupportCardProps> = ({ title, subtit
               <div className="support-score-item">
                 <div className="support-score-label">Verification Rate</div>
                 <div className="support-score-bar">
-                  <div className="support-score-fill" style={{ width: '96%' }}></div>
+                  <AnimatedProgressFill targetWidth={96} className="support-score-fill" />
                 </div>
-                <span className="support-score-value">96%</span>
+                <span className="support-score-value"><AnimatedNumber value={96} suffix="%" /></span>
               </div>
               <div className="support-score-item">
                 <div className="support-score-label">Callback Success</div>
                 <div className="support-score-bar">
-                  <div className="support-score-fill" style={{ width: '89%' }}></div>
+                  <AnimatedProgressFill targetWidth={89} className="support-score-fill" />
                 </div>
-                <span className="support-score-value">89%</span>
+                <span className="support-score-value"><AnimatedNumber value={89} suffix="%" /></span>
               </div>
               <div className="support-score-item">
                 <div className="support-score-label">Status Updates</div>
                 <div className="support-score-bar">
-                  <div className="support-score-fill" style={{ width: '92%' }}></div>
+                  <AnimatedProgressFill targetWidth={92} className="support-score-fill" />
                 </div>
-                <span className="support-score-value">92%</span>
+                <span className="support-score-value"><AnimatedNumber value={92} suffix="%" /></span>
               </div>
             </div>
             <div className="support-trend-indicator">
@@ -1311,7 +1513,7 @@ const EnhancedSupportCard: React.FC<EnhancedSupportCardProps> = ({ title, subtit
           <>
             <div className="support-analytics-stats">
               <div className="support-stat-box">
-                <div className="support-stat-icon">📊</div>
+                <div className="support-stat-icon"></div>
                 <div className="support-stat-details">
                   <div className="support-stat-big">4.7/5</div>
                   <div className="support-stat-small">CSAT Score</div>
@@ -1326,9 +1528,9 @@ const EnhancedSupportCard: React.FC<EnhancedSupportCardProps> = ({ title, subtit
               </div>
             </div>
             <div className="support-analytics-features">
-              <div className="support-feature-tag">✓ Response Time</div>
-              <div className="support-feature-tag">✓ CSAT Tracking</div>
-              <div className="support-feature-tag">✓ Volume Trends</div>
+              <div className="support-feature-tag">Response Time</div>
+              <div className="support-feature-tag">CSAT Tracking</div>
+              <div className="support-feature-tag">Volume Trends</div>
             </div>
             <div className="support-analytics-breakdown">
               <div className="support-breakdown-row">
@@ -1396,11 +1598,11 @@ const EnhancedRealEstateCard: React.FC<EnhancedRealEstateCardProps> = ({ title, 
           <>
             <div className="re-matching-stats">
               <div className="re-stat-large">
-                <div className="re-stat-number">1,847</div>
+                <div className="re-stat-number"><AnimatedNumber value={1847} /></div>
                 <div className="re-stat-desc">Properties Matched</div>
               </div>
               <div className="re-stat-large">
-                <div className="re-stat-number">89%</div>
+                <div className="re-stat-number"><AnimatedNumber value={89} suffix="%" /></div>
                 <div className="re-stat-desc">Match Accuracy</div>
               </div>
             </div>
@@ -1408,22 +1610,19 @@ const EnhancedRealEstateCard: React.FC<EnhancedRealEstateCardProps> = ({ title, 
               <div className="re-chart-item">
                 <div className="re-chart-label">Perfect Match</div>
                 <div className="re-chart-bar-container">
-                  <div className="re-chart-bar" style={{ width: '82%' }}></div>
-                  <span className="re-chart-value">82%</span>
+                  <AnimatedProgressBar targetWidth={82} barClassName="re-chart-bar" valueClassName="re-chart-value" />
                 </div>
               </div>
               <div className="re-chart-item">
                 <div className="re-chart-label">Good Match</div>
                 <div className="re-chart-bar-container">
-                  <div className="re-chart-bar" style={{ width: '75%' }}></div>
-                  <span className="re-chart-value">75%</span>
+                  <AnimatedProgressBar targetWidth={75} barClassName="re-chart-bar" valueClassName="re-chart-value" />
                 </div>
               </div>
               <div className="re-chart-item">
                 <div className="re-chart-label">Partial Match</div>
                 <div className="re-chart-bar-container">
-                  <div className="re-chart-bar" style={{ width: '68%' }}></div>
-                  <span className="re-chart-value">68%</span>
+                  <AnimatedProgressBar targetWidth={68} barClassName="re-chart-bar" valueClassName="re-chart-value" />
                 </div>
               </div>
             </div>
@@ -1438,14 +1637,14 @@ const EnhancedRealEstateCard: React.FC<EnhancedRealEstateCardProps> = ({ title, 
           <>
             <div className="re-calling-metrics">
               <div className="re-metric-box">
-                <div className="re-metric-icon">📞</div>
+                <div className="re-metric-icon"></div>
                 <div className="re-metric-info">
                   <div className="re-metric-number">2,456</div>
                   <div className="re-metric-label">Calls Made</div>
                 </div>
               </div>
               <div className="re-metric-box">
-                <div className="re-metric-icon">🌐</div>
+                <div className="re-metric-icon"></div>
                 <div className="re-metric-info">
                   <div className="re-metric-number">12</div>
                   <div className="re-metric-label">Languages</div>
@@ -1528,14 +1727,14 @@ const EnhancedRealEstateCard: React.FC<EnhancedRealEstateCardProps> = ({ title, 
           <>
             <div className="re-issues-stats">
               <div className="re-stat-box">
-                <div className="re-stat-icon">🔧</div>
+                <div className="re-stat-icon"></div>
                 <div className="re-stat-details">
                   <div className="re-stat-big">456</div>
                   <div className="re-stat-small">Issues Resolved</div>
                 </div>
               </div>
               <div className="re-stat-box">
-                <div className="re-stat-icon">⚡</div>
+                <div className="re-stat-icon"></div>
                 <div className="re-stat-details">
                   <div className="re-stat-big">2.4h</div>
                   <div className="re-stat-small">Avg Resolution</div>
@@ -1543,9 +1742,9 @@ const EnhancedRealEstateCard: React.FC<EnhancedRealEstateCardProps> = ({ title, 
               </div>
             </div>
             <div className="re-issues-features">
-              <div className="re-feature-tag">✓ Issue Diagnosis</div>
-              <div className="re-feature-tag">✓ Ticket Creation</div>
-              <div className="re-feature-tag">✓ Priority Routing</div>
+              <div className="re-feature-tag">Issue Diagnosis</div>
+              <div className="re-feature-tag">Ticket Creation</div>
+              <div className="re-feature-tag">Priority Routing</div>
             </div>
             <div className="re-issues-breakdown">
               <div className="re-breakdown-row">
@@ -1623,14 +1822,14 @@ const EnhancedRealEstateCard: React.FC<EnhancedRealEstateCardProps> = ({ title, 
           <>
             <div className="re-renewals-stats">
               <div className="re-stat-box">
-                <div className="re-stat-icon">🔄</div>
+                <div className="re-stat-icon"></div>
                 <div className="re-stat-details">
                   <div className="re-stat-big">347</div>
                   <div className="re-stat-small">Renewals Processed</div>
                 </div>
               </div>
               <div className="re-stat-box">
-                <div className="re-stat-icon">📈</div>
+                <div className="re-stat-icon"></div>
                 <div className="re-stat-details">
                   <div className="re-stat-big">78%</div>
                   <div className="re-stat-small">Retention Rate</div>
@@ -1638,9 +1837,9 @@ const EnhancedRealEstateCard: React.FC<EnhancedRealEstateCardProps> = ({ title, 
               </div>
             </div>
             <div className="re-renewals-features">
-              <div className="re-feature-tag">✓ Auto-Renewals</div>
-              <div className="re-feature-tag">✓ Offer Generation</div>
-              <div className="re-feature-tag">✓ Client Nurturing</div>
+              <div className="re-feature-tag">Auto-Renewals</div>
+              <div className="re-feature-tag">Offer Generation</div>
+              <div className="re-feature-tag">Client Nurturing</div>
             </div>
             <div className="re-renewals-breakdown">
               <div className="re-breakdown-row">
@@ -1708,11 +1907,11 @@ const EnhancedHealthcareCard: React.FC<EnhancedHealthcareCardProps> = ({ title, 
           <>
             <div className="health-intake-stats">
               <div className="health-stat-large">
-                <div className="health-stat-number">3,247</div>
+                <div className="health-stat-number"><AnimatedNumber value={3247} /></div>
                 <div className="health-stat-desc">Patients Intake</div>
               </div>
               <div className="health-stat-large">
-                <div className="health-stat-number">96%</div>
+                <div className="health-stat-number"><AnimatedNumber value={96} suffix="%" /></div>
                 <div className="health-stat-desc">Data Accuracy</div>
               </div>
             </div>
@@ -1720,40 +1919,36 @@ const EnhancedHealthcareCard: React.FC<EnhancedHealthcareCardProps> = ({ title, 
             <div className="health-area-chart">
               <div className="health-area-title">Daily Patient Intake</div>
               <div className="health-area-container">
-                <div className="health-area-bar" style={{ height: '55%' }}></div>
-                <div className="health-area-bar" style={{ height: '68%' }}></div>
-                <div className="health-area-bar" style={{ height: '72%' }}></div>
-                <div className="health-area-bar" style={{ height: '65%' }}></div>
-                <div className="health-area-bar" style={{ height: '80%' }}></div>
-                <div className="health-area-bar" style={{ height: '88%' }}></div>
-                <div className="health-area-bar" style={{ height: '92%' }}></div>
+                <AnimatedBar height={55} delay={0} />
+                <AnimatedBar height={68} delay={100} />
+                <AnimatedBar height={72} delay={200} />
+                <AnimatedBar height={65} delay={300} />
+                <AnimatedBar height={80} delay={400} />
+                <AnimatedBar height={88} delay={500} />
+                <AnimatedBar height={92} delay={600} />
               </div>
             </div>
             <div className="health-intake-chart">
               <div className="health-chart-item">
                 <div className="health-chart-label">Symptom Collection</div>
                 <div className="health-chart-bar-container">
-                  <div className="health-chart-bar" style={{ width: '94%' }}></div>
-                  <span className="health-chart-value">94%</span>
+                  <AnimatedProgressBar targetWidth={94} barClassName="health-chart-bar" valueClassName="health-chart-value" />
                 </div>
               </div>
               <div className="health-chart-item">
                 <div className="health-chart-label">Context Gathering</div>
                 <div className="health-chart-bar-container">
-                  <div className="health-chart-bar" style={{ width: '91%' }}></div>
-                  <span className="health-chart-value">91%</span>
+                  <AnimatedProgressBar targetWidth={91} barClassName="health-chart-bar" valueClassName="health-chart-value" />
                 </div>
               </div>
               <div className="health-chart-item">
                 <div className="health-chart-label">Medical History</div>
                 <div className="health-chart-bar-container">
-                  <div className="health-chart-bar" style={{ width: '88%' }}></div>
-                  <span className="health-chart-value">88%</span>
+                  <AnimatedProgressBar targetWidth={88} barClassName="health-chart-bar" valueClassName="health-chart-value" />
                 </div>
               </div>
             </div>
             {/* Visual Icon */}
-            <div className="health-visual-icon">🏥</div>
             <div className="health-trend-indicator">
               <span className="health-trend-arrow">↑</span>
               <span className="health-trend-text">Intake quality improved by 38%</span>
@@ -1765,14 +1960,14 @@ const EnhancedHealthcareCard: React.FC<EnhancedHealthcareCardProps> = ({ title, 
           <>
             <div className="health-triage-metrics">
               <div className="health-metric-box">
-                <div className="health-metric-icon">🚨</div>
+                <div className="health-metric-icon"></div>
                 <div className="health-metric-info">
                   <div className="health-metric-number">2,156</div>
                   <div className="health-metric-label">Cases Routed</div>
                 </div>
               </div>
               <div className="health-metric-box">
-                <div className="health-metric-icon">✓</div>
+                <div className="health-metric-icon"></div>
                 <div className="health-metric-info">
                   <div className="health-metric-number">100%</div>
                   <div className="health-metric-label">Safety Rate</div>
@@ -1803,7 +1998,7 @@ const EnhancedHealthcareCard: React.FC<EnhancedHealthcareCardProps> = ({ title, 
               </div>
             </div>
             <div className="health-trend-indicator positive">
-              <span className="health-trend-arrow">✓</span>
+              <span className="health-trend-arrow">↑</span>
               <span className="health-trend-text">All cases routed safely</span>
             </div>
           </>
@@ -1855,14 +2050,14 @@ const EnhancedHealthcareCard: React.FC<EnhancedHealthcareCardProps> = ({ title, 
           <>
             <div className="health-lab-stats">
               <div className="health-stat-box">
-                <div className="health-stat-icon">🔬</div>
+                <div className="health-stat-icon"></div>
                 <div className="health-stat-details">
                   <div className="health-stat-big">1,456</div>
                   <div className="health-stat-small">Results Explained</div>
                 </div>
               </div>
               <div className="health-stat-box">
-                <div className="health-stat-icon">💬</div>
+                <div className="health-stat-icon"></div>
                 <div className="health-stat-details">
                   <div className="health-stat-big">93%</div>
                   <div className="health-stat-small">Understanding Rate</div>
@@ -1870,9 +2065,9 @@ const EnhancedHealthcareCard: React.FC<EnhancedHealthcareCardProps> = ({ title, 
               </div>
             </div>
             <div className="health-lab-features">
-              <div className="health-feature-tag">✓ Simple Language</div>
-              <div className="health-feature-tag">✓ Patient-Friendly</div>
-              <div className="health-feature-tag">✓ Clear Explanations</div>
+              <div className="health-feature-tag">Simple Language</div>
+              <div className="health-feature-tag">Patient-Friendly</div>
+              <div className="health-feature-tag">Clear Explanations</div>
             </div>
             <div className="health-lab-breakdown">
               <div className="health-breakdown-row">
@@ -1950,14 +2145,14 @@ const EnhancedHealthcareCard: React.FC<EnhancedHealthcareCardProps> = ({ title, 
           <>
             <div className="health-coordination-stats">
               <div className="health-stat-box">
-                <div className="health-stat-icon">🤝</div>
+                <div className="health-stat-icon"></div>
                 <div className="health-stat-details">
                   <div className="health-stat-big">1,892</div>
                   <div className="health-stat-small">Cases Coordinated</div>
                 </div>
               </div>
               <div className="health-stat-box">
-                <div className="health-stat-icon">📋</div>
+                <div className="health-stat-icon"></div>
                 <div className="health-stat-details">
                   <div className="health-stat-big">96%</div>
                   <div className="health-stat-small">Communication Rate</div>
@@ -1965,9 +2160,9 @@ const EnhancedHealthcareCard: React.FC<EnhancedHealthcareCardProps> = ({ title, 
               </div>
             </div>
             <div className="health-coordination-features">
-              <div className="health-feature-tag">✓ Care Summaries</div>
-              <div className="health-feature-tag">✓ Insurance Info</div>
-              <div className="health-feature-tag">✓ Team Communication</div>
+              <div className="health-feature-tag">Care Summaries</div>
+              <div className="health-feature-tag">Insurance Info</div>
+              <div className="health-feature-tag">Team Communication</div>
             </div>
             <div className="health-coordination-breakdown">
               <div className="health-breakdown-row">
@@ -2063,12 +2258,13 @@ const AgentPageTemplate: React.FC<AgentPageProps> = ({ config }) => {
           <div className="agent-image-overlay">
             <img 
               src={
-                isCFOFinancePage ? "/images/agent2.png" : 
-                isRealEstatePage ? "/images/agent3.png" : 
-                isGTMSalesPage ? "/images/agent4.png" : 
-                isHealthcarePage ? "/images/agent5.png" : 
-                isCustomerSupportPage ? "/images/agent6.png" : 
-                "/images/agent1.png"
+                isGTMSalesPage ? "/images/GTM-dashboard.jpeg" : 
+                isCFOFinancePage ? "/images/CFO-dashboard.png" : 
+                isCustomerSupportPage ? "/images/Customer-dashboard.png" : 
+                isRealEstatePage ? "/images/Property-dashboard.png" : 
+                isHealthcarePage ? "/images/Healthcare-dashboard.png" : 
+                isHRRecruitmentPage ? "/images/HR-dashboard.png" : 
+                "/images/HR-dashboard.png"
               } 
               alt={`${config.title}`} 
               className="agent-overlay-image"
@@ -2330,37 +2526,37 @@ const gtmSalesConfig: AgentConfig = {
   videoSrc: '/sales.mp4',
   features: [
     {
-      icon: '🎯',
+      icon: '',
       title: 'Lead Generation',
       description: 'Find and qualify high-intent leads with precision in seconds.',
     },
     {
-      icon: '🔍',
+      icon: '',
       title: 'Lead Enrichment',
       description: 'Surface deep company insights automatically before outreach.',
     },
     {
-      icon: '📞',
+      icon: '',
       title: 'Voice Calling',
       description: 'Call prospects in any language—or with your cloned voice.',
     },
     {
-      icon: '⚡',
+      icon: '',
       title: 'Campaign Automation',
       description: 'Launch multi‑channel sequences that run on autopilot.',
     },
     {
-      icon: '🔄',
+      icon: '',
       title: 'Follow‑Ups',
       description: 'Never miss a follow-up; the agent chases prospects relentlessly.',
     },
     {
-      icon: '🤖',
+      icon: '',
       title: 'AI Meeting Assistant',
       description: 'Joins your calls silently and turns every word into actionable intelligence.',
     },
     {
-      icon: '📊',
+      icon: '',
       title: 'Sales Analytics',
       description: 'Crystal‑clear pipeline insights, call logs, and performance reports.',
     },
@@ -2376,32 +2572,32 @@ const hrRecruitmentConfig: AgentConfig = {
   videoSrc: '/HRvc.mp4',
   features: [
     {
-      icon: '📄',
+      icon: '',
       title: 'Resume Screening',
       description: 'Filter hundreds of CVs instantly with skill‑accurate matching.',
     },
     {
-      icon: '📞',
+      icon: '',
       title: 'Candidate Outreach',
       description: 'Call candidates, collect details, and schedule interviews automatically.',
     },
     {
-      icon: '🎤',
+      icon: '',
       title: 'AI Interviewing',
       description: 'Conducts natural interviews based on JD + resume understanding.',
     },
     {
-      icon: '❓',
+      icon: '',
       title: 'Cross‑Questioning',
       description: 'Tests real competence with smart follow-up questions.',
     },
     {
-      icon: '⭐',
+      icon: '',
       title: 'Shortlisting',
       description: 'Ranks and selects top candidates with clean scorecards.',
     },
     {
-      icon: '📋',
+      icon: '',
       title: 'Interview Summaries',
       description: 'Delivers transcripts, insights, and hiring recommendations.',
     },
@@ -2417,32 +2613,32 @@ const cfoFinanceConfig: AgentConfig = {
   videoSrc: '/AICFO.mp4',
   features: [
     {
-      icon: '⚙️',
+      icon: '',
       title: 'Financial Automation',
       description: 'Automate AP, AR, reconciliation, and monthly closes.',
     },
     {
-      icon: '💹',
+      icon: '',
       title: 'Cashflow Intelligence',
       description: 'Predict burn, runway, and financial health instantly.',
     },
     {
-      icon: '💰',
+      icon: '',
       title: 'Expense Tracking',
       description: 'Spot anomalies and overspending in real time.',
     },
     {
-      icon: '📈',
+      icon: '',
       title: 'Revenue Insights',
       description: 'Get instant P&L, balance sheets, and forecasts.',
     },
     {
-      icon: '🛡️',
+      icon: '',
       title: 'Compliance‑Ready',
       description: 'Built for PDPL, NCA, HIPAA‑aligned data governance.',
     },
     {
-      icon: '📊',
+      icon: '',
       title: 'CFO Reports',
       description: 'Receive clean, investor‑ready summaries on demand.',
     },
@@ -2458,32 +2654,32 @@ const customerSupportConfig: AgentConfig = {
   videoSrc: '/sal.mp4',
   features: [
     {
-      icon: '💬',
+      icon: '',
       title: 'Multi‑Channel Support',
       description: 'Resolve queries across chat, WhatsApp, email, and voice.',
     },
     {
-      icon: '🕐',
+      icon: '',
       title: '24/7 Availability',
       description: 'Instant, accurate responses at any hour.',
     },
     {
-      icon: '🎫',
+      icon: '',
       title: 'Ticket Automation',
       description: 'Creates, assigns, and tracks tickets without human input.',
     },
     {
-      icon: '🧠',
+      icon: '',
       title: 'Knowledge Learning',
       description: 'Learns from your docs and updates FAQs automatically.',
     },
     {
-      icon: '📞',
+      icon: '',
       title: 'Voice Support',
       description: 'Handles verification, callbacks, and status updates.',
     },
     {
-      icon: '📊',
+      icon: '',
       title: 'Support Analytics',
       description: 'Monitor response time, CSAT, volume, and trends.',
     },
@@ -2492,39 +2688,39 @@ const customerSupportConfig: AgentConfig = {
 
 const realEstateConfig: AgentConfig = {
   id: 'real-estate',
-  title: 'Real Estate / Property Management Agent',
-  eyebrow: 'Real Estate / Property Management Agent',
+  title: 'Real Estate Agent',
+  eyebrow: 'Real Estate Agent',
   overview:
     'From leads to leases and maintenance, handled quietly. From leads to leases and maintenance, this agent keeps your portfolio humming in the background.',
   videoSrc: '/sal.mp4',
   features: [
     {
-      icon: '🏠',
+      icon: '',
       title: 'Property Matching',
       description: 'Suggest perfect units based on client needs instantly.',
     },
     {
-      icon: '📞',
+      icon: '',
       title: 'Lead Calling',
       description: 'Qualify buyers and tenants using multilingual AI voice.',
     },
     {
-      icon: '📅',
+      icon: '',
       title: 'Viewings Scheduling',
       description: 'Book, confirm, and manage property viewings effortlessly.',
     },
     {
-      icon: '🔧',
+      icon: '',
       title: 'Tenant Issue Handling',
       description: 'Call tenants, diagnose issues, and create maintenance tickets.',
     },
     {
-      icon: '⚙️',
+      icon: '',
       title: 'Maintenance Automation',
       description: 'Assign technicians and track task completion automatically.',
     },
     {
-      icon: '🔄',
+      icon: '',
       title: 'Renewal & Follow‑Ups',
       description: 'Automate renewals, offers, and client nurturing.',
     },
@@ -2540,32 +2736,32 @@ const healthcareConfig: AgentConfig = {
   videoSrc: '/sal.mp4',
   features: [
     {
-      icon: '🏥',
+      icon: '',
       title: 'Patient Intake',
       description: 'Collect symptoms and context with medical‑grade questioning.',
     },
     {
-      icon: '🚨',
+      icon: '',
       title: 'Triage Guidance',
       description: 'Routes cases safely without providing diagnosis.',
     },
     {
-      icon: '📅',
+      icon: '',
       title: 'Appointment Scheduling',
       description: 'Books visits, reminders, and follow‑ups automatically.',
     },
     {
-      icon: '🔬',
+      icon: '',
       title: 'Lab Explanation',
       description: 'Explains results in simple, patient‑friendly language.',
     },
     {
-      icon: '🥗',
+      icon: '',
       title: 'Diet & Wellness Plans',
       description: 'Generates personalized lifestyle guidance.',
     },
     {
-      icon: '🤝',
+      icon: '',
       title: 'Care Coordination',
       description: 'Manages summaries, insurance info, and communication.',
     },

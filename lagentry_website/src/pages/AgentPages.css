@@ -176,8 +176,10 @@ body.hr-recruitment-active .navigation .logo-icon-image {
 /* Hero Section - Cinematic & Bold */
 .agent-hero {
   padding: 8rem 8vw 5rem;
-  text-align: center;
+  text-align: left;
   position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .agent-hero::before {
@@ -203,6 +205,7 @@ body.hr-recruitment-active .navigation .logo-icon-image {
   margin: 0 auto;
   position: relative;
   z-index: 1;
+  text-align: left;
 }
 
 .agent-hero-eyebrow {
@@ -229,15 +232,19 @@ body.hr-recruitment-active .navigation .logo-icon-image {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   letter-spacing: -0.02em;
+  white-space: nowrap;
+  overflow: visible;
+  text-align: left;
 }
 
 .agent-hero-overview {
   max-width: 700px;
-  margin: 0 auto;
+  margin: 0;
   font-size: 1.15rem;
   line-height: 1.7;
   color: rgba(209, 213, 219, 0.85);
   font-weight: 400;
+  text-align: left;
 }
 
 /* Video Section - Clean & Centered */
@@ -677,12 +684,14 @@ body.hr-recruitment-active .navigation .logo-icon-image {
 .agent-features-section {
   padding: 6rem 8vw 8rem;
   position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .agent-features-header {
-  max-width: 1100px;
-  margin: 0 auto 4rem;
-  text-align: center;
+  max-width: 900px;
+  margin: 0 0 4rem;
+  text-align: left;
 }
 
 .agent-features-header h2 {
@@ -702,6 +711,7 @@ body.hr-recruitment-active .navigation .logo-icon-image {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
+  padding: 0;
 }
 
 /* HR Recruitment - 2x3 Grid Layout */
@@ -962,10 +972,12 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 }
 
 .hr-stat-value {
+  font-family: 'Geist', sans-serif !important;
   font-size: 1.75rem;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 0.25rem;
+  text-align: center !important;
 }
 
 .hr-stat-label {
@@ -1114,7 +1126,7 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 }
 
 .hr-action-check {
-  color: #22c55e;
+  color: rgba(139, 92, 246, 1);
   font-weight: 600;
 }
 
@@ -1206,8 +1218,8 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 }
 
 .hr-step-item.completed .hr-step-number {
-  background: rgba(34, 197, 94, 0.3);
-  border-color: rgba(34, 197, 94, 0.6);
+  background: rgba(139, 92, 246, 0.3);
+  border-color: rgba(139, 92, 246, 0.6);
   color: #ffffff;
 }
 
@@ -1243,7 +1255,7 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 
 .hr-progress-fill {
   height: 100%;
-  background: rgba(139, 92, 246, 0.6);
+  background: linear-gradient(90deg, rgba(224, 128, 255, 0.8), rgba(213, 111, 255, 0.9));
   border-radius: 4px;
   transition: width 0.3s ease;
 }
@@ -1270,10 +1282,12 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 }
 
 .hr-stat-number {
+  font-family: 'Geist', sans-serif !important;
   font-size: 1.5rem;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 0.25rem;
+  text-align: center !important;
 }
 
 .hr-stat-desc {
@@ -1308,17 +1322,19 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 .hr-chart-bar {
   flex: 1;
   height: 6px;
-  background: rgba(139, 92, 246, 0.4);
+  background: linear-gradient(90deg, rgba(224, 128, 255, 0.8), rgba(213, 111, 255, 0.9));
   border-radius: 3px;
   transition: width 0.3s ease;
 }
 
 .hr-chart-value {
+  font-family: 'Geist', sans-serif !important;
   font-size: 0.8rem;
   font-weight: 600;
   color: #ffffff;
+  text-align: center !important;
   min-width: 35px;
-  text-align: right;
+  text-align: center;
 }
 
 /* Trend Indicator */
@@ -1333,13 +1349,13 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 }
 
 .hr-trend-indicator.positive {
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.2);
+  background: rgba(224, 128, 255, 0.1);
+  border: 1px solid rgba(224, 128, 255, 0.2);
 }
 
 .hr-trend-arrow {
   font-size: 1rem;
-  color: rgba(34, 197, 94, 0.8);
+  color: rgba(224, 128, 255, 1);
 }
 
 .hr-trend-text {
@@ -1372,10 +1388,12 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 }
 
 .hr-metric-number {
+  font-family: 'Geist', sans-serif !important;
   font-size: 1.25rem;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 0.2rem;
+  text-align: center !important;
 }
 
 .hr-metric-label {
@@ -1418,7 +1436,7 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 
 .hr-timeline-bar {
   height: 5px;
-  background: rgba(139, 92, 246, 0.3);
+  background: linear-gradient(90deg, rgba(224, 128, 255, 0.8), rgba(213, 111, 255, 0.9));
   border-radius: 3px;
 }
 
@@ -1516,7 +1534,7 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 
 .hr-breakdown-fill {
   height: 100%;
-  background: rgba(139, 92, 246, 0.5);
+  background: linear-gradient(90deg, rgba(224, 128, 255, 0.8), rgba(213, 111, 255, 0.9));
   border-radius: 3px;
   transition: width 0.3s ease;
 }
@@ -1545,10 +1563,12 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 }
 
 .hr-overview-number {
+  font-family: 'Geist', sans-serif !important;
   font-size: 1.5rem;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 0.3rem;
+  text-align: center !important;
 }
 
 .hr-overview-label {
@@ -1585,16 +1605,17 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 
 .hr-score-fill {
   height: 100%;
-  background: rgba(139, 92, 246, 0.5);
+  background: linear-gradient(90deg, rgba(224, 128, 255, 0.8), rgba(213, 111, 255, 0.9));
   border-radius: 4px;
   transition: width 0.3s ease;
 }
 
 .hr-score-value {
+  font-family: 'Geist', sans-serif !important;
   font-size: 0.8rem;
   font-weight: 600;
   color: #ffffff;
-  text-align: right;
+  text-align: center !important;
 }
 
 .hr-shortlisting-distribution {
@@ -1616,7 +1637,7 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 
 .hr-dist-bar {
   width: 100%;
-  background: rgba(139, 92, 246, 0.4);
+  background: linear-gradient(180deg, rgba(224, 128, 255, 0.8), rgba(213, 111, 255, 0.4));
   border-radius: 4px 4px 0 0;
   min-height: 10px;
   transition: height 0.3s ease;
@@ -1653,10 +1674,12 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 }
 
 .hr-stat-big {
+  font-family: 'Geist', sans-serif !important;
   font-size: 1.5rem;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 0.2rem;
+  text-align: center !important;
 }
 
 .hr-stat-small {
@@ -1709,12 +1732,14 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 
 .hr-breakdown-progress {
   height: 100%;
-  background: rgba(139, 92, 246, 0.5);
+  background: linear-gradient(90deg, rgba(224, 128, 255, 0.8), rgba(213, 111, 255, 0.9));
   border-radius: 3px;
   transition: width 0.3s ease;
 }
 
 .hr-breakdown-percent {
+  font-family: 'Geist', sans-serif !important;
+  text-align: center !important;
   font-size: 0.8rem;
   font-weight: 600;
   color: #ffffff;
@@ -1790,131 +1815,559 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
     padding-top: 70px;
   }
 
+  /* Hero Section - Mobile */
   .agent-hero {
-    padding: 5rem 1.5rem 3rem;
+    padding: 3rem 1rem 2rem;
+    text-align: left !important;
+  }
+
+  .agent-hero-inner {
+    max-width: 100%;
+    text-align: left !important;
   }
 
   .agent-hero-eyebrow {
-    font-size: 0.7rem;
-    padding: 0.4rem 0.8rem;
+    font-size: 0.65rem;
+    padding: 0.35rem 0.75rem;
+    margin-bottom: 1rem;
   }
 
   .agent-hero-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
     line-height: 1.2;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.75rem;
+    white-space: normal !important;
+    word-wrap: break-word;
+    text-align: left !important;
   }
 
   .agent-hero-overview {
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    text-align: left !important;
+    max-width: 100%;
   }
 
+  /* Image overlay - Mobile */
+  .agent-image-overlay {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 300px !important;
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    transform: none !important;
+    padding: 1rem !important;
+  }
+
+  .agent-overlay-image {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 300px !important;
+    object-fit: contain !important;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+  }
+
+  /* HR and other pages - Mobile image fixes */
+  .hr-recruitment-page .agent-image-overlay,
+  .gtm-sales-page .agent-image-overlay,
+  .cfo-finance-page .agent-image-overlay,
+  .customer-support-page .agent-image-overlay,
+  .real-estate-page .agent-image-overlay,
+  .healthcare-page .agent-image-overlay {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 300px !important;
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    transform: none !important;
+    padding: 1rem !important;
+  }
+
+  .hr-recruitment-page .agent-overlay-image,
+  .gtm-sales-page .agent-overlay-image,
+  .cfo-finance-page .agent-overlay-image,
+  .customer-support-page .agent-overlay-image,
+  .real-estate-page .agent-overlay-image,
+  .healthcare-page .agent-overlay-image {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 300px !important;
+    object-fit: contain !important;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+  }
+
+  /* Video Section - Mobile */
   .agent-video-section {
-    padding: 0 1.5rem 3rem;
+    padding: 0 0 2rem;
   }
 
   .agent-video-frame {
-    border-radius: 20px;
+    border-radius: 16px;
+    margin: 0;
   }
 
+  /* Features Section - Mobile */
   .agent-features-section {
-    padding: 3rem 1.5rem 5rem;
+    padding: 2.5rem 1rem 4rem;
   }
 
   .agent-features-header {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
+    text-align: left !important;
   }
 
   .agent-features-header h2 {
-    font-size: 1.75rem;
+    font-size: 1.35rem;
+    text-align: left !important;
+    margin-bottom: 0.75rem;
   }
 
   .agent-features-grid {
     grid-template-columns: 1fr;
-    gap: 1.25rem;
+    gap: 1rem;
   }
 
   /* HR Recruitment - Mobile: Single column */
   body.hr-recruitment-active .agent-features-grid {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
   .agent-feature-card.hr-dashboard-style {
     min-height: auto;
-    padding: 1.5rem;
+    padding: 1.25rem;
+    gap: 0.75rem;
   }
 
   .agent-feature-card.hr-dashboard-style .agent-feature-title {
-    font-size: 1.5rem;
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
   }
 
   .agent-feature-card {
-    padding: 1.75rem;
+    padding: 1.25rem;
+    gap: 0.75rem;
+    border-radius: 16px;
   }
 
   .agent-feature-icon {
-    width: 44px;
-    height: 44px;
-    font-size: 1.35rem;
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
   }
 
   .agent-feature-title {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
   }
 
   .agent-feature-description {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  /* GTM Sales - Mobile: Single column */
+  .gtm-sales-page .agent-features-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+
+  .gtm-sales-page .agent-feature-card.hr-dashboard-style {
+    padding: 1.25rem;
+    gap: 0.75rem;
+    min-height: auto;
+  }
+
+  .gtm-sales-page .agent-feature-card.hr-dashboard-style .agent-feature-title {
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .gtm-sales-page .agent-feature-card.hr-dashboard-style .agent-feature-subtitle {
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Sales Analytics Card - Mobile */
+  .gtm-sales-page .agent-feature-card.sales-analytics-card {
+    padding: 1.25rem;
+    gap: 0.75rem;
+  }
+
+  .gtm-sales-page .agent-feature-card.sales-analytics-card .agent-feature-title {
+    font-size: 1.15rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* All agent pages hero positioning - Mobile */
+  .hr-recruitment-page .agent-hero,
+  .gtm-sales-page .agent-hero,
+  .cfo-finance-page .agent-hero,
+  .customer-support-page .agent-hero,
+  .real-estate-page .agent-hero,
+  .healthcare-page .agent-hero {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    padding: 3rem 1rem 2rem;
+    text-align: left !important;
+  }
+
+  /* All agent pages hero inner - Mobile - Match HR alignment */
+  .hr-recruitment-page .agent-hero-inner,
+  .gtm-sales-page .agent-hero-inner,
+  .cfo-finance-page .agent-hero-inner,
+  .customer-support-page .agent-hero-inner,
+  .real-estate-page .agent-hero-inner,
+  .healthcare-page .agent-hero-inner {
+    text-align: left !important;
+    width: 100%;
+  }
+
+  /* All agent pages hero title - Mobile - Match HR alignment */
+  .hr-recruitment-page .agent-hero-title,
+  .gtm-sales-page .agent-hero-title,
+  .cfo-finance-page .agent-hero-title,
+  .customer-support-page .agent-hero-title,
+  .real-estate-page .agent-hero-title,
+  .healthcare-page .agent-hero-title {
+    text-align: left !important;
+  }
+
+  /* All agent pages hero overview - Mobile - Match HR alignment */
+  .hr-recruitment-page .agent-hero-overview,
+  .gtm-sales-page .agent-hero-overview,
+  .cfo-finance-page .agent-hero-overview,
+  .customer-support-page .agent-hero-overview,
+  .real-estate-page .agent-hero-overview,
+  .healthcare-page .agent-hero-overview {
+    text-align: left !important;
+  }
+
+  /* Stat Cards - Mobile - Reduce sizes */
+  .hr-stat-large,
+  .sales-stat-large,
+  .cfo-stat-large,
+  .support-stat-large,
+  .re-stat-large,
+  .health-stat-large {
+    padding: 0.625rem;
+  }
+
+  .hr-stat-number,
+  .sales-stat-number,
+  .cfo-stat-number,
+  .support-stat-number,
+  .re-stat-number,
+  .health-stat-number {
+    font-size: 1.25rem !important;
+  }
+
+  .hr-stat-desc,
+  .sales-stat-desc,
+  .cfo-stat-desc,
+  .support-stat-desc,
+  .re-stat-desc,
+  .health-stat-desc {
+    font-size: 0.7rem;
+  }
+
+  /* Chart and progress bars - Mobile */
+  .hr-chart-item,
+  .sales-chart-item,
+  .cfo-chart-item,
+  .support-chart-item,
+  .re-chart-item,
+  .health-chart-item {
+    gap: 0.5rem;
+  }
+
+  .hr-chart-label,
+  .sales-chart-label,
+  .cfo-chart-label,
+  .support-chart-label,
+  .re-chart-label,
+  .health-chart-label {
+    font-size: 0.75rem;
+  }
+
+  .hr-chart-value,
+  .sales-chart-value,
+  .cfo-chart-value,
+  .support-chart-value,
+  .re-chart-value,
+  .health-chart-value {
+    font-size: 0.85rem !important;
+  }
+
+  /* Progress bars - Mobile */
+  .hr-progress-bar,
+  .sales-progress-bar,
+  .cfo-progress-bar,
+  .support-progress-bar,
+  .re-progress-bar,
+  .health-progress-bar {
+    height: 6px;
   }
 }
 
 @media (max-width: 480px) {
   .agent-hero {
-    padding: 4rem 1rem 2.5rem;
+    padding: 2.5rem 1rem 1.5rem;
+    text-align: left !important;
   }
 
   .agent-hero-title {
-    font-size: 1.75rem;
-    margin-bottom: 1.25rem;
+    font-size: 1.35rem;
+    margin-bottom: 0.625rem;
+    white-space: normal !important;
+    word-wrap: break-word;
+    text-align: left !important;
   }
 
   .agent-hero-overview {
-    font-size: 0.95rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    text-align: left !important;
+  }
+
+  /* Image overlay - Small Mobile */
+  .agent-image-overlay {
+    max-height: 250px !important;
+    padding: 0.75rem !important;
+  }
+
+  .agent-overlay-image {
+    max-height: 250px !important;
+  }
+
+  .hr-recruitment-page .agent-image-overlay,
+  .gtm-sales-page .agent-image-overlay,
+  .cfo-finance-page .agent-image-overlay,
+  .customer-support-page .agent-image-overlay,
+  .real-estate-page .agent-image-overlay,
+  .healthcare-page .agent-image-overlay {
+    max-height: 250px !important;
+    padding: 0.75rem !important;
+  }
+
+  .hr-recruitment-page .agent-overlay-image,
+  .gtm-sales-page .agent-overlay-image,
+  .cfo-finance-page .agent-overlay-image,
+  .customer-support-page .agent-overlay-image,
+  .real-estate-page .agent-overlay-image,
+  .healthcare-page .agent-overlay-image {
+    max-height: 250px !important;
   }
 
   .agent-video-section {
-    padding: 0 1rem 2.5rem;
+    padding: 0 0 1.5rem;
   }
 
   .agent-video-frame {
-    border-radius: 16px;
+    border-radius: 12px;
   }
 
   .agent-features-section {
-    padding: 2.5rem 1rem 4rem;
+    padding: 2rem 1rem 3rem;
+  }
+
+  .agent-features-header {
+    margin-bottom: 1.5rem;
+    text-align: left !important;
   }
 
   .agent-features-header h2 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    text-align: left !important;
+    margin-bottom: 0.625rem;
+  }
+
+  .agent-features-grid {
+    gap: 0.875rem;
   }
 
   .agent-feature-card {
-    padding: 1.5rem;
+    padding: 1rem;
+    gap: 0.625rem;
+    border-radius: 12px;
+  }
+
+  .agent-feature-card.hr-dashboard-style {
+    padding: 1rem;
+    gap: 0.625rem;
+  }
+
+  .agent-feature-card.hr-dashboard-style .agent-feature-title {
+    font-size: 1.05rem;
   }
 
   .agent-feature-icon {
-    width: 40px;
-    height: 40px;
-    font-size: 1.25rem;
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
   }
 
   .agent-feature-title {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    margin-bottom: 0.375rem;
   }
 
   .agent-feature-description {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  /* GTM Sales - Small Mobile: Single column */
+  .gtm-sales-page .agent-features-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.875rem;
+  }
+
+  .gtm-sales-page .agent-feature-card.hr-dashboard-style {
+    padding: 1rem;
+    gap: 0.625rem;
+  }
+
+  .gtm-sales-page .agent-feature-card.hr-dashboard-style .agent-feature-title {
+    font-size: 1.05rem;
+    margin-bottom: 0.375rem;
+  }
+
+  .gtm-sales-page .agent-feature-card.hr-dashboard-style .agent-feature-subtitle {
+    font-size: 0.8rem;
+    margin-bottom: 0.625rem;
+  }
+
+  /* Sales Analytics Card - Small Mobile */
+  .gtm-sales-page .agent-feature-card.sales-analytics-card {
+    padding: 1rem;
+    gap: 0.625rem;
+  }
+
+  .gtm-sales-page .agent-feature-card.sales-analytics-card .agent-feature-title {
+    font-size: 1.05rem;
+  }
+
+  /* All agent pages hero positioning - Small Mobile */
+  .hr-recruitment-page .agent-hero,
+  .gtm-sales-page .agent-hero,
+  .cfo-finance-page .agent-hero,
+  .customer-support-page .agent-hero,
+  .real-estate-page .agent-hero,
+  .healthcare-page .agent-hero {
+    padding: 2.5rem 1rem 1.5rem;
+    text-align: left !important;
+  }
+
+  /* All agent pages hero inner - Small Mobile - Match HR alignment */
+  .hr-recruitment-page .agent-hero-inner,
+  .gtm-sales-page .agent-hero-inner,
+  .cfo-finance-page .agent-hero-inner,
+  .customer-support-page .agent-hero-inner,
+  .real-estate-page .agent-hero-inner,
+  .healthcare-page .agent-hero-inner {
+    text-align: left !important;
+    width: 100%;
+  }
+
+  /* All agent pages hero title - Small Mobile - Match HR alignment */
+  .hr-recruitment-page .agent-hero-title,
+  .gtm-sales-page .agent-hero-title,
+  .cfo-finance-page .agent-hero-title,
+  .customer-support-page .agent-hero-title,
+  .real-estate-page .agent-hero-title,
+  .healthcare-page .agent-hero-title {
+    text-align: left !important;
+  }
+
+  /* All agent pages hero overview - Small Mobile - Match HR alignment */
+  .hr-recruitment-page .agent-hero-overview,
+  .gtm-sales-page .agent-hero-overview,
+  .cfo-finance-page .agent-hero-overview,
+  .customer-support-page .agent-hero-overview,
+  .real-estate-page .agent-hero-overview,
+  .healthcare-page .agent-hero-overview {
+    text-align: left !important;
+  }
+
+  /* Stat Cards - Small Mobile - Further reduce sizes */
+  .hr-stat-large,
+  .sales-stat-large,
+  .cfo-stat-large,
+  .support-stat-large,
+  .re-stat-large,
+  .health-stat-large {
+    padding: 0.5rem;
+  }
+
+  .hr-stat-number,
+  .sales-stat-number,
+  .cfo-stat-number,
+  .support-stat-number,
+  .re-stat-number,
+  .health-stat-number {
+    font-size: 1.1rem !important;
+  }
+
+  .hr-stat-desc,
+  .sales-stat-desc,
+  .cfo-stat-desc,
+  .support-stat-desc,
+  .re-stat-desc,
+  .health-stat-desc {
+    font-size: 0.65rem;
+  }
+
+  /* Chart and progress bars - Small Mobile */
+  .hr-chart-item,
+  .sales-chart-item,
+  .cfo-chart-item,
+  .support-chart-item,
+  .re-chart-item,
+  .health-chart-item {
+    gap: 0.375rem;
+  }
+
+  .hr-chart-label,
+  .sales-chart-label,
+  .cfo-chart-label,
+  .support-chart-label,
+  .re-chart-label,
+  .health-chart-label {
+    font-size: 0.7rem;
+  }
+
+  .hr-chart-value,
+  .sales-chart-value,
+  .cfo-chart-value,
+  .support-chart-value,
+  .re-chart-value,
+  .health-chart-value {
+    font-size: 0.8rem !important;
+  }
+
+  /* Progress bars - Small Mobile */
+  .hr-progress-bar,
+  .sales-progress-bar,
+  .cfo-progress-bar,
+  .support-progress-bar,
+  .re-progress-bar,
+  .health-progress-bar {
+    height: 5px;
   }
 }
 
@@ -2018,15 +2471,24 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 .healthcare-page .agent-hero {
   position: absolute;
   top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 900px;
+  left: 5%;
+  transform: translateY(-50%);
+  width: 50%;
+  max-width: 600px;
   display: block !important;
   z-index: 10;
   padding: 2rem;
   background: transparent;
   pointer-events: none;
+  text-align: left !important;
+}
+
+.gtm-sales-page .agent-hero::before,
+.cfo-finance-page .agent-hero::before,
+.customer-support-page .agent-hero::before,
+.real-estate-page .agent-hero::before,
+.healthcare-page .agent-hero::before {
+  display: none;
 }
 
 .gtm-sales-page .agent-hero-inner,
@@ -2037,12 +2499,10 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
   pointer-events: auto;
   position: relative;
   z-index: 10;
-  text-align: center !important;
+  text-align: left !important;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
+  max-width: 900px;
+  margin: 0;
 }
 
 .gtm-sales-page .agent-hero-title,
@@ -2054,14 +2514,14 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
   -webkit-text-fill-color: #ffffff !important;
   background: none !important;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-  white-space: normal !important;
+  white-space: nowrap !important;
   overflow: visible !important;
   font-size: clamp(2.5rem, 5vw, 4rem) !important;
   line-height: 1.2 !important;
-  margin: 0 auto 1.5rem auto !important;
+  margin: 0 0 1.5rem 0 !important;
   font-weight: 700 !important;
   letter-spacing: -0.01em !important;
-  text-align: center !important;
+  text-align: left !important;
 }
 
 .gtm-sales-page .agent-hero-eyebrow,
@@ -2081,9 +2541,9 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
   font-size: 1.1rem !important;
   line-height: 1.7 !important;
-  margin: 0 auto !important;
+  margin: 0 !important;
   max-width: 700px !important;
-  text-align: center !important;
+  text-align: left !important;
 }
 
 .gtm-sales-page .agent-image-overlay,
@@ -2139,10 +2599,22 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 .healthcare-page .agent-features-section {
   background: #000000;
   margin-top: 0;
-  padding-top: 6rem;
-  padding-bottom: 6rem;
+  padding: 6rem 8vw 8rem;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
   position: relative;
   z-index: 10;
+}
+
+.gtm-sales-page .agent-features-header,
+.cfo-finance-page .agent-features-header,
+.customer-support-page .agent-features-header,
+.real-estate-page .agent-features-header,
+.healthcare-page .agent-features-header {
+  max-width: 900px;
+  margin: 0 0 4rem;
+  text-align: left;
 }
 
 /* GTM Sales - 3 cards per row with proper alignment */
@@ -2179,6 +2651,71 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
   flex-direction: column;
 }
 
+/* Make Sales Analytics card span 3 columns (full width) */
+.gtm-sales-page .agent-feature-card.hr-dashboard-style.sales-analytics-card {
+  grid-column: 1 / -1;
+  max-width: 100%;
+  width: 100%;
+  padding: 0.75rem;
+}
+
+.gtm-sales-page .agent-feature-card.hr-dashboard-style.sales-analytics-card .sales-analytics-stats {
+  margin-bottom: 0.4rem;
+  gap: 0.5rem;
+}
+
+.gtm-sales-page .agent-feature-card.hr-dashboard-style.sales-analytics-card .sales-stat-large {
+  padding: 0.5rem;
+  margin-bottom: 0;
+}
+
+.gtm-sales-page .agent-feature-card.hr-dashboard-style.sales-analytics-card .sales-stat-number {
+  font-size: 1.5rem;
+}
+
+.gtm-sales-page .agent-feature-card.hr-dashboard-style.sales-analytics-card .sales-stat-desc {
+  font-size: 0.75rem;
+}
+
+.gtm-sales-page .agent-feature-card.hr-dashboard-style.sales-analytics-card .sales-area-chart {
+  margin: 0.4rem 0;
+  padding: 0.4rem;
+}
+
+.gtm-sales-page .agent-feature-card.hr-dashboard-style.sales-analytics-card .sales-area-title {
+  font-size: 0.75rem;
+  margin-bottom: 0.4rem;
+}
+
+.gtm-sales-page .agent-feature-card.hr-dashboard-style.sales-analytics-card .sales-area-container {
+  height: 60px;
+  gap: 4px;
+}
+
+.gtm-sales-page .agent-feature-card.hr-dashboard-style.sales-analytics-card .sales-analytics-chart {
+  margin-top: 0.4rem;
+  gap: 0.5rem;
+}
+
+.gtm-sales-page .agent-feature-card.hr-dashboard-style.sales-analytics-card .sales-chart-item {
+  margin-bottom: 0.3rem;
+}
+
+.gtm-sales-page .agent-feature-card.hr-dashboard-style.sales-analytics-card .sales-chart-label {
+  font-size: 0.75rem;
+}
+
+.gtm-sales-page .agent-feature-card.hr-dashboard-style.sales-analytics-card .sales-chart-value {
+  font-family: 'Geist', sans-serif !important;
+  font-size: 0.75rem;
+  text-align: center !important;
+}
+
+.gtm-sales-page .agent-feature-card.hr-dashboard-style.sales-analytics-card .sales-trend-indicator {
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+}
+
 /* Enhanced Card Styles - Shared across all agents */
 .sales-stat-large, .sales-metric-box, .sales-stat-card, .sales-stat-box, .sales-overview-item,
 .cfo-stat-large, .cfo-metric-box, .cfo-stat-card, .cfo-stat-box, .cfo-overview-item,
@@ -2200,10 +2737,20 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 .support-stat-number, .support-metric-number, .support-stat-value, .support-stat-big, .support-overview-number,
 .re-stat-number, .re-metric-number, .re-stat-value, .re-stat-big, .re-overview-number,
 .health-stat-number, .health-metric-number, .health-stat-value, .health-stat-big, .health-overview-number {
+  font-family: 'Geist', sans-serif !important;
   font-size: 2rem;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 0.5rem;
+  text-align: center !important;
+}
+
+/* Center align and apply Geist font to all chart values, breakdown percents, and score values */
+.sales-chart-value, .cfo-chart-value, .support-chart-value, .re-chart-value, .health-chart-value,
+.sales-breakdown-percent, .cfo-breakdown-percent, .support-breakdown-percent, .re-breakdown-percent, .health-breakdown-percent,
+.sales-score-value, .cfo-score-value, .support-score-value, .re-score-value, .health-score-value {
+  font-family: 'Geist', sans-serif !important;
+  text-align: center !important;
 }
 
 .sales-stat-desc, .sales-metric-label, .sales-stat-label, .sales-stat-small, .sales-overview-label,
@@ -2368,9 +2915,7 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 
 /* Visual Icons and Images */
 .sales-visual-icon, .cfo-visual-icon, .support-visual-icon, .re-visual-icon, .health-visual-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
+  display: none !important;
   background: rgba(224, 128, 255, 0.2);
   display: flex;
   align-items: center;
@@ -2381,13 +2926,7 @@ body.hr-recruitment-active .agent-feature-card.hr-dashboard-style .agent-feature
 
 /* Grid Visual */
 .sales-grid-visual, .cfo-grid-visual, .support-grid-visual, .re-grid-visual, .health-grid-visual {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.5rem;
-  margin: 1rem 0;
-  padding: 0.5rem;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 8px;
+  display: none !important;
 }
 
 .sales-grid-item, .cfo-grid-item, .support-grid-item, .re-grid-item, .health-grid-item {

@@ -402,9 +402,17 @@ const WhyChooseLagentry: React.FC = () => {
                                 <span className="cost-card-with">
                                     With
                                     <img
-                                        src="/images/logo.png"
+                                        src="/images/lagentry-Logo.png"
                                         alt="Lagentry logo"
                                         className="cost-card-logo"
+                                        onError={(e) => {
+                                          const target = e.currentTarget;
+                                          if (!target.src.includes('lagentry-logo.png')) {
+                                            target.src = "/images/lagentry-logo.png";
+                                          } else {
+                                            target.src = "/images/logo.png";
+                                          }
+                                        }}
                                     />
                                     Lagentry
                                 </span>

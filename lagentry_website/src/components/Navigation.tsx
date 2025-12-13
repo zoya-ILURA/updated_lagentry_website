@@ -2,11 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Navigation.css';
 
+// Logo path - React serves public folder from root
+// Use process.env.PUBLIC_URL to ensure correct path resolution
+const logoPath = `${process.env.PUBLIC_URL || ''}/images/lagentry-Logo.png`;
+
 const Navigation: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isAgentsOpen, setIsAgentsOpen] = useState(false);
+  const [isMobileAgentsOpen, setIsMobileAgentsOpen] = useState(false);
   const agentsHoverTimeoutRef = useRef<number | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -48,12 +53,6 @@ const Navigation: React.FC = () => {
     tryScroll();
   };
 
-  const handleAgentsClick = (e?: React.MouseEvent) => {
-    if (e) {
-      e.stopPropagation();
-    }
-    navigate('/agents');
-  };
 
   const handleAgentsMouseEnter = () => {
     if (agentsHoverTimeoutRef.current) {
@@ -96,7 +95,32 @@ const Navigation: React.FC = () => {
                 {/* Logo with purple hexagonal icon */}
           <div className="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
                   <div className="logo-icon">
-                    <img src="/images/logo.png" alt="Lagentry Logo" className="logo-icon-image" />
+                    <img 
+                      src={logoPath}
+                      alt="Lagentry Logo" 
+                      className="logo-icon-image"
+                      style={{ display: 'block', width: '100%', height: '100%', objectFit: 'contain' }}
+                      onLoad={() => console.log('Logo loaded successfully:', logoPath)}
+                      onError={(e) => {
+                        console.error('Logo image failed to load:', e.currentTarget.src);
+                        const target = e.currentTarget;
+                        const attempts = target.getAttribute('data-attempts') || '0';
+                        const attemptNum = parseInt(attempts);
+                        const baseUrl = process.env.PUBLIC_URL || '';
+                        
+                        if (attemptNum === 0) {
+                          target.setAttribute('data-attempts', '1');
+                          // Try without PUBLIC_URL
+                          target.src = "/images/lagentry-Logo.png";
+                        } else if (attemptNum === 1) {
+                          target.setAttribute('data-attempts', '2');
+                          // Try alternative logo
+                          target.src = `${baseUrl}/images/lagentry-logo.png`;
+                        } else {
+                          console.error('Logo failed to load after all attempts');
+                        }
+                      }}
+                    />
                   </div>
           </div>
 
@@ -104,11 +128,11 @@ const Navigation: React.FC = () => {
           <div className="nav-menu desktop-menu">
           <div
             className="nav-item nav-item-agents"
-            style={{ cursor: 'pointer', position: 'relative' }}
+            style={{ cursor: 'default', position: 'relative' }}
             onMouseEnter={handleAgentsMouseEnter}
             onMouseLeave={handleAgentsMouseLeave}
           >
-            <span onClick={handleAgentsClick}>Agents</span>
+            <span>Agents</span>
             <div 
               className={`agents-dropdown ${isAgentsOpen ? 'open' : ''}`}
               onClick={(e) => e.stopPropagation()}
@@ -220,8 +244,23 @@ const Navigation: React.FC = () => {
       {/* Mobile Dropdown Menu */}
       <div className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
         <div className="mobile-menu-content">
-          <div className="mobile-nav-item mobile-homepage" onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }} style={{ cursor: 'pointer' }}>Homepage</div>
-          <div className="mobile-nav-item" onClick={() => { handleAgentsClick(); setIsMobileMenuOpen(false); }} style={{ cursor: 'pointer' }}>Agents</div>
+          <div className="mobile-nav-item mobile-homepage" onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }} style={{ cursor: 'pointer' }}>Home</div>
+          <div className="mobile-nav-item mobile-agents-parent" style={{ cursor: 'pointer' }}>
+            <div onClick={() => setIsMobileAgentsOpen(!isMobileAgentsOpen)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+              <span>Agents</span>
+              <span style={{ transform: isMobileAgentsOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}>▼</span>
+            </div>
+            {isMobileAgentsOpen && (
+              <div className="mobile-agents-submenu">
+                <div className="mobile-nav-subitem" onClick={(e) => { handleAgentItemClick('/agents/gtm-sales', e); setIsMobileMenuOpen(false); setIsMobileAgentsOpen(false); }}>GTM & Sales</div>
+                <div className="mobile-nav-subitem" onClick={(e) => { handleAgentItemClick('/agents/hr-recruitment', e); setIsMobileMenuOpen(false); setIsMobileAgentsOpen(false); }}>HR & Recruitment</div>
+                <div className="mobile-nav-subitem" onClick={(e) => { handleAgentItemClick('/agents/cfo-finance', e); setIsMobileMenuOpen(false); setIsMobileAgentsOpen(false); }}>CFO & Finance</div>
+                <div className="mobile-nav-subitem" onClick={(e) => { handleAgentItemClick('/agents/customer-support', e); setIsMobileMenuOpen(false); setIsMobileAgentsOpen(false); }}>Customer Support</div>
+                <div className="mobile-nav-subitem" onClick={(e) => { handleAgentItemClick('/agents/real-estate', e); setIsMobileMenuOpen(false); setIsMobileAgentsOpen(false); }}>Real Estate</div>
+                <div className="mobile-nav-subitem" onClick={(e) => { handleAgentItemClick('/agents/healthcare', e); setIsMobileMenuOpen(false); setIsMobileAgentsOpen(false); }}>Healthcare</div>
+              </div>
+            )}
+          </div>
           <div className="mobile-nav-item" onClick={() => { handleFeaturesClick(); setIsMobileMenuOpen(false); }} style={{ cursor: 'pointer' }}>Features</div>
           <div className="mobile-nav-item" onClick={() => { navigate('/pricing'); setIsMobileMenuOpen(false); }} style={{ cursor: 'pointer' }}>Pricing</div>
           <div className="mobile-nav-item" onClick={() => { handleContactClick(); setIsMobileMenuOpen(false); }} style={{ cursor: 'pointer' }}>Contact Us</div>

@@ -10,7 +10,10 @@ const Dashboard: React.FC = () => {
       <div className="dashboard-container">
         <div className="dashboard-content">
           <div className="dashboard-header">
-            <h2 className="dashboard-title">Agent Analytics Dashboard</h2>
+            <h2 className="dashboard-title">
+              <span className="dashboard-title-line1">Agent Analytics</span>
+              <span className="dashboard-title-line2">Dashboard</span>
+            </h2>
             <p className="dashboard-subtitle">
               Real-time insights into your AI agent ecosystem
             </p>

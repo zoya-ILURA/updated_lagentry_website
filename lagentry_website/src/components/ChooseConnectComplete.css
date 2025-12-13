@@ -29,6 +29,24 @@
   line-height: 1.4;
   max-width: 900px;
   margin: 0 auto;
+  min-height: 1.4em; /* Prevent layout shift during typing */
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  animation: blink 1s infinite;
+  color: #ffffff;
+  font-weight: 400;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
 }
 
 .section-title .agent-word-underlined {
@@ -113,13 +131,12 @@
   /* No special styling for current state - keep it clean */
   /* .step-card.current - intentionally empty */
 
-/* Animation for Connect and Complete steps (step 2 and 3) */
+/* All steps appear instantly - no delays */
 .step-2 .step-number-circle,
 .step-3 .step-number-circle {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.2s ease;
-  transition-delay: 0s;
+  opacity: 1;
+  transform: translateY(0);
+  transition: none;
 }
 
 .step-2.active .step-number-circle,
@@ -130,10 +147,9 @@
 
 .step-2 .step-title,
 .step-3 .step-title {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.2s ease;
-  transition-delay: 0.05s;
+  opacity: 1;
+  transform: translateY(0);
+  transition: none;
 }
 
 .step-2.active .step-title,
@@ -144,10 +160,9 @@
 
 .step-2 .step-description,
 .step-3 .step-description {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.2s ease;
-  transition-delay: 0.1s;
+  opacity: 1;
+  transform: translateY(0);
+  transition: none;
 }
 
 .step-2.active .step-description,
@@ -191,6 +206,15 @@
   margin-bottom: 1rem;
   color: #ffffff;
   transition: all 0.3s ease;
+  min-height: 1.2em; /* Prevent layout shift during typing */
+}
+
+.step-title .typewriter-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  animation: blink 1s infinite;
+  color: #ffffff;
+  font-weight: 400;
 }
 
 .step-description {

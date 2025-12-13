@@ -149,7 +149,18 @@ const Waitlist: React.FC = () => {
           </div>
           <div className="join-header">
             <div className="join-logo">
-              <img src="/images/logo.png" alt="Legentry" />
+              <img 
+                src="/images/lagentry-Logo.png"
+                alt="Legentry" 
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.includes('lagentry-logo.png')) {
+                    target.src = "/images/lagentry-logo.png";
+                  } else {
+                    target.src = "/images/logo.png";
+                  }
+                }}
+              />
             </div>
           </div>
           <div className="join-content">
